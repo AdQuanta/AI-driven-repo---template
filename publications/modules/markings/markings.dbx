@@ -1,0 +1,6 @@
+% marking.dbx -- biblatex data model extension for the marking module.
+% Declares the markroles field used by citation highlighting.
+% Loaded via: \usepackage[..., datamodel=marking]{biblatex}
+
+\DeclareDatamodelFields[type=field, datatype=literal]{markroles}
+\DeclareDatamodelEntryfields{markroles}

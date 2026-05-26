@@ -1,0 +1,622 @@
+% ============================================================================
+% Marking module
+% Public API:
+%   \DefineMarkRole{role}{color}[state]   state: colored (default) | plain | hidden
+%   \SetMarkFallbackColor{color}
+%   \Mark{role}[kind]{content}
+%   \begin{MarkEnv}{role}[kind] ... \end{MarkEnv}
+%   \MarkPlaceholderFigure{role}[layout]{description}{label}{caption}
+% Supported Mark kinds: text, math, figure, heading
+%
+% Citation highlighting (biblatex only):
+%   \SetMarkDefaultCiteColor{color}   (optional override -- rarely needed)
+%   In .bib: markroles = {role}       (drives all highlighting automatically)
+% ============================================================================
+
+% Fail fast when required dependencies are not loaded in config.
+\makeatletter
+\@ifpackageloaded{xcolor}{}{
+  \PackageError{marking}{MarkErrMissingDependency: xcolor not loaded}{}
+}
+\@ifpackageloaded{soul}{}{
+  \PackageError{marking}{MarkErrMissingDependency: soul not loaded}{}
+}
+\@ifpackageloaded{environ}{}{
+  \PackageError{marking}{MarkErrMissingDependency: environ not loaded}{}
+}
+\@ifpackageloaded{etoolbox}{}{
+  \PackageError{marking}{MarkErrMissingDependency: etoolbox not loaded}{}
+}
+\@ifpackageloaded{xparse}{}{
+  \PackageError{marking}{MarkErrMissingDependency: xparse not loaded}{}
+}
+\@ifpackageloaded{tcolorbox}{}{
+  \PackageError{marking}{MarkErrMissingDependency: tcolorbox not loaded}{}
+}
+\makeatother
+
+\providecommand{\MarkingResolvedColor}{red}
+
+\makeatletter
+\newcommand{\marking@iftypesetTF}[2]{%
+  \ifx\protect\@typeset@protect
+    #1%
+  \else
+    #2%
+  \fi
+}
+\makeatother
+
+\ExplSyntaxOn
+
+\prop_new:N \g_marking_role_color_prop
+\prop_new:N \g_marking_role_state_prop
+\tl_new:N \g_marking_fallback_color_tl
+\tl_gset:Nn \g_marking_fallback_color_tl { red }
+
+\tl_new:N \l_marking_role_tl
+\tl_new:N \l_marking_kind_tl
+\tl_new:N \l_marking_color_tl
+\tl_new:N \l_marking_layout_tl
+\tl_new:N \l_marking_caption_tl
+\tl_new:N \l_marking_label_tl
+\tl_new:N \l_marking_state_tl
+\bool_new:N \l_marking_has_label_bool
+\bool_new:N \g_marking_in_mark_bool
+
+\cs_new_protected:Npn \marking_warn:nn #1#2
+  { \PackageWarningNoLine { marking } { #1:~#2 } }
+
+\cs_new:Npn \marking_normalize_token:n #1
+  { \tl_lower_case:n { \tl_trim_spaces:n {#1} } }
+
+\cs_new_protected:Npn \marking_set_fallback_color:n #1
+  {
+    \tl_set:Nx \l_marking_color_tl { \tl_trim_spaces:n {#1} }
+    \tl_if_blank:VTF \l_marking_color_tl
+      {
+        \marking_warn:nn { MarkWarnInvalidColor }
+          { empty~fallback~color;~keeping~current~fallback }
+      }
+      {
+        \tl_gset_eq:NN \g_marking_fallback_color_tl \l_marking_color_tl
+        \xdef\marking@fallbackcolor { \tl_use:N \l_marking_color_tl }
+      }
+  }
+
+\cs_new_protected:Npn \marking_validate_state:n #1
+  {
+    \tl_set:Nx \l_marking_state_tl { \marking_normalize_token:n {#1} }
+    \tl_if_eq:VnTF \l_marking_state_tl { colored }
+      {}
+      {
+        \tl_if_eq:VnTF \l_marking_state_tl { plain }
+          {}
+          {
+            \tl_if_eq:VnTF \l_marking_state_tl { hidden }
+              {}
+              {
+                \marking_warn:nn { MarkWarnInvalidState }
+                  { unknown~state~'\l_marking_state_tl'~for~role;~using~colored }
+                \tl_set:Nn \l_marking_state_tl { colored }
+              }
+          }
+      }
+  }
+
+\cs_new_protected:Npn \marking_resolve_role_state:n #1
+  {
+    \tl_set:Nx \l_marking_role_tl { \marking_normalize_token:n {#1} }
+    \prop_get:NVNTF
+      \g_marking_role_state_prop
+      \l_marking_role_tl
+      \l_marking_state_tl
+      {}
+      {
+        \marking_warn:nn { MarkWarnMissingRole }
+          { role~'\l_marking_role_tl'~has~no~state;~using~colored }
+        \tl_set:Nn \l_marking_state_tl { colored }
+      }
+  }
+
+\cs_new_protected:Npn \marking_define_role:nnn #1#2#3
+  {
+    \tl_set:Nx \l_marking_role_tl { \marking_normalize_token:n {#1} }
+    \tl_if_blank:VTF \l_marking_role_tl
+      {
+        \marking_warn:nn { MarkWarnEmptyRole }
+          { role~name~is~empty;~definition~ignored }
+      }
+      {
+        \prop_if_in:NVTF \g_marking_role_color_prop \l_marking_role_tl
+          {
+            \marking_warn:nn { MarkWarnDuplicateRole }
+              { role~'\l_marking_role_tl'~already~defined;~keeping~first~definition }
+          }
+          {
+            \tl_set:Nx \l_marking_color_tl { \tl_trim_spaces:n {#2} }
+            \tl_if_blank:VTF \l_marking_color_tl
+              {
+                \marking_warn:nn { MarkWarnInvalidColor }
+                  { empty~color~for~role~'\l_marking_role_tl';~using~fallback }
+                \prop_gput:NVV
+                  \g_marking_role_color_prop
+                  \l_marking_role_tl
+                  \g_marking_fallback_color_tl
+                \tl_set:Nx \l_tmpa_tl
+                  { marking_rolecolor_ \tl_use:N \l_marking_role_tl }
+                \exp_args:Nc \xdef { \tl_use:N \l_tmpa_tl }
+                  { \tl_use:N \g_marking_fallback_color_tl }
+                \marking_validate_state:n {#3}
+                \prop_gput:NVV
+                  \g_marking_role_state_prop
+                  \l_marking_role_tl
+                  \l_marking_state_tl
+                \tl_set:Nx \l_tmpa_tl
+                  { marking_rolestate_ \tl_use:N \l_marking_role_tl }
+                \exp_args:Nc \xdef { \tl_use:N \l_tmpa_tl }
+                  { \tl_use:N \l_marking_state_tl }
+              }
+              {
+                \prop_gput:NVV
+                  \g_marking_role_color_prop
+                  \l_marking_role_tl
+                  \l_marking_color_tl
+                \tl_set:Nx \l_tmpa_tl
+                  { marking_rolecolor_ \tl_use:N \l_marking_role_tl }
+                \exp_args:Nc \xdef { \tl_use:N \l_tmpa_tl }
+                  { \tl_use:N \l_marking_color_tl }
+                \marking_validate_state:n {#3}
+                \prop_gput:NVV
+                  \g_marking_role_state_prop
+                  \l_marking_role_tl
+                  \l_marking_state_tl
+                \tl_set:Nx \l_tmpa_tl
+                  { marking_rolestate_ \tl_use:N \l_marking_role_tl }
+                \exp_args:Nc \xdef { \tl_use:N \l_tmpa_tl }
+                  { \tl_use:N \l_marking_state_tl }
+              }
+          }
+      }
+  }
+
+\cs_new_protected:Npn \marking_resolve_role_color:n #1
+  {
+    \tl_set:Nx \l_marking_role_tl { \marking_normalize_token:n {#1} }
+    \tl_if_blank:VTF \l_marking_role_tl
+      {
+        \marking_warn:nn { MarkWarnEmptyRole }
+          { empty~role~at~call~site;~using~fallback }
+        \tl_set_eq:NN \l_marking_color_tl \g_marking_fallback_color_tl
+      }
+      {
+        \prop_get:NVNTF
+          \g_marking_role_color_prop
+          \l_marking_role_tl
+          \l_marking_color_tl
+          {}
+          {
+            \marking_warn:nn { MarkWarnMissingRole }
+              { role~'\l_marking_role_tl'~is~undefined;~using~fallback }
+            \tl_set_eq:NN \l_marking_color_tl \g_marking_fallback_color_tl
+          }
+      }
+    \edef\MarkingResolvedColor{\tl_use:N \l_marking_color_tl}
+  }
+
+\cs_new_protected:Npn \marking_resolve_kind:n #1
+  {
+    \tl_set:Nx \l_marking_kind_tl { \marking_normalize_token:n {#1} }
+    \tl_if_blank:VTF \l_marking_kind_tl
+      { \tl_set:Nn \l_marking_kind_tl { text } }
+      {}
+  }
+
+\cs_new_protected:Npn \marking_render_inline:nnn #1#2#3
+  {
+    \marking_resolve_role_color:n {#1}
+    \marking_resolve_role_state:n {#1}
+    \marking_resolve_kind:n {#2}
+    \tl_if_eq:VnTF \l_marking_kind_tl { text }
+      {
+        \tl_if_eq:VnTF \l_marking_state_tl { hidden }
+          {}
+          {
+            \tl_if_eq:VnTF \l_marking_state_tl { colored }
+              {\sethlcolor{\MarkingResolvedColor}\hl{#3}}
+              {#3}
+          }
+      }
+      {
+        \tl_if_eq:VnTF \l_marking_kind_tl { math }
+          {
+            \tl_if_eq:VnTF \l_marking_state_tl { hidden }
+              {}
+              {
+                \tl_if_eq:VnTF \l_marking_state_tl { colored }
+                  { \colorbox{\MarkingResolvedColor!30}{$\displaystyle #3$} }
+                  { $#3$ }
+              }
+          }
+          {
+            \tl_if_eq:VnTF \l_marking_kind_tl { figure }
+              {
+                \marking_warn:nn { MarkWarnInlineFigureKind }
+                  { figure~kind~is~not~supported~for~Mark;~using~text }
+              }
+              {
+                \marking_warn:nn { MarkWarnUnknownKind }
+                  { unknown~kind~'\l_marking_kind_tl';~using~text }
+              }
+            \tl_if_eq:VnTF \l_marking_state_tl { hidden }
+              {}
+              {
+                \tl_if_eq:VnTF \l_marking_state_tl { colored }
+                  {\sethlcolor{\MarkingResolvedColor}\hl{#3}}
+                  {#3}
+              }
+          }
+      }
+  }
+
+\cs_new_protected:Npn \marking_render_heading:nn #1#2
+  {
+    \marking_resolve_role_state:n {#1}
+    \tl_if_eq:VnTF \l_marking_state_tl { hidden }
+      {
+        \marking_warn:nn { MarkWarnHiddenHeading }
+          { role~'\l_marking_role_tl'~is~hidden~but~used~in~a~heading;~rendering~plain }
+        #2
+      }
+      {
+        \texorpdfstring
+          { \marking_render_inline:nnn {#1}{text}{#2} }
+          { #2 }
+      }
+  }
+
+\cs_new_protected:Npn \marking_render_block:nnn #1#2#3
+  {
+    \marking_resolve_role_color:n {#1}
+    \marking_resolve_role_state:n {#1}
+    \marking_resolve_kind:n {#2}
+    \tl_if_eq:VnTF \l_marking_kind_tl { math }
+      {
+        \tl_if_eq:VnTF \l_marking_state_tl { hidden }
+          {}
+          {
+            \tl_if_eq:VnTF \l_marking_state_tl { colored }
+              {
+                \begin{tcolorbox}[
+                  enhanced,
+                  colback=\MarkingResolvedColor!50,
+                  colframe=\MarkingResolvedColor!50,
+                  boxrule=0pt,
+                  arc=0pt,
+                  left=2pt,
+                  right=2pt,
+                  top=2pt,
+                  bottom=2pt,
+                  boxsep=0pt
+                ]
+                  \begin{equation}
+                    #3
+                  \end{equation}
+                \end{tcolorbox}
+              }
+              {
+                \begin{equation}
+                  #3
+                \end{equation}
+              }
+          }
+      }
+      {
+        \tl_if_eq:VnTF \l_marking_kind_tl { figure }
+          {
+            \tl_if_eq:VnTF \l_marking_state_tl { hidden }
+              {}
+              {
+                \tl_if_eq:VnTF \l_marking_state_tl { colored }
+                  {
+                    \begin{tcolorbox}[
+                      enhanced,
+                      colback=white,
+                      colframe=\MarkingResolvedColor,
+                      boxrule=3pt,
+                      arc=0pt,
+                      left=0pt,
+                      right=0pt,
+                      top=0pt,
+                      bottom=0pt,
+                      boxsep=0pt
+                    ]
+                      #3
+                    \end{tcolorbox}
+                  }
+                  {#3}
+              }
+          }
+          {
+            \tl_if_eq:VnF \l_marking_kind_tl { text }
+              {
+                \marking_warn:nn { MarkWarnUnknownKind }
+                  { unknown~kind~'\l_marking_kind_tl';~using~text }
+              }
+            \tl_if_eq:VnTF \l_marking_state_tl { hidden }
+              {}
+              {
+                \tl_if_eq:VnTF \l_marking_state_tl { colored }
+                  {\sethlcolor{\MarkingResolvedColor}\hl{#3}}
+                  {#3}
+              }
+          }
+      }
+  }
+
+\cs_new_protected:Npn \marking_placeholder_box:nn #1#2
+  {
+    \fcolorbox{\MarkingResolvedColor}{\MarkingResolvedColor!15}{
+      \parbox{#1}{\centering\vspace{2em}%
+        \textbf{[Placeholder Figure]}\par\medskip #2%
+        \vspace{2em}}%
+    }
+  }
+
+\cs_new_protected:Npn \marking_placeholder_box_plain:nn #1#2
+  {
+    \fbox{%
+      \parbox{#1}{\centering\vspace{2em}%
+        \textbf{[Placeholder Figure]}\par\medskip #2%
+        \vspace{2em}}%
+    }
+  }
+
+\cs_new_protected:Npn \marking_render_placeholder:nnnnn #1#2#3#4#5
+  {
+    \marking_resolve_role_color:n {#1}
+    \marking_resolve_role_state:n {#1}
+    \tl_set:Nx \l_marking_layout_tl { \marking_normalize_token:n {#2} }
+    \tl_if_blank:VTF \l_marking_layout_tl
+      { \tl_set:Nn \l_marking_layout_tl { single } }
+      {}
+    \tl_set:Nx \l_marking_caption_tl { \tl_trim_spaces:n {#5} }
+    \tl_if_blank:VTF \l_marking_caption_tl
+      {
+        \marking_warn:nn { MarkWarnEmptyCaption }
+          { placeholder~caption~is~empty;~using~'Placeholder~Figure' }
+        \tl_set:Nn \l_marking_caption_tl { Placeholder Figure }
+      }
+      {}
+    \tl_set:Nx \l_marking_label_tl { \tl_trim_spaces:n {#4} }
+    \tl_if_blank:VTF \l_marking_label_tl
+      {
+        \marking_warn:nn { MarkWarnEmptyLabel }
+          { placeholder~label~is~empty;~label~omitted }
+        \bool_set_false:N \l_marking_has_label_bool
+      }
+      { \bool_set_true:N \l_marking_has_label_bool }
+    \tl_if_eq:VnTF \l_marking_state_tl { hidden }
+      {}
+      {
+        \tl_if_eq:VnTF \l_marking_layout_tl { wide }
+          {
+            \begin{figure*}[t]
+              \centering
+              \tl_if_eq:VnTF \l_marking_state_tl { colored }
+                { \marking_placeholder_box:nn {0.85\textwidth} {#3} }
+                { \marking_placeholder_box_plain:nn {0.85\textwidth} {#3} }
+              \caption{\l_marking_caption_tl}
+              \bool_if:NT \l_marking_has_label_bool { \exp_args:NV \label \l_marking_label_tl }
+            \end{figure*}
+          }
+          {
+            \tl_if_eq:VnF \l_marking_layout_tl { single }
+              {
+                \marking_warn:nn { MarkWarnUnknownLayout }
+                  { unknown~layout~'\l_marking_layout_tl';~using~single }
+              }
+            \begin{figure}[t]
+              \centering
+              \tl_if_eq:VnTF \l_marking_state_tl { colored }
+                { \marking_placeholder_box:nn {0.9\linewidth} {#3} }
+                { \marking_placeholder_box_plain:nn {0.9\linewidth} {#3} }
+              \caption{\l_marking_caption_tl}
+              \bool_if:NT \l_marking_has_label_bool { \exp_args:NV \label \l_marking_label_tl }
+            \end{figure}
+          }
+      }
+  }
+
+\cs_new_protected:Npn \marking_if_typeset:TF #1#2
+  { \use:c { marking@iftypesetTF } {#1}{#2} }
+
+\cs_new_protected:Npn \marking_mark:nnn #1#2#3
+  {
+    \marking_resolve_kind:n {#2}
+    \tl_if_eq:VnTF \l_marking_kind_tl { heading }
+      {
+        \bool_if:NTF \g_marking_in_mark_bool
+          {
+            \marking_warn:nn { MarkWarnNestedMark }
+              { nested~Mark/MarkEnv~usage;~rendering~nested~content~plain }
+            #3
+          }
+          {
+            \bool_gset_true:N \g_marking_in_mark_bool
+            \marking_render_heading:nn {#1}{#3}
+            \bool_gset_false:N \g_marking_in_mark_bool
+          }
+      }
+      {
+        \marking_if_typeset:TF
+          {
+            \bool_if:NTF \g_marking_in_mark_bool
+              {
+                \marking_warn:nn { MarkWarnNestedMark }
+                  { nested~Mark/MarkEnv~usage;~rendering~nested~content~plain }
+                #3
+              }
+              {
+                \bool_gset_true:N \g_marking_in_mark_bool
+                \marking_render_inline:nnn {#1}{#2}{#3}
+                \bool_gset_false:N \g_marking_in_mark_bool
+              }
+          }
+          {
+            \marking_warn:nn { MarkWarnMovingArgFallback }
+              { Mark~used~in~moving~argument;~using~plain~text }
+            #3
+          }
+      }
+  }
+
+\cs_new_protected:Npn \marking_markenv:nnn #1#2#3
+  {
+    \bool_if:NTF \g_marking_in_mark_bool
+      {
+        \marking_warn:nn { MarkWarnNestedMark }
+          { nested~Mark/MarkEnv~usage;~rendering~nested~content~plain }
+        #3
+      }
+      {
+        \bool_gset_true:N \g_marking_in_mark_bool
+        \marking_render_block:nnn {#1}{#2}{#3}
+        \bool_gset_false:N \g_marking_in_mark_bool
+      }
+  }
+
+\ExplSyntaxOff
+
+\ExplSyntaxOn
+\NewDocumentCommand{\SetMarkFallbackColor}{m}
+  { \marking_set_fallback_color:n {#1} }
+
+\NewDocumentCommand{\DefineMarkRole}{m m O{colored}}
+  { \marking_define_role:nnn {#1}{#2}{#3} }
+
+\NewDocumentCommand{\Mark}{m O{text} +m}
+  { \marking_mark:nnn {#1}{#2}{#3} }
+
+\NewDocumentEnvironment{MarkEnv}{m O{text} +b}
+  { \marking_markenv:nnn {#1}{#2}{#3} }
+  {}
+
+\NewDocumentCommand{\MarkPlaceholderFigure}{m O{single} m m m}
+  { \marking_render_placeholder:nnnnn {#1}{#2}{#3}{#4}{#5} }
+\ExplSyntaxOff
+
+\makeatletter
+\AtBeginDocument{%
+  \@ifpackageloaded{hyperref}{%
+    \pdfstringdefDisableCommands{%
+      \def\Mark#1#2]#3{#3}%
+    }%
+  }{}%
+}
+\makeatother
+
+% ============================================================================
+% Citation Marking (biblatex-only feature)
+% ============================================================================
+
+\tcbuselibrary{breakable}
+
+\makeatletter
+\newcommand{\marking@fallbackcolor}{red}
+
+\newcommand{\marking@defaultcitecolor}{}
+\newcommand{\SetMarkDefaultCiteColor}[1]{\renewcommand{\marking@defaultcitecolor}{#1}}
+
+\AtBeginDocument{%
+  \@ifpackageloaded{biblatex}{%
+    \def\marking@statecolored{colored}%
+    \newcommand{\marking@resolveentryroles}{%
+      \global\let\marking@entryrolecolor\@empty
+      \global\def\marking@entryrolestate{colored}%
+      \iffieldundef{markroles}{}{%
+        \edef\marking@tmprole{\thefield{markroles}}%
+        \@ifundefined{marking_rolecolor_\marking@tmprole}{%
+          \PackageWarningNoLine{marking}{MarkWarnMissingRole:
+            role '\marking@tmprole' is undefined; using fallback}%
+          \global\edef\marking@entryrolecolor{\marking@fallbackcolor}%
+        }{%
+          \global\edef\marking@entryrolecolor{%
+            \csname marking_rolecolor_\marking@tmprole\endcsname}%
+        }%
+        \@ifundefined{marking_rolestate_\marking@tmprole}{}{%
+          \global\edef\marking@entryrolestate{%
+            \csname marking_rolestate_\marking@tmprole\endcsname}%
+        }%
+      }%
+    }%
+    \@ifpackageloaded{hyperref}{%
+      \@ifundefined{HyColor@citecolor}{%
+        \@ifundefined{Hy@citecolor}{%
+          \renewcommand{\marking@defaultcitecolor}{black}%
+        }{%
+          \edef\marking@defaultcitecolor{\Hy@citecolor}%
+        }%
+      }{%
+        \edef\marking@defaultcitecolor{\HyColor@citecolor}%
+      }%
+      \AtEveryCitekey{%
+        \marking@resolveentryroles
+        \ifx\marking@entryrolecolor\@empty
+          \hypersetup{citecolor=\marking@defaultcitecolor}%
+        \else
+          \ifx\marking@entryrolestate\marking@statecolored
+            \hypersetup{citecolor=\marking@entryrolecolor!50!black}%
+          \else
+            \hypersetup{citecolor=\marking@defaultcitecolor}%
+          \fi
+        \fi
+      }%
+    }{%
+      \PackageInfo{marking}{hyperref not loaded; in-text citation color disabled}%
+    }%
+    \DeclareFieldFormat{labelnumberwidth}{%
+      \marking@resolveentryroles
+      \ifx\marking@entryrolecolor\@empty
+        \mkbibbrackets{#1}%
+      \else
+        \ifx\marking@entryrolestate\marking@statecolored
+          \colorbox{\marking@entryrolecolor!25}{\strut\mkbibbrackets{#1}}%
+        \else
+          \mkbibbrackets{#1}%
+        \fi
+      \fi
+    }%
+    \@ifpackageloaded{xpatch}{%
+      \xpretobibmacro{begentry}{%
+        \marking@resolveentryroles
+        \ifx\marking@entryrolecolor\@empty\else
+          \ifx\marking@entryrolestate\marking@statecolored
+            \begin{tcolorbox}[%
+              enhanced, breakable,%
+              colback=\marking@entryrolecolor!25,%
+              colframe=\marking@entryrolecolor,%
+              boxrule=1pt, arc=0pt,%
+              left=0pt, right=0pt, top=0pt, bottom=0pt, boxsep=1pt,%
+              before skip=0pt, after skip=0pt,%
+              enlarge left by=-\labelsep%
+            ]\ignorespaces
+          \fi
+        \fi
+      }{}{}%
+      \xapptobibmacro{finentry}{%
+        \marking@resolveentryroles
+        \ifx\marking@entryrolecolor\@empty\else
+          \ifx\marking@entryrolestate\marking@statecolored
+            \unskip\end{tcolorbox}%
+          \fi
+        \fi
+      }{}{}%
+    }{%
+      \PackageInfo{marking}{xpatch not loaded; bib entry body panels disabled}%
+    }%
+  }{%
+    \PackageInfo{marking}{biblatex not loaded; citation marking disabled}%
+  }%
+}
+\makeatother

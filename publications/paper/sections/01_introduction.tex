@@ -1,0 +1,49 @@
+% ============================================================================
+%  Section 1 — Introduction
+%
+%  Mark API examples are shown throughout this section to demonstrate
+%  the marking workflow. Remove/replace them with your actual content.
+% ============================================================================
+\section{\Mark{changes}[heading]{Introduction}}
+
+\Mark{changes}{%
+This is an example of a highlighted \emph{change} — a new or revised sentence
+is wrapped in \texttt{\textbackslash Mark\{changes\}\{...\}} to highlight it
+in the compiled PDF. The highlight color (yellow by default) is defined in
+\texttt{config.tex} via \texttt{\textbackslash DefineMarkRole\{changes\}\{\textbackslash ChangesColor\}}.%
+}
+
+\Mark{missing}{TODO: Write the introduction here. %
+Motivate the problem, state the main contribution, and outline the paper structure.}
+
+Here is an example of a \emph{missing} equation placeholder:
+
+\MarkPlaceholderFigure{missing}{%
+  Add a system diagram here showing the high-level architecture.%
+}{fig:system}{System overview.}
+
+Here is an example of a highlighted block equation:
+
+\begin{MarkEnv}{changes}[math]
+    \mathcal{F}(\alpha) =
+    \sum_{k=1}^{K}
+    \alpha \cdot f_k + (1 - \alpha) \cdot g_k
+\end{MarkEnv}
+
+\noindent
+where \Mark{changes}{$\alpha \in [0, 1]$ is a risk parameter} %
+and \Mark{missing}{TODO: define $f_k$ and $g_k$}.
+
+The paper is organized as follows.
+\Cref{sec:background} \Mark{missing}{TODO: describe each section briefly.}
+
+% ============================================================================
+%  Related Work (can be a subsection of Introduction or a standalone section)
+% ============================================================================
+\subsection{Related Work}
+
+\Mark{missing}{TODO: Survey related work here. %
+Cite key papers from the literature knowledge base using \texttt{@find-papers}.}
+
+Prior work on \Mark{changes}{relevant topic}~\cite{example2024} has shown that
+\Mark{missing}{TODO: summarize the key finding and its limitation.}

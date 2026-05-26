@@ -1,0 +1,129 @@
+% ============================================================================
+%  [Your Paper Title Here]
+%  Package & settings configuration
+% ============================================================================
+
+% ---------- Page layout ----------
+\usepackage[a4paper,margin=0.85in]{geometry}
+
+% ---------- Fonts & typography ----------
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{csquotes}
+
+% ---------- Math ----------
+\usepackage{amsmath,amssymb,amsthm,mathtools,bm}
+\usepackage{bbm}
+
+% ---------- Graphics & figures ----------
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{positioning,calc,arrows.meta,decorations.markings}
+\usepackage{float}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{subcaption}
+
+% ---------- Tables ----------
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+
+% ---------- Lists ----------
+\usepackage{enumitem}
+\setlist{nosep, leftmargin=*}
+
+% ---------- Colors & Highlighting ----------
+\usepackage[dvipsnames]{xcolor}
+\definecolor{CustomYellow}{RGB}{204, 153, 0}
+
+% Packages for robust highlighting
+\usepackage{soul}
+\usepackage{environ}
+\usepackage{etoolbox}
+\usepackage{xparse}
+\usepackage[most]{tcolorbox}
+\usepackage{xpatch}
+
+% Avoid hyphenation & footnote breaking issues with soul
+\AtBeginDocument{%
+  \soulregister\cite7
+  \soulregister\ref7
+  \soulregister\cref7
+  \soulregister\eqref7
+}
+
+%% ==== Marking Environments ==== %%
+
+% Load modular marking API.
+\input{../modules/markings/markings.tex}
+
+% Global Highlight Colors
+\newcommand{\ChangesColor}{CustomYellow}
+\newcommand{\MissingColor}{red}
+
+% Default role definitions for project-level semantics.
+\DefineMarkRole{changes}{\ChangesColor}
+\DefineMarkRole{missing}{\MissingColor}
+
+% ---------- Hyperlinks & cross-references ----------
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  citecolor=ForestGreen,
+  urlcolor=blue,
+  breaklinks=true
+}
+\usepackage[nameinlink]{cleveref}
+\crefname{equation}{Eq.}{Eqs.}
+\Crefname{equation}{Eq.}{Eqs.}
+\crefname{figure}{Fig.}{Figs.}
+\Crefname{figure}{Fig.}{Figs.}
+\creflabelformat{equation}{#2#1#3}
+\AtBeginDocument{%
+  \SetMarkDefaultCiteColor{ForestGreen}%
+  \hypersetup{citecolor=ForestGreen,linkcolor=blue,urlcolor=blue}%
+}
+
+% ---------- Bibliography (biblatex + biber) ----------
+\usepackage[
+  backend=biber,
+  style=numeric-comp,
+  maxcitenames=2,
+  maxbibnames=99,
+  giveninits=true,
+  doi=true,
+  isbn=false,
+  url=true,
+  eprint=true,
+  sorting=none,
+  datamodel=../modules/markings/markings
+]{biblatex}
+\addbibresource{references.bib}
+
+% ---------- Algorithms ----------
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+\crefname{algocf}{Algorithm}{Algorithms}
+\Crefname{algocf}{Algorithm}{Algorithms}
+
+% ---------- SI units ----------
+\usepackage{siunitx}
+
+% ---------- Math operators ----------
+\DeclareMathOperator{\Tr}{Tr}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\Span}{span}
+\DeclareMathOperator{\Prob}{Pr}
+\DeclareMathOperator{\E}{\mathbb{E}}
+
+% ---------- Theorem environments ----------
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+
+% ---------- Author block ----------
+\usepackage{authblk}

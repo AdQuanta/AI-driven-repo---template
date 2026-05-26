@@ -1,0 +1,80 @@
+% !TEX root = main.tex
+% ============================================================================
+%  [Your Paper Title Here]
+%  Stand-alone paper — template with Mark API examples
+%
+%  HOW TO USE THIS TEMPLATE:
+%  1. Replace the title, authors, and affiliations below.
+%  2. Edit config.tex to add/remove packages and custom macros.
+%  3. Replace sections/ files with your actual content.
+%  4. Add bibliography entries to references.bib.
+%
+%  Mark API quick reference (defined in publications/modules/markings/):
+%    \Mark{changes}{...}              — highlight an inline change (yellow)
+%    \Mark{missing}{...}              — flag missing content (red)
+%    \Mark{changes}[heading]{...}     — highlight a section heading
+%    \begin{MarkEnv}{changes}[text]   — highlight a block of text
+%    \begin{MarkEnv}{changes}[math]   — highlight a display equation
+%    \MarkPlaceholderFigure{missing}{description}{label}{caption}
+%
+%  To strip all \Mark{changes} wrappers before submission, run:
+%    @approve-changes-markings
+% ============================================================================
+\documentclass[10pt,twocolumn]{article}
+
+% ---------- Packages, macros & settings ----------
+\input{config}
+
+
+% Uncomment to turn all mark-highlights OFF for a clean read:
+% \MarkingOff
+
+
+% ============================================================================
+\title{%
+    \Mark{changes}{[TODO: Your Paper Title]}
+}
+
+\author[1]{First Author}
+\author[1]{Second Author}
+\affil[1]{\small %
+    Your Institution, %
+    Department of Your Field, %
+    City, Country%
+}
+
+\date{\today}
+
+% ============================================================================
+\begin{document}
+\twocolumn[
+\begin{@twocolumnfalse}
+\maketitle
+
+% ---------- Abstract ----------
+\input{sections/abstract}
+\end{@twocolumnfalse}
+]
+\vspace{1em}
+
+% ---------- Body ----------
+\input{sections/01_introduction}
+\input{sections/02_background}
+
+% Add more sections here:
+% \input{sections/03_method}
+% \input{sections/04_results}
+% \input{sections/05_conclusion}
+
+% ---------- Acknowledgements ----------
+\section*{Acknowledgements}
+\Mark{missing}{TODO: Fill acknowledgements — names, funding agency, grant number(s).}
+
+% ---------- Bibliography ----------
+\printbibliography
+
+% ---------- Appendices ----------
+% \appendix
+% \input{sections/appendices}
+
+\end{document}
