@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "skills": {
+    "find-skills": {
+      "source": "vercel-labs/skills",
+      "sourceType": "github",
+      "computedHash": "645b891da1edbae76ab79c7b088d4e73397464f8396edaf773c0e01971ce75d6"
+    },
+    "latex-paper-en": {
+      "source": "bahayonghang/academic-writing-skills",
+      "sourceType": "github",
+      "computedHash": "177fbf89742e892cf1cb692d7162d441bed498f3a022b1c9c29750bfa5de6813"
+    },
+    "literature-review": {
+      "source": "davila7/claude-code-templates",
+      "sourceType": "github",
+      "computedHash": "854f60b6f2b2b72183f1a384961dca03123e013955837858a2a3607b223d64b6"
+    },
+    "math": {
+      "source": "parcadei/continuous-claude-v3",
+      "sourceType": "github",
+      "computedHash": "98780331887ff182587556774005b21b52a6f79c72ac1e4da60196c945b4a4cf"
+    },
+    "networkx": {
+      "source": "davila7/claude-code-templates",
+      "sourceType": "github",
+      "computedHash": "adfe8bdea5b8ad684d32a84558a66a026f8585299bdfb20d6abe4165dd4ded59"
+    },
+    "scientific-visualization": {
+      "source": "davila7/claude-code-templates",
+      "sourceType": "github",
+      "computedHash": "764e9b5031a195d2cc9fd4207f58ca755e0ccc8917e270ab2eb84c086af1773f"
+    },
+    "subagent-driven-development": {
+      "source": "obra/superpowers",
+      "sourceType": "github",
+      "computedHash": "a197f8e5fba5ea59013e1adbaa90dd42db35de8f074feca200c8038de584a83b"
+    },
+    "writing-plans": {
+      "source": "obra/superpowers",
+      "sourceType": "github",
+      "computedHash": "bfaed11054ad8021c66860244e2d2e0d1eca483ae9f5fbfcb956e99c61f5c3d7"
+    },
+    "writing-skills": {
+      "source": "obra/superpowers",
+      "sourceType": "github",
+      "computedHash": "b0e3065034610df41b9119445b5fd052042752bb3e598ca66aea2403a7c7685e"
+    }
+  }
+}

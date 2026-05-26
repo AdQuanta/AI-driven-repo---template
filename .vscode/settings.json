@@ -1,0 +1,170 @@
+{
+    "python.analysis.extraPaths": [
+        "${workspaceFolder}/code",
+        "${workspaceFolder}/code/src"
+    ],
+    "python.autoComplete.extraPaths": [
+        "${workspaceFolder}/code",
+        "${workspaceFolder}/code/src"
+    ],
+    "vsicons.associations.folders": [
+        {
+            "icon": "src",
+            "extensions": ["code"],
+            "format": "svg"
+        },
+        {
+            "icon": "notebooks",
+            "extensions": ["research"],
+            "format": "svg"
+        },
+        {
+            "icon": "docs",
+            "extensions": ["publications"],
+            "format": "svg"
+        }
+    ],
+    // LaTeX Workshop Configuration
+    "latex-workshop.latex.recipes": [
+        {
+            "name": "pdfLaTeX (quick)",
+            "tools": ["pdflatex"]
+        },
+        {
+            "name": "pdfLaTeX -> Biber -> pdfLaTeX x2 (full)",
+            "tools": ["pdflatex", "biber", "pdflatex", "pdflatex"]
+        }
+    ],
+    "latex-workshop.latex.tools": [
+        {
+            "name": "pdflatex",
+            "command": "pdflatex",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "--aux-directory=.latex_build",
+                "%DOC%"
+            ],
+            "env": {}
+        },
+        {
+            "name": "biber",
+            "command": "biber",
+            "args": [
+                "--input-directory=.latex_build",
+                "--output-directory=.latex_build",
+                "%DOCFILE%"
+            ],
+            "env": {}
+        }
+    ],
+    "latex-workshop.latex.autoBuild.run": "onSave",
+    "latex-workshop.latex.recipe.default": "first",
+    "latex-workshop.latex.outDir": ".",
+    "latex-workshop.view.pdf.viewer": "tab",
+    "latex-workshop.view.pdf.internal.synctex.keybinding": "double-click",
+    "latex-workshop.latex.clean.subfolder.enabled": true,
+    "latex-workshop.latex.clean.method": "glob",
+    "latex-workshop.latex.autoClean.run": "never",
+    "chat.tools.terminal.autoApprove": {
+        // ----- Common PowerShell cmdlets (safe) -----
+        "ForEach-Object": true,
+        "Rename-Item": true,
+        "Set-Content": true,
+        "Push-Location": true,
+        "Pop-Location": true,
+        "Copy-Item": true,
+        "Move-Item": true,
+        "New-Item": true,
+        "Remove-Item": true,
+        "Test-Path": true,
+        "Write-Output": true,
+        "Get-Content": true,
+        "Get-Process": true,
+        "Stop-Process": true,
+        "Select-Object": true,
+        "Group-Object": true,
+        "Out-Null": true,
+        "ErrorAction": true,
+        "SilentlyContinue": true,
+        "Force": true,
+        "Get-Command": true,
+        "mkdir": true,
+        "mv": true,
+        "&": true,
+        // ----- LaTeX -----
+        "pdflatex": true,
+        "nonstopmode": true,
+        ".latex_build": true,
+        "LASTEXITCODE": true,
+        // ----- Python / venv -----
+        ".venv\\Scripts\\python.exe": true,
+        ".venv\\Scripts\\pip.exe": true,
+        ".venv\\Scripts\\Activate.ps1": true,
+        "..\\.venv\\Scripts\\python.exe": true,
+        "..\\..\\venv\\Scripts\\python.exe": true,
+        "pip": true,
+        "-m pytest": true,
+        "code\\scripts\\": true,
+        "code\\scripts\\figures\\": true,
+        "code\\scripts\\data\\": true,
+        "npx skills": true,
+        // ----- pytest (exact command) -----
+        "/^Push-Location code; python -m pytest; Pop-Location$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        // ----- PDF verification -----
+        "/^python -c \"import os; f=r'.*'; print\\(os\\.path\\.getsize\\(f\\), open\\(f,'rb'\\)\\.read\\(5\\)\\)\"$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        // ----- Academic paper downloads (urllib, trusted domains) -----
+        "/^python -c \"import urllib\\.request; urllib\\.request\\.urlretrieve\\('https://arxiv\\.org/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^python -c \"import urllib\\.request; urllib\\.request\\.urlretrieve\\('https://doi\\.org/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^python -c \"import urllib\\.request; urllib\\.request\\.urlretrieve\\('https://nature\\.com/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^python -c \"import urllib\\.request; urllib\\.request\\.urlretrieve\\('https://link\\.springer\\.com/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^python -c \"import urllib\\.request; urllib\\.request\\.urlretrieve\\('https://ieeexplore\\.ieee\\.org/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^python -c \"import urllib\\.request; urllib\\.request\\.urlretrieve\\('https://dl\\.acm\\.org/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^python -c \"import urllib\\.request; urllib\\.request\\.urlretrieve\\('https://link\\.aps\\.org/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^python -c \"import urllib\\.request; urllib\\.request\\.urlretrieve\\('https://quantum-journal\\.org/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^python -c \"import urllib\\.request; urllib\\.request\\.urlretrieve\\('https://semanticscholar\\.org/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^python -c \"import urllib\\.request; urllib\\.request\\.urlretrieve\\('https://opg\\.optica\\.org/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        // ----- Mark API approval script -----
+        "Strip-MarkEnvChanges": true,
+        "Strip-MarkChangesMacro": true,
+        "git check-ignore": true,
+        "pdftoppm": true
+    }
+}
