@@ -1,0 +1,30 @@
+# Root dependency manifest for this repository's shared project structure.
+#
+# Scope: packages required by the executable scripts that ship inside the
+# canonical AI customization assets (`.agents/skills/**`). Without these, those
+# scripts fail at import time with an unhelpful "No module named ..." error and
+# nothing in the repository explains what to install.
+#
+# This file does NOT cover the science code under `code/`, which carries its own
+# scoped manifest (`code/requirements.txt`). Install both into the same venv.
+#
+# Install into the repository-root virtual environment:
+#
+#     python -m venv .venv
+#     .venv/Scripts/python.exe -m pip install -r requirements.txt -r code/requirements.txt   # Windows
+#     .venv/bin/python -m pip install -r requirements.txt -r code/requirements.txt           # macOS/Linux
+#
+# When a skill, agent, or app that is part of the shared project structure grows
+# a new third-party dependency, add it here in the same change. See
+# `.agents/skills/skill-maintenance/SKILL.md`.
+
+# --- math skill: .agents/skills/math/scripts/cc_math/ ---
+# Each entry below backs a specific script; removing one breaks that script.
+sympy>=1.14        # sympy_compute.py, sympy_baseline_validation.py
+mpmath>=1.3        # mpmath_compute.py (also a sympy dependency)
+numpy>=2.0         # numpy_compute.py
+scipy>=1.17        # scipy_compute.py
+z3-solver>=4.12    # z3_solve.py  (imported as `z3`)
+pint>=0.24         # pint_compute.py
+shapely>=2.0       # shapely_compute.py
+matplotlib>=3.10   # math_plot.py

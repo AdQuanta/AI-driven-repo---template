@@ -100,8 +100,14 @@ celerybeat.pid
 /artifacts/
 _agents_outputs/_agents_dump/
 
+# Claude Code skill discovery link (recreate with .claude/setup-discovery.ps1):
+/.claude/skills/
+
+# Local credentials (never commit):
+secrets/
+
 # LaTeX build files:
 **/.latex_build/
-publications/paper/main.pdf
+publications/**/main.pdf
 *.synctex.gz
 *.synctex(busy)

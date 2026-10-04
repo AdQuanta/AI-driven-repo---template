@@ -7,14 +7,14 @@ Outputs one line per marker in the format:
 Kinds:
   Mark-inline   -- \\Mark{changes}{...}  or  \\Mark{changes}[kind]{...}
   MarkEnv-text  -- \\begin{MarkEnv}{changes}[text]
-  MarkEnv-math  -- \\begin{MarkEnv}{changes}[math]   <- needs equation wrap on removal
+  MarkEnv-math  -- \\begin{MarkEnv}{changes}[math]   ← needs equation wrap on removal
   MarkEnv-fig   -- \\begin{MarkEnv}{changes}[figure]
   markroles-bib -- markroles = {changes, ...}  in a .bib entry
 
 Usage:
-    python .github/prompts/scripts/find_changes_markers.py [project_root]
+    python .github/prompts/scripts/find_changes_markers.py <project_root>
 
-    project_root defaults to  publications/paper
+    project_root is required, e.g.  publications/paper---example
 """
 from __future__ import annotations
 
@@ -69,7 +69,11 @@ def scan_bib(path: Path) -> list[tuple[int, str, str]]:
 
 
 def main(argv: list[str]) -> int:
-    root = Path(argv[1]) if len(argv) > 1 else Path("publications/paper")
+    if len(argv) < 2:
+        print("Usage: find_changes_markers.py <project_root>", file=sys.stderr)
+        print("Example: find_changes_markers.py publications/paper---example", file=sys.stderr)
+        return 1
+    root = Path(argv[1])
     if not root.exists():
         print(f"ERROR: project root '{root}' does not exist.", file=sys.stderr)
         return 1
