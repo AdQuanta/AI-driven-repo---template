@@ -15,7 +15,7 @@ Assume they are a skilled developer, but know almost nothing about our toolset o
 
 **Announce at start:** "I'm using the writing-plans skill to create the implementation plan."
 
-**Context:** Work in the user's current worktree unless the user asked for a separate worktree (see `docs/agent-guidance/git-policy.md`). Never stage, commit, or push unless the user explicitly asks.
+**Context:** Work in the user's current worktree unless the user asked for a separate worktree (see `docs/agent-guidance/git-policy.md`).
 
 **Save plans to:** `_agents_outputs/plans/YYYY-MM-DD-<feature-name>.md`
 - (User preferences for plan location override this default)
@@ -51,7 +51,7 @@ This structure informs the task decomposition. Each task should produce self-con
 ```markdown
 # [Feature Name] Implementation Plan
 
-> **For agentic workers:** Execute this plan task-by-task, in order, verifying each step's expected output before moving on. Steps use checkbox (`- [ ]`) syntax for tracking. Do not stage or commit unless the user explicitly asks.
+> **For agentic workers:** Execute this plan task-by-task, in order, verifying each step's expected output before moving on. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** [One sentence describing what this builds]
 
@@ -99,8 +99,8 @@ Expected: PASS
 
 - [ ] **Step 5: Checkpoint**
 
-List the files changed in this task for the user to review. Commit only if the
-user has explicitly asked for commits, e.g.:
+List the files changed in this task for review. If your Git workflow commits
+per task, commit here, e.g.:
 
 ```bash
 git add tests/path/test.py src/path/file.py
@@ -150,4 +150,4 @@ After saving the plan, offer execution choice:
 
 **If Inline Execution chosen:**
 - Work through the tasks in order, ticking each step only when its expected output is observed
-- Stop and report at every checkpoint; never commit unless asked
+- Stop and report at every checkpoint

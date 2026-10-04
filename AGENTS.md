@@ -47,8 +47,7 @@ literature, and synthesize both. If a needed paper is not in the knowledge base,
 invoke `ingest-paper`. Save new derivations under `research/derivations/` using
 the research-sector structure and citation rules.
 
-## Git Operation Ownership
-- Do not stage, commit, or push unless the user explicitly asks.
+## Git Safety
 - Never use destructive Git commands that discard the user's active working-tree
   state.
 - Agent-created worktrees may be managed by the agent for the task, but must not

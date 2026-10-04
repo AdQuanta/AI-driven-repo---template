@@ -20,9 +20,8 @@ Agents must follow these rules:
 3. Do not start a second LaTeX build while another build is active.
 4. After changing publication LaTeX, run the full build. Compilation errors
    leave the task incomplete.
-5. Do not modify VS Code user settings or user keybindings unless the user
-   explicitly requests it. Merge entries into the existing JSON; never replace
-   the whole user file.
+5. When changing VS Code user settings or user keybindings, merge entries into
+   the existing JSON; never replace the whole user file.
 
 ## Source of Truth
 

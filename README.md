@@ -137,8 +137,11 @@ It strips all `changes` wrappers (keeping the content) and rebuilds the paper.
 - **Mark API roles/colors:** `\DefineMarkRole` calls in your paper's `config.tex`.
 - **Skills:** follow [`.agents/skills/skill-maintenance/SKILL.md`](.agents/skills/skill-maintenance/SKILL.md) and update the [registry](.agents/skills/docs/registry.md). Edit skills only under `.agents/skills/`.
 - **Instructions:** edit `AGENTS.md` or the sector `AGENTS.md` files directly. Never edit `CLAUDE.md` beyond its `@AGENTS.md` import.
+- **Personal preferences** (for example, whether agents may commit, or your
+  preferred Python coding style) are deliberately absent. Keep them in your own
+  user-level agent configuration, not in the project instructions.
 
-## Git ownership
+## Git safety
 
-Agents do not stage, commit, or push unless you explicitly ask. See
+Agents never run Git commands that discard uncommitted work. See
 [`docs/agent-guidance/git-policy.md`](docs/agent-guidance/git-policy.md).

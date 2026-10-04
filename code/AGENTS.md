@@ -10,7 +10,6 @@ For code tasks, prioritize Python simulation correctness and reproducibility.
 - For generated script results, use `artifacts/` (repo root) as the canonical root (figures in `artifacts/figures/`, data in `artifacts/data/`).
 - Prefer centralized path inference via `code/src/code_paths.py` over per-script relative path finding.
 - Shared cross-domain Python helpers belong in `code/src/utils/` (create it on first need); check and reuse these utilities before introducing new helpers in domain-specific modules.
-- For scripts in `code/scripts/**`, prefer pure Python entrypoints that run directly in file-run/debug sessions; avoid adding CLI/`argparse` layers unless the user explicitly asks for CLI support.
 - Sector-specific Python dependencies are declared in `code/requirements.txt`; the root `requirements.txt` is reserved for packages used by shared skills and agents.
 
 
@@ -21,76 +20,12 @@ For code tasks, prioritize Python simulation correctness and reproducibility.
 - Tune figure text sizes against the manuscript they will appear in, so figures match the paper's visual scale.
 
 
-## Code writing style:
-
-
-### Python Module Calling Conventions
-- **Never use `subprocess.run([sys.executable, "script.py"])` to call a Python script** that has an importable `main()`. Import and call it directly.
-- **Never mutate `sys.argv`** to pass arguments to another module's `main()`. Refactor that `main()` to accept explicit keyword arguments with defaults instead.
-- **Separate argparse from logic**: keep `argparse` in a `_parse_args()` helper called only from `if __name__ == "__main__"`, so `main()` is callable programmatically with keyword args.
-- **`sys.path` manipulation and module-level imports belong at module level** (before any `def`), not lazily inside function bodies.
-- When refactoring away a `subprocess` call to a direct import, remove the `import subprocess` line. When keeping subprocess usage, ensure it is imported.
-
-**Canonical dual-callable pattern** — every module that can be run as a script should be callable both from the terminal and from Python code without any argument plumbing:
-
-```python
-# ── module-level imports (never inside def) ─────────────────────────────────
-import argparse
-
-# ── pure logic ───────────────────────────────────────────────────────────────
-def main(*, n_steps: int = 4, weight: float = 0.5) -> None:
-    """Run the simulation. All parameters are keyword-only with defaults,
-    so callers never need to remember positional order and imports just work."""
-    ...  # actual logic here
-
-# ── CLI shim (only reached via `python script.py`) ───────────────────────────
-def _parse_args() -> dict:
-    p = argparse.ArgumentParser()
-    p.add_argument("--n-steps", type=int, default=4)
-    p.add_argument("--weight", type=float, default=0.5)
-    ns = p.parse_args()
-    return {"n_steps": ns.n_steps, "weight": ns.weight}
-
-if __name__ == "__main__":
-    main(**_parse_args())
-```
-
-Callers (other scripts, tests, notebooks) just do:
-```python
-from code.scripts.figures.my_script import main
-main(n_steps=6, weight=0.3)   # no CLI, no subprocess, no sys.argv mutation
-```
-
-> **Exception for `code/scripts/**`:** pure exploration scripts that are never imported do not need `_parse_args()`. Keep `if __name__ == "__main__": main()` and put defaults directly in `main()`'s signature.
-
-### Prefer Enums and Literals
-Prefer expressive control-state types (`Enum` or `Literal`) over ambiguous `bool` flags when code flow depends on named states (for example, movement direction).
-
-### Split Long Functions into Smaller Ones
-When independent parts of a logic block can be extracted, split them into small, named sub-functions instead of keeping one long function.
-
-### Type-hinting:
-Use type hints for all functions, including return types. This improves readability and linting and helps catch bugs.
-
-- Avoid using `Any` as a type hint. Instead, use more specific types or create custom types if necessary.
-- If many outputs are needed from a function, consider using a `TypedDict` or a `dataclass` to return a structured object instead of an ambiguous unnamed tuple\dict.
-
-
 ## Testing Guidelines
 
-Changes to the codebase must be accompanied by appropriate tests to ensure correctness and prevent regressions. All prior tests must pass after changes are made, and new tests should be added to cover new functionality or edge cases introduced by the changes.
+All existing tests must pass after changes.
 
-- Test scope: write tests for `code/src/**` logic and internal APIs (math, physics, algorithms, OOP behavior).
+- Test scope: write tests for `code/src/**` logic and internal APIs.
 - Test organization: use `code/tests/` with one wrapper file per domain/module (for example, `test_find_papers_gather.py`).
-- Script-level tests are not allowed. Period. Do not add tests for `code/scripts/**`.
-
-### Test Selection Checklist (use before writing tests)
-- Test it if it is core logic: equations, physics/math invariants, algorithmic decisions, reusable OOP behavior, or regression-prone domain logic in `code/src/**`.
-- Do not test `code/scripts/**` glue: CLI argument plumbing, wrapper entrypoints, path bootstrapping, or artifact printouts.
-- If logic in a script is important, move it to `code/src/**` and test the extracted module logic there.
-
-
-- Mandatory tests: all simulations must be verified with automated tests, including small or simple features.
 - Directory structure: place tests in `code/tests/` and create tests as needed during development.
 - Canonical test command: use `python -m pytest` from the `code/` folder, with the root `.venv` interpreter (`..\.venv\Scripts\python.exe` on Windows, `../.venv/bin/python` elsewhere) rather than a bare `python` that may not be on `PATH`.
 - Wrapper pattern: keep domain wrappers in `code/tests/test_*.py` so future domains can add one wrapper file.

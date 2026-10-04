@@ -3,10 +3,8 @@
 This document holds the detailed Git workflow policy. Root instructions keep
 only the safety contract.
 
-## Ownership Boundary
+## Working-Tree Safety
 
-- The user owns staging, committing, and pushing unless they explicitly ask an
-  agent to do one of those operations.
 - The user's active working tree may contain irreplaceable uncommitted work.
   Treat any existing modification as user-owned unless there is clear evidence
   it was created by the current agent task.

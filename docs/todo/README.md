@@ -25,10 +25,6 @@ needed.
   [research](../../research/AGENTS.md),
   [code](../../code/AGENTS.md), or
   [publications](../../publications/AGENTS.md).
-- Do not mark checklist items complete unless the user explicitly asks to
-  update their state.
-- After related work, report which items appear resolved and let the user
-  decide whether to mark them complete.
 - Use repository-relative Markdown links so references remain navigable.
 - Use proper LaTeX delimiters for math: `$...$` inline and `$$...$$` for display
   math.
@@ -41,8 +37,6 @@ needed.
   Set a terminal status (`Done` or `Superseded`), add a short note that links
   to the work, decision, or evidence that closed it, and update relative links
   to and from the moved file.
-- Only the user may declare a TODO or checklist item closed. An agent may
-  report that work appears resolved and propose the corresponding status.
 - A file with outstanding work remains non-terminal (`Open`, `In progress`, or
   `Blocked`); record resolved sections in place rather than using a partial
   terminal status.
