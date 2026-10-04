@@ -1,0 +1,3 @@
+# Dependencies of the science code under `code/` (src, scripts, tests).
+# Shared skill dependencies live in the root `requirements.txt`.
+pytest>=8.0

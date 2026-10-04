@@ -1,0 +1,19 @@
+\section{Introduction}
+
+Quantum networks aim to distribute entanglement between distant nodes, unlocking
+applications that range from provably secure key exchange to distributed sensing and
+modular quantum computation~\cite{wehner2018quantum}. Because photon loss grows
+exponentially with fibre length, entanglement cannot be sent directly over continental
+distances; instead, short entangled links are joined at intermediate nodes through
+\emph{entanglement swapping}, whereby a Bell-state measurement projects two independently
+generated pairs onto a single longer-range entangled state~\cite{zukowski1993eventready}.
+This stitching is not free: the secret-key rate achievable across a lossy link decays at
+best linearly in the channel transmissivity, an information-theoretic ceiling that no
+repeaterless protocol can surpass~\cite{wootters1998entanglement}.
+
+Multi-hop routing over these quantum networks requires link-layer coordination and
+path-selection algorithms that account for both decoherence and probabilistic
+swap outcomes~\cite{pant2019routing,dahlberg2019linklayer}. Recent work has shown that
+the order in which swaps are performed along a path significantly impacts the end-to-end
+fidelity and success probability, making swap scheduling a first-class routing
+consideration~\cite{bennett1993teleporting}.

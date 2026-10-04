@@ -11,7 +11,7 @@ The agent must infer approval span from context and execute directly, without co
 ## Input
 
 Expected input from the user message and editor context:
-- `project_root`: path to the LaTeX project root (for example `publications/paper`)
+- `project_root`: path to the LaTeX project root (for example `publications/paper---example`)
 - Optional `main_tex`: root TeX file (default `main.tex`)
 - Optional `scope_glob`: files to process (default `**/*.tex` and `**/*.bib` under `project_root`)
 - Optional cited range/selection from active editor context
@@ -60,7 +60,7 @@ Fallback:
 
 ## Marking Patterns To Clean
 
-The project uses the marking API in `modules/markings.tex`.
+The project uses the marking API in `publications/modules/markings/markings.tex`.
 
 ### TeX wrappers
 
@@ -70,7 +70,7 @@ The project uses the marking API in `modules/markings.tex`.
 - `\\Mark{changes}[heading]{...}` -> `...`
 - `\\Mark{changes}[math]{...}` -> `...`
 
-2. Block environment — **kind-dependent replacement**:
+2. Block environment — **kind-dependent replacement** (see `publications/modules/markings/markings.tex` for the disabled fallback):
 - `\\begin{MarkEnv}{changes}[text] ... \\end{MarkEnv}` → inner content only
 - `\\begin{MarkEnv}{changes}[math] ... \\end{MarkEnv}` → **`\\begin{equation}\n...\n\\end{equation}`**
   (the `[math]` wrapper IS the math mode; stripping without wrapping breaks the build)
@@ -90,6 +90,7 @@ For citation-scope approval:
 - Parse cited keys in target TeX scope from standard citation commands (`\\cite`, `\\parencite`, `\\textcite`, etc.).
 - Locate those keys in bibliography file(s) used by the project.
 - Clean `changes` token in `markroles` for those entries only.
+- Do not modify other entry metadata.
 
 ## Procedure
 
@@ -111,7 +112,7 @@ For citation-scope approval:
 Run the [finder script](./scripts/find_changes_markers.py) to get a precise, line-numbered inventory:
 
 ```powershell
-.venv\Scripts\python.exe .github/prompts/scripts/find_changes_markers.py publications/paper
+.venv\Scripts\python.exe .github/prompts/scripts/find_changes_markers.py <path/to/paper>
 ```
 
 Output format per match:
@@ -131,7 +132,8 @@ Kinds and what each removal requires:
 ### Step 2 — Edit files directly with agent tools
 
 For each hit from the finder, use `read_file` to read the exact surrounding
-lines, then use `replace_string_in_file` to make the precise substitution.
+lines, then use `replace_string_in_file` (or `multi_replace_string_in_file`
+for multiple changes in the same file) to make the precise substitution.
 
 Do **not** write a bulk-transform script. The agent's built-in file-editing
 tools are more reliable and produce easier-to-review diffs.
@@ -143,15 +145,17 @@ Key rules for making edits:
 - For `Mark-inline` spanning multiple lines, capture the full brace-balanced
   group by reading ahead with `read_file`.
 
-### Step 3 — Validate
+### Step 3 — Validate with grep_search
+
+`rg` is not available on Windows in this environment. Use `grep_search` instead.
 
 After all edits, re-run the finder script and confirm exit 0 (zero markers):
 
 ```powershell
-.venv\Scripts\python.exe .github/prompts/scripts/find_changes_markers.py publications/paper
+.venv\Scripts\python.exe .github/prompts/scripts/find_changes_markers.py <path/to/paper>
 ```
 
-Then run the project full build task to confirm no LaTeX errors were introduced.
+Then run the full LaTeX build sequence from `docs/agent-guidance/vscode-latex-environment.md` to confirm no LaTeX errors were introduced.
 
 ## Output Contract
 
@@ -161,3 +165,5 @@ Return:
 - count of removed `changes` wrappers/fields
 - build result (pass/fail)
 - any ambiguous cases requiring manual review
+
+If ambiguous macro structure is encountered, apply the safest local edit and continue; include the snippet in the final report.

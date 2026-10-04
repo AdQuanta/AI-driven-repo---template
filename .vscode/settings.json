@@ -1,4 +1,7 @@
 {
+    "chat.useNestedAgentsMdFiles": true,
+    "chat.useClaudeMdFile": false,
+    "github.copilot.chat.codeGeneration.useInstructionFiles": false,
     "python.analysis.extraPaths": [
         "${workspaceFolder}/code",
         "${workspaceFolder}/code/src"
@@ -59,8 +62,8 @@
             "env": {}
         }
     ],
-    "latex-workshop.latex.autoBuild.run": "onSave",
-    "latex-workshop.latex.recipe.default": "first",
+    "latex-workshop.latex.autoBuild.run": "never",
+    "latex-workshop.latex.recipe.default": "pdfLaTeX -> Biber -> pdfLaTeX x2 (full)",
     "latex-workshop.latex.outDir": ".",
     "latex-workshop.view.pdf.viewer": "tab",
     "latex-workshop.view.pdf.internal.synctex.keybinding": "double-click",
@@ -109,9 +112,12 @@
         "code\\scripts\\": true,
         "code\\scripts\\figures\\": true,
         "code\\scripts\\data\\": true,
-        "npx skills": true,
         // ----- pytest (exact command) -----
         "/^Push-Location code; python -m pytest; Pop-Location$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^Push-Location code; \\.\\.\\\\\\.venv\\\\Scripts\\\\python\\.exe -m pytest( -q)?; Pop-Location$/": {
             "approve": true,
             "matchCommandLine": true
         },
