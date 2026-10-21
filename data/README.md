@@ -16,7 +16,7 @@ folder.
    manifest that records what produced it, when, on which backend or machine,
    and what it cost.
 2. Add a row for it to the index below in the same change.
-3. Tell the user that it is not yet committed.
+3. Make sure it is committed promptly, following the project's Git workflow.
 
 ## Datasets
 

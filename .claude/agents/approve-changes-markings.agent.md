@@ -138,6 +138,8 @@ For citation-scope approval:
 - no remaining `\\MarkEdit{edits}`
 - no remaining `\\begin{MarkEnv}{changes}`
 - no remaining in-scope `markroles` entries containing `changes` that should have been approved
+- except the rule violations you left unchanged: each remaining hit must be
+  listed under "Rule violations"
 6. Run full LaTeX build for the target project.
 7. Report the result.
 
@@ -194,7 +196,9 @@ Key rules for making edits:
 Prefer `rg` for supplemental searches when it is available; otherwise use the
 environment's text-search tool.
 
-After all edits, re-run the finder script and confirm exit 0 (zero markers):
+After all edits, re-run the finder script. It must exit 0 (zero markers), or
+exit 2 with every remaining hit listed under "Rule violations" (the finder
+still reports the nested markers and multi-role fields you left unchanged):
 
 ```text
 python publications/modules/markings/scripts/find_changes_markers.py <path/to/paper>

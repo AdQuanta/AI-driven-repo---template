@@ -42,9 +42,10 @@ undone.
 1. **Write it under `data/` from the start.** Do not write it to
    `artifacts/` and move it later. Code gets the folder from
    `code_paths.data`.
-2. **Get it into Git promptly.** As soon as tracked data exists and is not
-   committed, tell the user so in plain words, so it can be committed before
-   anything else touches it.
+2. **Get it into Git promptly.** As soon as tracked data exists, make sure it
+   is committed, following the project's Git workflow, before anything else
+   touches it. If you cannot commit it yourself, say plainly that it is not
+   yet committed.
 3. **Never delete, overwrite, or regenerate it.** A new run gets a new run
    ID and a new directory. A pending record may be completed. A completed
    result is never rewritten.

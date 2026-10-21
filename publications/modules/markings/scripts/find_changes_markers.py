@@ -15,7 +15,7 @@ Kinds:
 Usage:
     python publications/modules/markings/scripts/find_changes_markers.py <project_root>
 
-    project_root is required, e.g.  publications/paper
+    project_root is required, e.g.  publications/<paper-dir>
 """
 from __future__ import annotations
 
@@ -74,7 +74,7 @@ def scan_bib(path: Path) -> list[tuple[int, str, str]]:
 def main(argv: list[str]) -> int:
     if len(argv) < 2:
         print("Usage: find_changes_markers.py <project_root>", file=sys.stderr)
-        print("Example: find_changes_markers.py publications/paper", file=sys.stderr)
+        print("Example: find_changes_markers.py publications/<paper-dir>", file=sys.stderr)
         return 1
     root = Path(argv[1])
     if not root.exists():

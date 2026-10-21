@@ -213,19 +213,19 @@ tags: [sensor_networks, adaptive_sampling, field_measurements]
 Write the file with Python instead. This is the only sanctioned method:
 
 1. Write the summary body to a scratchpad file named **`<citation_key>-body.md`**. The name must contain the citation key. Do not use a generic name such as `paper-body.md` or `summary_payload.txt` — the scratchpad is shared, concurrent ingest runs collide on generic names, and a collision silently copies another paper's summary into your destination.
-2. Copy it into the destination with an explicit encoding, using the **`Bash` tool** (PowerShell strips the inner double quotes from this command) and the **absolute** path to the repository virtual environment — the working directory is not guaranteed between calls, so `.venv\Scripts\python.exe` alone will not resolve:
+2. Copy it into the destination with an explicit encoding, using the **`Bash` tool** (PowerShell strips the inner double quotes from this command) and the **absolute** path to the repository virtual environment — the working directory is not guaranteed between calls, so a relative interpreter path alone will not resolve. The interpreter is `<workspace-root>/.venv/Scripts/python.exe` on Windows and `<workspace-root>/.venv/bin/python` on Linux and macOS; the command below shows the Windows form:
 
 ```
 <workspace-root>/.venv/Scripts/python.exe -c "import pathlib,sys; src=pathlib.Path(sys.argv[1]); dst=pathlib.Path(sys.argv[2]); dst.parent.mkdir(parents=True, exist_ok=True); open(dst,'w',encoding='utf-8',newline='\r\n').write(src.read_text(encoding='utf-8-sig'))" <scratchpad>/<citation_key>-body.md <destination>/summary.md
 ```
 
-`encoding='utf-8-sig'` on read strips any BOM the scratchpad file picked up; `encoding='utf-8'` with `newline='\r\n'` on write matches the existing summaries in the knowledge base. Use the `open(...)` form shown, not `Path.write_text(..., newline=...)`, which requires Python 3.10+.
+`encoding='utf-8-sig'` on read strips any BOM the scratchpad file picked up; `encoding='utf-8'` with `newline='\r\n'` on write gives every summary the same working-tree line endings on every platform; Git stores them with LF either way (`* text=auto`).
 
 3. Delete the scratchpad file, then verify the destination. **Read the written file back from disk** and confirm all of:
    - the file exists and its size is greater than zero;
    - its first byte is `-` (the YAML frontmatter delimiter, i.e. no BOM);
    - line endings are CRLF;
    - **its `citation_key` frontmatter field matches the paper you are ingesting** — a copy of the wrong body file passes every other check on this list, so this is the check that catches it;
-   - all five required sections are present.
+   - all four required sections are present (Abstract, Key Takeaways, Relevance to the project, BibTeX).
 
 If step 2 fails, report the exact error and status `blocked`. Do not fall back to `Write`, and do not fall back to shell heredocs — heredoc quoting is unreliable for this content because summaries contain backticks, `$` math, and quotes.

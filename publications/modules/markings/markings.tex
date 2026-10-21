@@ -673,8 +673,8 @@
 % LaTeX2e mirror of \g_marking_fallback_color_tl; kept in sync by
 % \marking_set_fallback_color:n (via \xdef). Used by biblatex citation hooks.
 \newcommand{\marking@fallbackcolor}{red}
-% markroles data model registration lives in marking.dbx (loaded via
-% biblatex's datamodel= package option). See publications/paper/marking.dbx.
+% markroles data model registration lives in markings.dbx (loaded via
+% biblatex's datamodel= package option). See publications/modules/markings/markings.dbx.
 
 % \SetMarkDefaultCiteColor{<color>}
 % Optional public override for the reset citecolor used in \AtEveryCitekey.
@@ -688,7 +688,7 @@
     %
     % ---- Helper: resolve markroles field and set \marking@entryrolecolor ----
     % Sets \marking@entryrolecolor to the resolved color, or \@empty if none.
-    % markroles is declared as a scalar literal field (marking.dbx), accessed
+    % markroles is declared as a scalar literal field (markings.dbx), accessed
     % via \thefield.  The role-to-color lookup uses a CS-name mirror defined
     % by \DefineMarkRole:  \csname marking_rolecolor_<role>\endcsname.
     % The role-to-state lookup uses \csname marking_rolestate_<role>\endcsname.

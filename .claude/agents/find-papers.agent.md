@@ -52,7 +52,7 @@ Follow these steps in order.
 Run the gather script from the repository root using the project virtual environment:
 
 ```
-.venv\Scripts\python.exe research/references/src/gather_summaries.py
+.venv/Scripts/python.exe research/references/src/gather_summaries.py
 ```
 
 On macOS or Linux the interpreter is `.venv/bin/python`.
