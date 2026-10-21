@@ -4,23 +4,102 @@ on:
   push:
     branches: [main]
   pull_request:
-    branches: [main]
 
 permissions:
   contents: read
 
 jobs:
-  pytest:
+  code-tests:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: code
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
       - name: Install code-sector dependencies
-        run: python -m pip install -r requirements.txt
-      - name: Run pytest
-        run: python -m pytest
+        run: python -m pip install -r code/requirements.txt
+      # Run from inside code/: its pytest.ini sets pythonpath = src.
+      - name: Run code tests
+        working-directory: code
+        run: python -m pytest -q
+
+  kb-and-markings-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install pytest
+        run: python -m pip install pytest
+      - name: Run knowledge-base tooling tests
+        run: python -m pytest research/references/src -q
+      - name: Run markings script tests
+        run: python -m pytest publications/modules/markings/scripts -q
+      # The shipped literature tag index is empty and must pass its own check.
+      - name: Check literature tag index
+        run: python research/references/src/generate_literature_tag_index.py --check
+
+  discovery-setup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run setup-discovery twice and verify the link
+        shell: bash
+        run: |
+          set -euo pipefail
+          # First run creates the link; second run reports it already configured.
+          sh .claude/setup-discovery.sh
+          sh .claude/setup-discovery.sh
+          [ -L .claude/skills ]
+          test -f .claude/skills/brainstorming/SKILL.md
+          git check-ignore -q .claude/skills
+          # The link must not show up as an untracked change.
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "git status is not clean after setup-discovery:"
+            git status --porcelain
+            exit 1
+          fi
+
+  paper-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # texlive-plain-generic provides soul (markings module) and tracklang
+      # (pdfcomment); latex-extra only recommends it, so name it explicitly.
+      - name: Install TeX Live and biber
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            texlive-latex-recommended texlive-fonts-recommended \
+            texlive-latex-extra texlive-plain-generic texlive-pictures \
+            texlive-bibtex-extra texlive-science biber
+      # Canonical recipe: pdflatex -> biber -> pdflatex -> pdflatex, with
+      # intermediates in .latex_build/. Run from the paper directory because
+      # config.tex uses ../modules/markings/... relative paths.
+      - name: Build the example paper
+        working-directory: publications/paper---example
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .latex_build
+          pdflatex -interaction=nonstopmode -halt-on-error -file-line-error -output-directory=.latex_build main.tex
+          biber --input-directory=.latex_build --output-directory=.latex_build main
+          pdflatex -interaction=nonstopmode -halt-on-error -file-line-error -output-directory=.latex_build main.tex
+          pdflatex -interaction=nonstopmode -halt-on-error -file-line-error -output-directory=.latex_build main.tex
+          mv .latex_build/main.pdf main.pdf
+      - name: Fail on unresolved references or citations
+        working-directory: publications/paper---example
+        shell: bash
+        run: |
+          set -euo pipefail
+          if grep -E "undefined references|Citation .* undefined|Reference .* undefined" .latex_build/main.log; then
+            echo "Unresolved references or citations found in main.log (lines above)."
+            exit 1
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: paper-example-pdf
+          path: publications/paper---example/main.pdf
