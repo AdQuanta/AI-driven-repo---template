@@ -38,22 +38,22 @@ Use this skill when working on propositional-logic problems in mathematical logi
 
 ### Z3_Sat
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/z3_solve.py sat "And(p, Implies(p, q), Not(q))"
+python .agents/skills/math/scripts/cc_math/z3_solve.py sat "And(p, Implies(p, q), Not(q))"
 ```
 
 ### Z3_Tautology
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/z3_solve.py prove "Implies(And(p, Implies(p, q)), q)"
+python .agents/skills/math/scripts/cc_math/z3_solve.py prove "Implies(And(p, Implies(p, q)), q)"
 ```
 
 ### Sympy_Truthtable
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/sympy_compute.py truthtable "p & (p >> q) >> q"
+python .agents/skills/math/scripts/cc_math/sympy_compute.py truthtable "p & (p >> q) >> q"
 ```
 
 ### Z3_Modus_Ponens
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/z3_solve.py prove "Implies(And(p, Implies(p,q)), q)"
+python .agents/skills/math/scripts/cc_math/z3_solve.py prove "Implies(And(p, Implies(p,q)), q)"
 ```
 
 ## Cognitive Tools Reference

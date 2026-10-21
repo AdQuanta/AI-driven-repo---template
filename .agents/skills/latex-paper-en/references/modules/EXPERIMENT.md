@@ -7,8 +7,8 @@
 ## Commands
 
 ```bash
-uv run python -B scripts/analyze_experiment.py main.tex --section experiments
-uv run python -B scripts/analyze_experiment.py main.tex --section results
+python -B .agents/skills/latex-paper-en/scripts/analyze_experiment.py main.tex --section experiments
+python -B .agents/skills/latex-paper-en/scripts/analyze_experiment.py main.tex --section results
 ```
 
 ## Review Focus

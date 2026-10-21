@@ -7,8 +7,8 @@
 ## Commands
 
 ```bash
-uv run python -B scripts/analyze_grammar.py main.tex
-uv run python -B scripts/analyze_grammar.py main.tex --section introduction
+python -B .agents/skills/latex-paper-en/scripts/analyze_grammar.py main.tex
+python -B .agents/skills/latex-paper-en/scripts/analyze_grammar.py main.tex --section introduction
 ```
 
 ## Raw Script Output

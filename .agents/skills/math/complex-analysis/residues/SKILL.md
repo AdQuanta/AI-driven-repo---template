@@ -43,33 +43,33 @@ Use this skill when working on residues problems in complex analysis.
 
 ### Sympy_Residue
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/sympy_compute.py residue "1/((z-1)*(z-2))" --var z --at 1
+python .agents/skills/math/scripts/cc_math/sympy_compute.py residue "1/((z-1)*(z-2))" --var z --at 1
 ```
 
 ### Sympy_Limit
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/sympy_compute.py limit "(z - z0)*f(z)" --var z --at z0
+python .agents/skills/math/scripts/cc_math/sympy_compute.py limit "(z - z0)*f(z)" --var z --at z0
 ```
 
 ### Sympy_Laurent
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/sympy_compute.py series "exp(1/z)" --var z --at 0
+python .agents/skills/math/scripts/cc_math/sympy_compute.py series "exp(1/z)" --var z --at 0
 ```
 
 ### Z3_Pole_Inside
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/z3_solve.py prove "abs(z0) < R"
+python .agents/skills/math/scripts/cc_math/z3_solve.py prove "abs(z0) < R"
 ```
 
 ## Key Techniques
 
 *From indexed textbooks:*
 
-- [Complex analysis  an introduction to... (Z-Library)] The fact that the calculus of residues yields complex rather than real integrals is no dis¬ (49) with g(z) — z, we obtain <»» i>(”)=25 / f^w) = 2vi / /'(*) /(z) - w z dz. If (49) is applied with g(z) = zm, equation (50) is replaced by 2iri I |z-zo| = /'(*) f(z) - w zm dz. The right-hand member represents an analytic function of w for \w — ir0| < 8.
-- [Complex analysis  an introduction to... (Z-Library)] What are the possible values of r dz J \/l — z2 over a closed curve in the region? THE CALCULUS OF RESIDUES The results of the preceding section have shown that the determination of line integrals of analytic functions over closed curves can be reduced to the determination of periods. Under certain circumstances it turns out that the periods can be found without or with very little computation.
-- [Complex analysis  an introduction to... (Z-Library)] Hint: Sketch the image of the imaginary axis and apply the argument principle to a large half disk. Evaluation of Definite Integrals. The calculus of residues pro¬ vides a very efficient tool for the evaluation of definite integrals.
-- [Complex analysis  an introduction to... (Z-Library)] The particular function 1 /(z — ay) has a vanishing period. The constant Rj which produces this result is called the residue of f(z) at the point ay. We repeat the definition in the following form: It is helpful to use such self-explanatory notations as R = Res!
-- [Complex Analysis (Elias M. Stein, Ram... (Z-Library)] Cauchy, 1826 There is a general principle in the theory, already implicit in Riemann’s work, which states that analytic functions are in an essential way charac- terized by their singularities. That is to say, globally analytic functions are “eectively” determined by their zeros, and meromorphic functions by their zeros and poles. While these assertions cannot be formulated as precise general theorems, there are nevertheless signicant instances where this principle applies.
+- [Complex analysis  an introduction to...] The fact that the calculus of residues yields complex rather than real integrals is no dis¬ (49) with g(z) — z, we obtain <»» i>(”)=25 / f^w) = 2vi / /'(*) /(z) - w z dz. If (49) is applied with g(z) = zm, equation (50) is replaced by 2iri I |z-zo| = /'(*) f(z) - w zm dz. The right-hand member represents an analytic function of w for \w — ir0| < 8.
+- [Complex analysis  an introduction to...] What are the possible values of r dz J \/l — z2 over a closed curve in the region? THE CALCULUS OF RESIDUES The results of the preceding section have shown that the determination of line integrals of analytic functions over closed curves can be reduced to the determination of periods. Under certain circumstances it turns out that the periods can be found without or with very little computation.
+- [Complex analysis  an introduction to...] Hint: Sketch the image of the imaginary axis and apply the argument principle to a large half disk. Evaluation of Definite Integrals. The calculus of residues pro¬ vides a very efficient tool for the evaluation of definite integrals.
+- [Complex analysis  an introduction to...] The particular function 1 /(z — ay) has a vanishing period. The constant Rj which produces this result is called the residue of f(z) at the point ay. We repeat the definition in the following form: It is helpful to use such self-explanatory notations as R = Res!
+- [Complex Analysis (Elias M. Stein, Ram...] Cauchy, 1826 There is a general principle in the theory, already implicit in Riemann’s work, which states that analytic functions are in an essential way charac- terized by their singularities. That is to say, globally analytic functions are “eectively” determined by their zeros, and meromorphic functions by their zeros and poles. While these assertions cannot be formulated as precise general theorems, there are nevertheless signicant instances where this principle applies.
 
 ## Cognitive Tools Reference
 

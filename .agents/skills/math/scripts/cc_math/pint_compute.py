@@ -3,23 +3,23 @@
 
 USAGE:
     # Parse a quantity
-    uv run python -m runtime.harness scripts/pint_compute.py \
+    python .agents/skills/math/scripts/cc_math/pint_compute.py \
         parse "100 km/h"
 
     # Convert between units
-    uv run python -m runtime.harness scripts/pint_compute.py \
+    python .agents/skills/math/scripts/cc_math/pint_compute.py \
         convert "5 meters" --to feet
 
     # Unit-aware calculation
-    uv run python -m runtime.harness scripts/pint_compute.py \
+    python .agents/skills/math/scripts/cc_math/pint_compute.py \
         calc "5 m * 3 s"
 
     # Check dimensional compatibility
-    uv run python -m runtime.harness scripts/pint_compute.py \
+    python .agents/skills/math/scripts/cc_math/pint_compute.py \
         check newton --against "kg * m / s^2"
 
     # Simplify compound units
-    uv run python -m runtime.harness scripts/pint_compute.py \
+    python .agents/skills/math/scripts/cc_math/pint_compute.py \
         simplify "1 kg*m/s^2"
 
 Requires: pint (pip install pint)

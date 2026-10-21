@@ -9,8 +9,8 @@ Recommended module sequence:
 
 Commands:
 ```bash
-uv run python -B $SKILL_DIR/scripts/compile.py main.tex
-uv run python -B $SKILL_DIR/scripts/verify_bib.py references.bib --tex main.tex
+python -B .agents/skills/latex-paper-en/scripts/compile.py main.tex
+python -B .agents/skills/latex-paper-en/scripts/verify_bib.py references.bib --tex main.tex
 ```
 
 Expected output:

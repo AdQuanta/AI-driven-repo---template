@@ -49,17 +49,17 @@ Use this skill when working on gradient-methods problems in optimization.
 
 ### Scipy_Bfgs
 ```bash
-uv run python -c "from scipy.optimize import minimize; res = minimize(lambda x: (x[0]-1)**2 + 100*(x[1]-x[0]**2)**2, [0, 0], method='BFGS'); print('Rosenbrock min at', res.x)"
+python -c "from scipy.optimize import minimize; res = minimize(lambda x: (x[0]-1)**2 + 100*(x[1]-x[0]**2)**2, [0, 0], method='BFGS'); print('Rosenbrock min at', res.x)"
 ```
 
 ### Scipy_Cg
 ```bash
-uv run python -c "from scipy.optimize import minimize; res = minimize(lambda x: x[0]**2 + x[1]**2, [1, 1], method='CG'); print('Min at', res.x)"
+python -c "from scipy.optimize import minimize; res = minimize(lambda x: x[0]**2 + x[1]**2, [1, 1], method='CG'); print('Min at', res.x)"
 ```
 
 ### Sympy_Gradient
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/sympy_compute.py diff "x**2 + y**2" --var "[x, y]"
+python .agents/skills/math/scripts/cc_math/sympy_compute.py diff "x**2 + y**2" --var "[x, y]"
 ```
 
 ## Key Techniques

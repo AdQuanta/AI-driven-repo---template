@@ -8,12 +8,12 @@ Default Behavior:
     of compilation passes. This is the recommended approach for most use cases.
 
 Usage:
-    uv run python -B compile.py main.tex                       # Default: latexmk auto
-    uv run python -B compile.py main.tex --compiler xelatex    # Explicit compiler
-    uv run python -B compile.py main.tex --recipe pdflatex-bibtex  # Traditional BibTeX
-    uv run python -B compile.py main.tex --recipe pdflatex-biber   # Modern biblatex
-    uv run python -B compile.py main.tex --watch               # Continuous compilation
-    uv run python -B compile.py main.tex --clean               # Clean auxiliary files
+    python -B .agents/skills/latex-paper-en/scripts/compile.py main.tex                       # Default: latexmk auto
+    python -B .agents/skills/latex-paper-en/scripts/compile.py main.tex --compiler xelatex    # Explicit compiler
+    python -B .agents/skills/latex-paper-en/scripts/compile.py main.tex --recipe pdflatex-bibtex  # Traditional BibTeX
+    python -B .agents/skills/latex-paper-en/scripts/compile.py main.tex --recipe pdflatex-biber   # Modern biblatex
+    python -B .agents/skills/latex-paper-en/scripts/compile.py main.tex --watch               # Continuous compilation
+    python -B .agents/skills/latex-paper-en/scripts/compile.py main.tex --clean               # Clean auxiliary files
 
 Recipes (matching VS Code LaTeX Workshop):
     latexmk          - LaTeXmk auto (DEFAULT - recommended)
@@ -398,12 +398,12 @@ Recipes (matching VS Code LaTeX Workshop):
   lualatex-biber   lualatex -> biber -> lualatex*2
 
 Examples:
-  uv run python -B compile.py main.tex                        # Default: latexmk auto
-  uv run python -B compile.py main.tex --recipe pdflatex-bibtex  # Traditional BibTeX
-  uv run python -B compile.py main.tex --recipe pdflatex-biber   # Modern biblatex
-  uv run python -B compile.py main.tex --biber               # Force detected-compiler biber flow
-  uv run python -B compile.py main.tex --outdir build        # Set output directory (latexmk path)
-  uv run python -B compile.py main.tex --watch                # Watch mode
+  python -B .agents/skills/latex-paper-en/scripts/compile.py main.tex                        # Default: latexmk auto
+  python -B .agents/skills/latex-paper-en/scripts/compile.py main.tex --recipe pdflatex-bibtex  # Traditional BibTeX
+  python -B .agents/skills/latex-paper-en/scripts/compile.py main.tex --recipe pdflatex-biber   # Modern biblatex
+  python -B .agents/skills/latex-paper-en/scripts/compile.py main.tex --biber               # Force detected-compiler biber flow
+  python -B .agents/skills/latex-paper-en/scripts/compile.py main.tex --outdir build        # Set output directory (latexmk path)
+  python -B .agents/skills/latex-paper-en/scripts/compile.py main.tex --watch                # Watch mode
         """,
     )
     parser.add_argument("tex_file", help="Main .tex file to compile")

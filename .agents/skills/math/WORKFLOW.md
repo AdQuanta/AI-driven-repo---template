@@ -1,47 +1,32 @@
 # Math Skills Development Workflow
 
-How we built this system and how to extend it.
+How to extend this skill.
 
 ## Philosophy: Cognitive Prosthetics
 
 LLMs make arithmetic errors. These tools don't replace thinking—they augment it:
 - **SymPy**: Exact symbolic computation (no floating point drift)
 - **Z3**: Exhaustive constraint checking
-- **Lean 4**: Compiler IS the proof checker
+- **Lean 4** (optional, external): the compiler is the proof checker
 
-## Development Pattern: TDD with Agents
+## Development Pattern
 
-We use Test-Driven Development with agent orchestration:
+Write the failing test first, then the implementation:
 
 ```
-1. Research     → NIA/WebFetch for API docs
-2. Plan         → Write plan in thoughts/shared/plans/
+1. Research     → Read the library's API docs
+2. Plan         → Write a short plan (see the writing-plans skill)
 3. Red          → Write failing tests FIRST
 4. Green        → Implement to pass tests
-5. Review       → Agent reviews implementation
-6. Regenerate   → Update skills with new capabilities
+5. Review       → Review the implementation
+6. Document     → Update the skills and TOOLS.md that reference it
 ```
 
-## Why Agent Orchestration?
-
-**Problem:** Reading files burns main context (2000+ tokens per file)
-
-**Solution:** Spawn agents that work in isolated context
-
-```
-Main: "Implement eigenvectors"
-      ↓
-Agent: Reads files → Writes code → Runs tests → Returns summary
-      ↓
-Main: Gets 200-token summary (not 2000+ token transcript)
-```
-
-## Key Decisions Log
+## Key Decisions
 
 | Decision | Why | Alternative Rejected |
 |----------|-----|---------------------|
 | Lean 4 for category theory | Z3 can't do abstract algebra | Keep broken Z3 commands |
-| Remove Key Techniques | RAG chunks were noisy | Jury pattern (too complex) |
 | SymPy over NumPy | Exact symbolic, not floating point | Numerical approximations |
 | Compiler-in-the-loop | Lean compiler = proof verifier | Manual proof checking |
 
@@ -49,27 +34,16 @@ Main: Gets 200-token summary (not 2000+ token transcript)
 
 ### Add New SymPy Command
 
-1. Write failing test in `tests/unit/test_sympy_compute.py`
-2. Implement function in `.agents/skills/math/scripts/cc_math/sympy_compute.py`
-3. Add CLI subparser
-4. Wire in `main()` dispatch
-5. Update skills that reference it
+1. Write a failing test for the new command (in the project's test suite)
+2. Implement the function in `.agents/skills/math/scripts/cc_math/sympy_compute.py`
+3. Add the CLI subparser
+4. Wire it into the `main()` dispatch
+5. Update `TOOLS.md`, `SKILL.md`, and any topic skill that references it
 
-### Add New Math Skill
+### Add New Math Topic Skill
 
-1. Add topic to `MATH_TOPICS` in generator
-2. Add decision tree to `DECISION_TREES`
-3. Add tool commands to `TOOL_COMMANDS`
-4. Run: `uv run python .agents/skills/math/scripts/cc_math/generate_math_skills.py --tier N`
-
-## Session Continuity
-
-Before clearing context:
-1. Update ledger: `thoughts/ledgers/CONTINUITY_CLAUDE-<session>.md`
-2. Create handoff: `thoughts/shared/handoffs/<session>/`
-3. Mark checkboxes for completed phases
-
-After resuming:
-1. SessionStart hook loads ledger automatically
-2. Find `[→]` to see current phase
-3. Continue from where you left off
+1. Create `<category>/<topic>/SKILL.md` with `name`, `description`, when to use,
+   a decision tree, and exact tool commands
+2. Link it from the category `README.md` as `<topic>/SKILL.md`
+3. If the script needs a new third-party package, declare it in the root
+   `requirements.txt`

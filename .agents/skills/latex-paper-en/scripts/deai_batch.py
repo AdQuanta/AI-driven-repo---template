@@ -4,9 +4,9 @@ De-AI Batch Processor for English Academic Papers
 Batch processes entire LaTeX/Typst chapters or documents.
 
 Usage:
-    uv run python -B deai_batch.py main.tex --chapter chapter3/introduction.tex
-    uv run python -B deai_batch.py main.tex --all-sections
-    uv run python -B deai_batch.py main.tex --section introduction --output polished/
+    python -B .agents/skills/latex-paper-en/scripts/deai_batch.py main.tex --chapter chapter3/introduction.tex
+    python -B .agents/skills/latex-paper-en/scripts/deai_batch.py main.tex --all-sections
+    python -B .agents/skills/latex-paper-en/scripts/deai_batch.py main.tex --section introduction --output polished/
 """
 
 import argparse

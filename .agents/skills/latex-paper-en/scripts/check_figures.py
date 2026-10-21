@@ -4,8 +4,8 @@ Figure Quality Checker for Academic Papers
 Checks resolution (DPI), format, and sequence of figures.
 
 Usage:
-    uv run python -B check_figures.py main.tex
-    uv run python -B check_figures.py main.tex --min-dpi 300
+    python -B .agents/skills/latex-paper-en/scripts/check_figures.py main.tex
+    python -B .agents/skills/latex-paper-en/scripts/check_figures.py main.tex --min-dpi 300
 """
 
 import argparse

@@ -42,22 +42,22 @@ Use this skill when working on operator-theory problems in functional analysis.
 
 ### Z3_Bounded_Operator
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/z3_solve.py prove "norm(Tx) <= M*norm(x)"
+python .agents/skills/math/scripts/cc_math/z3_solve.py prove "norm(Tx) <= M*norm(x)"
 ```
 
 ### Sympy_Adjoint
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/sympy_compute.py simplify "<Tx, y> - <x, T_star_y>"
+python .agents/skills/math/scripts/cc_math/sympy_compute.py simplify "<Tx, y> - <x, T_star_y>"
 ```
 
 ### Z3_Spectral
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/z3_solve.py prove "self_adjoint implies real_spectrum"
+python .agents/skills/math/scripts/cc_math/z3_solve.py prove "self_adjoint implies real_spectrum"
 ```
 
 ### Sympy_Compact
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/sympy_compute.py limit "norm(T - T_n)" --var n --at oo
+python .agents/skills/math/scripts/cc_math/sympy_compute.py limit "norm(T - T_n)" --var n --at oo
 ```
 
 ## Key Techniques

@@ -45,17 +45,17 @@ Use this skill when working on source-coding problems in information theory.
 
 ### Scipy_Huffman
 ```bash
-uv run python -c "print('Huffman codes for a=0.5, b=0.25, c=0.125, d=0.125: a=0, b=10, c=110, d=111')"
+python -c "print('Huffman codes for a=0.5, b=0.25, c=0.125, d=0.125: a=0, b=10, c=110, d=111')"
 ```
 
 ### Sympy_Kraft
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/sympy_compute.py simplify "2**(-l1) + 2**(-l2) + 2**(-l3) + 2**(-l4)"
+python .agents/skills/math/scripts/cc_math/sympy_compute.py simplify "2**(-l1) + 2**(-l2) + 2**(-l3) + 2**(-l4)"
 ```
 
 ### Z3_Shannon_Bound
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/z3_solve.py prove "expected_length >= entropy"
+python .agents/skills/math/scripts/cc_math/z3_solve.py prove "expected_length >= entropy"
 ```
 
 ## Key Techniques

@@ -47,17 +47,17 @@ Use this skill when working on channel-capacity problems in information theory.
 
 ### Scipy_Mutual_Info
 ```bash
-uv run python -c "from scipy.stats import entropy; p = [0.5, 0.5]; q = [0.6, 0.4]; H_X = entropy(p, base=2); H_Y = entropy(q, base=2); print('H(X)=', H_X, 'H(Y)=', H_Y)"
+python -c "from scipy.stats import entropy; p = [0.5, 0.5]; q = [0.6, 0.4]; H_X = entropy(p, base=2); H_Y = entropy(q, base=2); print('H(X)=', H_X, 'H(Y)=', H_Y)"
 ```
 
 ### Sympy_Bsc_Capacity
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/sympy_compute.py simplify "1 + p*log(p, 2) + (1-p)*log(1-p, 2)"
+python .agents/skills/math/scripts/cc_math/sympy_compute.py simplify "1 + p*log(p, 2) + (1-p)*log(1-p, 2)"
 ```
 
 ### Z3_Capacity_Bound
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/z3_solve.py prove "I(X;Y) <= H(X)"
+python .agents/skills/math/scripts/cc_math/z3_solve.py prove "I(X;Y) <= H(X)"
 ```
 
 ## Key Techniques

@@ -34,17 +34,17 @@ Use this skill when working on eigenvalues problems in linear algebra.
 
 ### Sympy_Eigenvalues
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/sympy_compute.py eigenvalues "[[1,2],[3,4]]"
+python .agents/skills/math/scripts/cc_math/sympy_compute.py eigenvalues "[[1,2],[3,4]]"
 ```
 
 ### Sympy_Charpoly
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/sympy_compute.py charpoly "[[a,b],[c,d]]" --var lam
+python .agents/skills/math/scripts/cc_math/sympy_compute.py charpoly "[[a,b],[c,d]]" --var lam
 ```
 
 ### Z3_Verify
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/z3_solve.py sat "det(A - lambda*I) == 0"
+python .agents/skills/math/scripts/cc_math/z3_solve.py sat "det(A - lambda*I) == 0"
 ```
 
 ## Cognitive Tools Reference

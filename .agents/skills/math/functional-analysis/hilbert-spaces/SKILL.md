@@ -40,22 +40,22 @@ Use this skill when working on hilbert-spaces problems in functional analysis.
 
 ### Sympy_Inner_Product
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/sympy_compute.py simplify "<x + y, z> == <x,z> + <y,z>"
+python .agents/skills/math/scripts/cc_math/sympy_compute.py simplify "<x + y, z> == <x,z> + <y,z>"
 ```
 
 ### Z3_Projection
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/z3_solve.py prove "x - P_M(x) in M_perp"
+python .agents/skills/math/scripts/cc_math/z3_solve.py prove "x - P_M(x) in M_perp"
 ```
 
 ### Z3_Riesz
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/z3_solve.py prove "bounded_linear_functional iff inner_product_form"
+python .agents/skills/math/scripts/cc_math/z3_solve.py prove "bounded_linear_functional iff inner_product_form"
 ```
 
 ### Sympy_Parseval
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/sympy_compute.py sum "abs(<x, e_n>)**2" --var n --from 1 --to oo
+python .agents/skills/math/scripts/cc_math/sympy_compute.py sum "abs(<x, e_n>)**2" --var n --from 1 --to oo
 ```
 
 ## Key Techniques

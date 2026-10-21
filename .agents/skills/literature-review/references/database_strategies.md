@@ -2,19 +2,24 @@
 
 This document provides comprehensive guidance for searching multiple literature databases systematically and effectively.
 
-## Available Databases and Skills
+## Available Databases
+
+Access every database through its public API or web interface, using the
+harness's web-search and web-fetch tools. Clients such as `gget` and
+`bioservices` are optional conveniences; they are not shipped or declared as
+dependencies, so use them only if a project installs them.
 
 ### Biomedical & Life Sciences
 
 #### PubMed / PubMed Central
-- **Access**: Use `gget` skill or WebFetch tool
+- **Access**: NCBI E-utilities API or web search (optional: `gget` client)
 - **Coverage**: 35M+ citations in biomedical literature
 - **Best for**: Clinical studies, biomedical research, genetics, molecular biology
 - **Search tips**: Use MeSH terms, Boolean operators (AND, OR, NOT), field tags [Title], [Author]
 - **Example**: `"CRISPR"[Title] AND "gene editing"[Title/Abstract] AND 2020:2024[Publication Date]`
 
 #### bioRxiv / medRxiv
-- **Access**: Use `gget` skill or direct API
+- **Access**: Public API (https://api.biorxiv.org/) or website (optional: `gget` client)
 - **Coverage**: Preprints in biology and medicine
 - **Best for**: Latest unpublished research, cutting-edge findings
 - **Note**: Not peer-reviewed; verify findings with caution
@@ -46,35 +51,35 @@ This document provides comprehensive guidance for searching multiple literature 
 ### Specialized Databases
 
 #### ChEMBL / PubChem
-- **Access**: Use `gget` skill or `bioservices` skill
+- **Access**: Public REST API or website (optional: `gget` or `bioservices` client)
 - **Coverage**: Chemical compounds, bioactivity data, drug molecules
 - **Best for**: Drug discovery, chemical biology, medicinal chemistry
 - **ChEMBL**: 2M+ compounds, bioactivity data
 - **PubChem**: 110M+ compounds, assay data
 
 #### UniProt
-- **Access**: Use `gget` skill or `bioservices` skill
+- **Access**: Public REST API or website (optional: `gget` or `bioservices` client)
 - **Coverage**: Protein sequence and functional information
 - **Best for**: Protein research, sequence analysis, functional annotations
 - **Search by**: Protein name, gene name, organism, function
 
 #### KEGG (Kyoto Encyclopedia of Genes and Genomes)
-- **Access**: Use `bioservices` skill
+- **Access**: Public REST API or website (optional: `bioservices` client)
 - **Coverage**: Pathways, diseases, drugs, genes
 - **Best for**: Pathway analysis, systems biology, metabolic research
 
 #### COSMIC (Catalogue of Somatic Mutations in Cancer)
-- **Access**: Use `gget` skill or direct download
+- **Access**: Website or direct download (optional: `gget` client)
 - **Coverage**: Cancer genomics, somatic mutations
 - **Best for**: Cancer research, mutation analysis
 
 #### AlphaFold Database
-- **Access**: Use `gget` skill with `alphafold` command
+- **Access**: Public API or website (optional: `gget alphafold`)
 - **Coverage**: 200M+ protein structure predictions
 - **Best for**: Structural biology, protein modeling
 
 #### PDB (Protein Data Bank)
-- **Access**: Use `gget` or direct API
+- **Access**: Public API or website (optional: `gget` client)
 - **Coverage**: Experimental 3D structures of proteins, nucleic acids
 - **Best for**: Structural biology, drug design, molecular modeling
 
@@ -338,14 +343,14 @@ Many databases suggest related articles:
 ## Example Multi-Database Search Workflow
 
 ```python
-# Example workflow using available skills
+# Example workflow using public APIs (run from the repository root)
 
-# 1. Search PubMed via gget
+# 1. Search PubMed via NCBI E-utilities
 search_term = "CRISPR AND sickle cell disease"
-# Use gget search pubmed search_term
+# esearch.fcgi?db=pubmed&term=<search_term>&retmode=json
 
 # 2. Search bioRxiv
-# Use gget search biorxiv search_term
+# Use the bioRxiv API or website search
 
 # 3. Search arXiv for computational papers
 # Search arXiv with: cat:q-bio AND "CRISPR" AND "sickle cell"
@@ -354,13 +359,13 @@ search_term = "CRISPR AND sickle cell disease"
 # Use semantic scholar API with search query
 
 # 5. Aggregate and deduplicate results
-# python search_databases.py combined_results.json --deduplicate --format markdown --output review_papers.md
+# python .agents/skills/literature-review/scripts/search_databases.py combined_results.json --deduplicate --format markdown --output review_papers.md
 
 # 6. Verify all citations
-# python verify_citations.py review_papers.md
+# python .agents/skills/literature-review/scripts/verify_citations.py review_papers.md
 
 # 7. Generate final PDF
-# python generate_pdf.py review_papers.md --citation-style nature
+# python .agents/skills/literature-review/scripts/generate_pdf.py review_papers.md --citation-style nature
 ```
 
 ---

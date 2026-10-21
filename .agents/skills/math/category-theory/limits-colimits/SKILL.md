@@ -60,7 +60,7 @@ Use this skill when working on limits-colimits problems in category theory.
 
 ### Sympy_Pullback
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/sympy_compute.py solve "f(a) == g(b)"
+python .agents/skills/math/scripts/cc_math/sympy_compute.py solve "f(a) == g(b)"
 ```
 
 ### Lean4_Build

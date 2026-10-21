@@ -32,3 +32,7 @@ Use this for repo-specific skill upkeep.
 - `.agents/skills/docs/registry.md` reflects the final skill set.
 - Imported skills still carry consistent authorship/source metadata in their
   frontmatter.
+- No skill depends on a skill that is not present: every name that follows
+  `.agents/skills/` in a path is a folder under `.agents/skills/`, and every
+  skill named in prose is listed in the registry. A quick check:
+  `grep -rnoE "\.agents/skills/[a-z0-9-]+" .agents/skills`.

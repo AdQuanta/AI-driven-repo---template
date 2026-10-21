@@ -35,17 +35,17 @@ Use this skill when working on limits problems in real analysis.
 
 ### Sympy_Limit
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/sympy_compute.py limit "sin(x)/x" --var x --at 0
+python .agents/skills/math/scripts/cc_math/sympy_compute.py limit "sin(x)/x" --var x --at 0
 ```
 
 ### Sympy_Diff
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/sympy_compute.py diff "x**2" --var x
+python .agents/skills/math/scripts/cc_math/sympy_compute.py diff "x**2" --var x
 ```
 
 ### Z3_Prove
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/z3_solve.py prove "limit_bound" --vars x
+python .agents/skills/math/scripts/cc_math/z3_solve.py prove "limit_bound" --vars x
 ```
 
 ## Cognitive Tools Reference

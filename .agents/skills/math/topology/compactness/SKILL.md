@@ -38,28 +38,28 @@ Use this skill when working on compactness problems in topology.
 
 ### Z3_Bounded_Closed
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/z3_solve.py prove "bounded_and_closed"
+python .agents/skills/math/scripts/cc_math/z3_solve.py prove "bounded_and_closed"
 ```
 
 ### Sympy_Limit
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/sympy_compute.py limit "a_n" --var n --at oo
+python .agents/skills/math/scripts/cc_math/sympy_compute.py limit "a_n" --var n --at oo
 ```
 
 ### Sympy_Maximum
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/sympy_compute.py maximum "f(x)" --var x --domain "[a,b]"
+python .agents/skills/math/scripts/cc_math/sympy_compute.py maximum "f(x)" --var x --domain "[a,b]"
 ```
 
 ## Key Techniques
 
 *From indexed textbooks:*
 
-- [Topology (Munkres, James Raymond) (Z-Library)] CompactSpaces163 164ConnectednessandCompactnessCh. Itisnotasnaturalorintuitiveastheformer;somefamiliaritywithitisneededbeforeitsusefulnessbecomesapparent. AcollectionAofsubsetsofaspaceXissaidtocoverX,ortobeacoveringofX,iftheunionoftheelementsofAisequaltoX.
-- [Real Analysis (Halsey L. Royden, Patr... (Z-Library)] If X contains more than one point, show that the only possible extreme points of B have norm 1. If X = Lp[a, b], 1 < p < ∞, show that every unit vector in B is an extreme point of B. If X = L∞[a, b], show that the extreme points of B are those functions f ∈ B such that |f | = 1 almost everywhere on [a, b].
-- [Topology (Munkres, James Raymond) (Z-Library)] ShowthatinthenitecomplementtopologyonR,everysubspaceiscom-pact. IfRhasthetopologyconsistingofallsetsAsuchthatR−AiseithercountableorallofR,is[0,1]acompactsubspace? ShowthataniteunionofcompactsubspacesofXiscompact.
-- [Real Analysis (Halsey L. Royden, Patr... (Z-Library)] The Eberlein-ˇSmulian Theorem . Metrizability of Weak Topologies . X is reexive; (ii) B is weakly compact; (iii) B is weakly sequentially compact.
-- [Topology (Munkres, James Raymond) (Z-Library)] SupposethatYiscompactandA={Aα}α∈JisacoveringofYbysetsopeninX. Thenthecollection{Aα∩Y|α∈J}isacoveringofYbysetsopeninY;henceanitesubcollection{Aα1∩Y,. Aαn}isasubcollectionofAthatcoversY.
+- [Topology (Munkres, James Raymond)] CompactSpaces163 164ConnectednessandCompactnessCh. Itisnotasnaturalorintuitiveastheformer;somefamiliaritywithitisneededbeforeitsusefulnessbecomesapparent. AcollectionAofsubsetsofaspaceXissaidtocoverX,ortobeacoveringofX,iftheunionoftheelementsofAisequaltoX.
+- [Real Analysis (Halsey L. Royden, Patr...] If X contains more than one point, show that the only possible extreme points of B have norm 1. If X = Lp[a, b], 1 < p < ∞, show that every unit vector in B is an extreme point of B. If X = L∞[a, b], show that the extreme points of B are those functions f ∈ B such that |f | = 1 almost everywhere on [a, b].
+- [Topology (Munkres, James Raymond)] ShowthatinthenitecomplementtopologyonR,everysubspaceiscom-pact. IfRhasthetopologyconsistingofallsetsAsuchthatR−AiseithercountableorallofR,is[0,1]acompactsubspace? ShowthataniteunionofcompactsubspacesofXiscompact.
+- [Real Analysis (Halsey L. Royden, Patr...] The Eberlein-ˇSmulian Theorem . Metrizability of Weak Topologies . X is reexive; (ii) B is weakly compact; (iii) B is weakly sequentially compact.
+- [Topology (Munkres, James Raymond)] SupposethatYiscompactandA={Aα}α∈JisacoveringofYbysetsopeninX. Thenthecollection{Aα∩Y|α∈J}isacoveringofYbysetsopeninY;henceanitesubcollection{Aα1∩Y,. Aαn}isasubcollectionofAthatcoversY.
 
 ## Cognitive Tools Reference
 

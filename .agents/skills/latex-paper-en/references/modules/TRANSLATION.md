@@ -7,8 +7,8 @@
 ## Commands
 
 ```bash
-uv run python -B scripts/translate_academic.py "本文提出了一种基于Transformer的方法" --domain deep-learning
-uv run python -B scripts/translate_academic.py input_zh.txt --domain industrial-control --output translation_report.md
+python -B .agents/skills/latex-paper-en/scripts/translate_academic.py "本文提出了一种基于Transformer的方法" --domain deep-learning
+python -B .agents/skills/latex-paper-en/scripts/translate_academic.py input_zh.txt --domain industrial-control --output translation_report.md
 ```
 
 ## Raw Script Output

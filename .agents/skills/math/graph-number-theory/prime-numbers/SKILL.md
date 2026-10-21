@@ -42,22 +42,22 @@ Use this skill when working on prime-numbers problems in graph number theory.
 
 ### Sympy_Factor
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/sympy_compute.py factor "n"
+python .agents/skills/math/scripts/cc_math/sympy_compute.py factor "n"
 ```
 
 ### Z3_Primality
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/z3_solve.py prove "no_divisor_between_1_and_sqrt_n"
+python .agents/skills/math/scripts/cc_math/z3_solve.py prove "no_divisor_between_1_and_sqrt_n"
 ```
 
 ### Sympy_Prime_Count
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/sympy_compute.py simplify "pi(x) ~ x/ln(x)"
+python .agents/skills/math/scripts/cc_math/sympy_compute.py simplify "pi(x) ~ x/ln(x)"
 ```
 
 ### Z3_Fermat_Little
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/z3_solve.py prove "a**(p-1) == 1 mod p"
+python .agents/skills/math/scripts/cc_math/z3_solve.py prove "a**(p-1) == 1 mod p"
 ```
 
 ## Key Techniques

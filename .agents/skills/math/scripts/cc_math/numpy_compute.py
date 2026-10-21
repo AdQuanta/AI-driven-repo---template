@@ -1,20 +1,20 @@
 """NumPy computation CLI - 160 functions across 10 categories (linalg, array_math, fft, polynomial, stats, sorting, reduction, math, set, logic).
 
 USAGE:
-    uv run python scripts/numpy_compute.py <command> [args]
+    python .agents/skills/math/scripts/cc_math/numpy_compute.py <command> [args]
 
     # Linear algebra examples
-    uv run python scripts/numpy_compute.py det "[[1,2],[3,4]]"
-    uv run python scripts/numpy_compute.py inv "[[1,2],[3,4]]"
-    uv run python scripts/numpy_compute.py eig "[[1,2],[3,4]]"
-    uv run python scripts/numpy_compute.py svd "[[1,2,3],[4,5,6]]"
-    uv run python scripts/numpy_compute.py solve "[[3,1],[1,2]]" "[9,8]"
-    uv run python scripts/numpy_compute.py lstsq "[[1,1],[1,2],[1,3]]" "[1,2,2]"
+    python .agents/skills/math/scripts/cc_math/numpy_compute.py det "[[1,2],[3,4]]"
+    python .agents/skills/math/scripts/cc_math/numpy_compute.py inv "[[1,2],[3,4]]"
+    python .agents/skills/math/scripts/cc_math/numpy_compute.py eig "[[1,2],[3,4]]"
+    python .agents/skills/math/scripts/cc_math/numpy_compute.py svd "[[1,2,3],[4,5,6]]"
+    python .agents/skills/math/scripts/cc_math/numpy_compute.py solve "[[3,1],[1,2]]" "[9,8]"
+    python .agents/skills/math/scripts/cc_math/numpy_compute.py lstsq "[[1,1],[1,2],[1,3]]" "[1,2,2]"
 """
 
 import sys
 
-from scripts.math_base import (
+from math_base import (
     create_main_parser,
     format_latex_matrix,
     get_array_info,

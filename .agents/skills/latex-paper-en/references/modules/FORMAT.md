@@ -5,8 +5,8 @@
 ## Commands
 
 ```bash
-uv run python -B scripts/check_format.py main.tex
-uv run python -B scripts/check_format.py main.tex --strict
+python -B .agents/skills/latex-paper-en/scripts/check_format.py main.tex
+python -B .agents/skills/latex-paper-en/scripts/check_format.py main.tex --strict
 ```
 
 ## Details

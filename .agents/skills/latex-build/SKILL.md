@@ -89,12 +89,12 @@ latexmk -pdf -interaction=nonstopmode document.tex
 
 ## Build Checklist
 
-- [ ] Verify latexmk installed: `latexmk -v`
+- [ ] Verify latexmk installed: `latexmk -v` (to locate it: `Get-Command latexmk` in PowerShell, `where latexmk` in cmd, `command -v latexmk` on Linux/macOS)
 - [ ] Test basic build: `latexmk -pdf document.tex`
 - [ ] Enable SyncTeX: Add `-synctex=1` flag
 - [ ] Test live preview: `latexmk -pvc -pdf document.tex`
 - [ ] Configure the PDF viewer for auto-reload
-- [ ] Create Makefile for common tasks (optional)
+- [ ] Create a Makefile (Linux/macOS) or PowerShell script (Windows) for common tasks (optional)
 - [ ] Create .latexmkrc for project-specific settings (optional)
 - [ ] Test clean: `latexmk -c` removes artifacts
 
@@ -110,7 +110,7 @@ For detailed information, see:
 - [Troubleshooting](./references/troubleshooting.md) - Common build issues and solutions
 - [Advanced Patterns](./references/advanced-patterns.md) - Parallel builds and CI/CD integration
 
-**Official Docs**: Run `man latexmk` or `latexmk -help` for complete reference
+**Official Docs**: Run `latexmk -help` (any OS) or `man latexmk` (Linux/macOS) for complete reference
 
 **See Also**:
 

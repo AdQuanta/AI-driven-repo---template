@@ -5,7 +5,8 @@
 ### Parallel Builds (Multiple Documents)
 
 ```bash
-# Build all .tex files in directory
+# Build all .tex files in directory (POSIX shells expand the glob;
+# in PowerShell use: latexmk -pdf (Get-ChildItem *.tex).Name)
 latexmk -pdf *.tex
 
 # Watch multiple documents
@@ -30,6 +31,16 @@ echo "Build complete: main.pdf"
 ls -lh main.pdf
 ```
 
+Windows PowerShell equivalent (`build.ps1`):
+
+```powershell
+$ErrorActionPreference = 'Stop'
+latexmk -C
+latexmk -pdf -synctex=1 main.tex
+if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+Get-Item main.pdf
+```
+
 ### CI/CD Integration
 
 ```bash
@@ -43,4 +54,11 @@ else
   echo "Build failed"
   exit 1
 fi
+```
+
+On a Windows runner (PowerShell), check `$LASTEXITCODE` instead of `$?`:
+
+```powershell
+latexmk -pdf -interaction=nonstopmode -view=none document.tex
+if ($LASTEXITCODE -ne 0) { Write-Error "Build failed"; exit 1 }
 ```

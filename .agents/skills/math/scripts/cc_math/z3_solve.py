@@ -3,15 +3,15 @@
 
 USAGE:
     # Check satisfiability
-    uv run python -m runtime.harness scripts/z3_solve.py \
+    python .agents/skills/math/scripts/cc_math/z3_solve.py \
         sat "x > 0, x < 10, x*x == 49" --type int
 
     # Prove theorem
-    uv run python -m runtime.harness scripts/z3_solve.py \
+    python .agents/skills/math/scripts/cc_math/z3_solve.py \
         prove "x + y == y + x" --vars x y --type int
 
     # Optimize
-    uv run python -m runtime.harness scripts/z3_solve.py \
+    python .agents/skills/math/scripts/cc_math/z3_solve.py \
         optimize "x + y" --constraints "x >= 0, y >= 0, x + y <= 100" \
         --direction maximize --type real
 

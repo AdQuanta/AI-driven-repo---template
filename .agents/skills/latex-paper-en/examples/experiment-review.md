@@ -8,7 +8,7 @@ Recommended module sequence:
 
 Commands:
 ```bash
-uv run python -B $SKILL_DIR/scripts/analyze_experiment.py main.tex --section experiments
+python -B .agents/skills/latex-paper-en/scripts/analyze_experiment.py main.tex --section experiments
 ```
 
 Expected output:

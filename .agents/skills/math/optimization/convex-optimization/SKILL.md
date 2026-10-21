@@ -48,17 +48,17 @@ Use this skill when working on convex-optimization problems in optimization.
 
 ### Scipy_Linprog
 ```bash
-uv run python -c "from scipy.optimize import linprog; res = linprog([-1, -2], A_ub=[[1, 1], [2, 1]], b_ub=[4, 5]); print('Optimal:', -res.fun, 'at x=', res.x)"
+python -c "from scipy.optimize import linprog; res = linprog([-1, -2], A_ub=[[1, 1], [2, 1]], b_ub=[4, 5]); print('Optimal:', -res.fun, 'at x=', res.x)"
 ```
 
 ### Scipy_Minimize
 ```bash
-uv run python -c "from scipy.optimize import minimize; res = minimize(lambda x: (x[0]-1)**2 + (x[1]-2)**2, [0, 0]); print('Minimum at', res.x)"
+python -c "from scipy.optimize import minimize; res = minimize(lambda x: (x[0]-1)**2 + (x[1]-2)**2, [0, 0]); print('Minimum at', res.x)"
 ```
 
 ### Z3_Kkt
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/z3_solve.py prove "kkt_conditions"
+python .agents/skills/math/scripts/cc_math/z3_solve.py prove "kkt_conditions"
 ```
 
 ## Key Techniques

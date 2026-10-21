@@ -153,6 +153,6 @@ Ready to Proceed:
 
 Suggest alongside:
 - **math-model-selector** - if framework unclear
-- **math-mode** - for concrete computations
+- **math** - for concrete computations
 - **math-progress-monitor** - during problem solving
 - **Relevant domain skill** - once intuition established

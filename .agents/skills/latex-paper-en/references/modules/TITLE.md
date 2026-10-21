@@ -8,19 +8,19 @@
 
 **Generate title from content**:
 ```bash
-uv run python -B scripts/optimize_title.py main.tex --generate
+python -B .agents/skills/latex-paper-en/scripts/optimize_title.py main.tex --generate
 # Analyzes abstract/introduction to propose 3-5 title candidates
 ```
 
 **Optimize existing title**:
 ```bash
-uv run python -B scripts/optimize_title.py main.tex --optimize
+python -B .agents/skills/latex-paper-en/scripts/optimize_title.py main.tex --optimize
 # Analyzes current title and provides improvement suggestions
 ```
 
 **Check title quality**:
 ```bash
-uv run python -B scripts/optimize_title.py main.tex --check
+python -B .agents/skills/latex-paper-en/scripts/optimize_title.py main.tex --check
 # Evaluates title against best practices (score 0-100)
 ```
 
@@ -180,18 +180,18 @@ Bad:  "An Improved LSTM Model Using Attention Mechanism for Prediction"
 
 **Interactive Mode** (Recommended):
 ```bash
-uv run python -B scripts/optimize_title.py main.tex --interactive
+python -B .agents/skills/latex-paper-en/scripts/optimize_title.py main.tex --interactive
 # Step-by-step guided title creation with user input
 ```
 
 **Batch Mode** (For multiple papers):
 ```bash
-uv run python -B scripts/optimize_title.py "papers/*.tex" --batch --output title_report.json
+python -B .agents/skills/latex-paper-en/scripts/optimize_title.py "papers/*.tex" --batch --output title_report.json
 ```
 
 **Title A/B Testing** (Optional):
 ```bash
-uv run python -B scripts/optimize_title.py main.tex --compare "Title A" "Title B" "Title C"
+python -B .agents/skills/latex-paper-en/scripts/optimize_title.py main.tex --compare "Title A" "Title B" "Title C"
 # Compares multiple title candidates with detailed scoring
 ```
 

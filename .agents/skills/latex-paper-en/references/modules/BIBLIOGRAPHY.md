@@ -5,10 +5,10 @@
 ## Commands
 
 ```bash
-uv run python -B scripts/verify_bib.py references.bib
-uv run python -B scripts/verify_bib.py references.bib --tex main.tex
-uv run python -B scripts/verify_bib.py references.bib --standard gb7714
-uv run python -B scripts/verify_bib.py references.bib --tex main.tex --json
+python -B .agents/skills/latex-paper-en/scripts/verify_bib.py references.bib
+python -B .agents/skills/latex-paper-en/scripts/verify_bib.py references.bib --tex main.tex
+python -B .agents/skills/latex-paper-en/scripts/verify_bib.py references.bib --standard gb7714
+python -B .agents/skills/latex-paper-en/scripts/verify_bib.py references.bib --tex main.tex --json
 ```
 
 ## Details

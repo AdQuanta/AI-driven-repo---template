@@ -122,4 +122,4 @@ Related Skills:
 After framework selection, suggest:
 - **math-intuition-builder** - to understand the framework
 - **Relevant domain skill** - for actual computation
-- **math-mode** - for symbolic verification
+- **math** - for symbolic verification

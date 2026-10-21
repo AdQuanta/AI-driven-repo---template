@@ -14,7 +14,7 @@ Usage:
     result = verifier.verify_entry({"key": "smith2020", "doi": "10.1234/example", "title": "..."})
 
     # Standalone CLI:
-    uv run python -B online_bib_verify.py --bib references.bib [--email user@example.com] [--json]
+    python -B .agents/skills/latex-paper-en/scripts/online_bib_verify.py --bib references.bib [--email user@example.com] [--json]
 """
 
 from __future__ import annotations
@@ -265,9 +265,9 @@ def main() -> int:
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  uv run python -B online_bib_verify.py --bib references.bib
-  uv run python -B online_bib_verify.py --bib references.bib --email user@example.com
-  uv run python -B online_bib_verify.py --bib references.bib --json
+  python -B .agents/skills/latex-paper-en/scripts/online_bib_verify.py --bib references.bib
+  python -B .agents/skills/latex-paper-en/scripts/online_bib_verify.py --bib references.bib --email user@example.com
+  python -B .agents/skills/latex-paper-en/scripts/online_bib_verify.py --bib references.bib --json
         """,
     )
     parser.add_argument("--bib", required=True, help="BibTeX file to verify")

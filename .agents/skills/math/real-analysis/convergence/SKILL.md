@@ -35,17 +35,17 @@ Use this skill when working on convergence problems in real analysis.
 
 ### Sympy_Limit
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/sympy_compute.py limit "a_n" --var n --at oo
+python .agents/skills/math/scripts/cc_math/sympy_compute.py limit "a_n" --var n --at oo
 ```
 
 ### Sympy_Sum
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/sympy_compute.py sum "1/n**2" --var n --from 1 --to oo
+python .agents/skills/math/scripts/cc_math/sympy_compute.py sum "1/n**2" --var n --from 1 --to oo
 ```
 
 ### Z3_Prove
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/z3_solve.py prove "series_bounded"
+python .agents/skills/math/scripts/cc_math/z3_solve.py prove "series_bounded"
 ```
 
 ## Cognitive Tools Reference

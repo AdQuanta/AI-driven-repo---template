@@ -5,9 +5,9 @@ This script tests SymPy's accuracy on a curated test set to determine
 if a Math Verification Pipeline is worth building.
 
 USAGE:
-    uv run python scripts/sympy_baseline_validation.py
-    uv run python scripts/sympy_baseline_validation.py --json
-    uv run python scripts/sympy_baseline_validation.py --verbose
+    python .agents/skills/math/scripts/cc_math/sympy_baseline_validation.py
+    python .agents/skills/math/scripts/cc_math/sympy_baseline_validation.py --json
+    python .agents/skills/math/scripts/cc_math/sympy_baseline_validation.py --verbose
 
 Results:
     As of 2025-12-31 with SymPy 1.14.0:
@@ -24,7 +24,7 @@ from typing import Any
 
 # Import from sympy_compute
 sys.path.insert(0, ".")
-from scripts.sympy_compute import (
+from sympy_compute import (
     binomial_coeff,
     catalan_number,
     det_matrix,
