@@ -1,14 +1,15 @@
 # Git Policy Reference
 
-This document holds the detailed Git workflow policy. Root instructions keep
-only the safety contract.
+This document holds the detailed Git safety policy and the optional worktree
+workflow. Root instructions keep only the safety contract.
 
 ## Working-Tree Safety
 
 - The user's active working tree may contain irreplaceable uncommitted work.
   Treat any existing modification as user-owned unless there is clear evidence
   it was created by the current agent task.
-- Do not switch the user's active worktree to another branch.
+- Do not switch the user's active worktree to another branch. Work that needs
+  another branch goes in a separate worktree (see below).
 
 ## Destructive Commands
 
@@ -28,7 +29,9 @@ manual reversal. Do not use a blanket Git restore/reset operation.
 
 Git worktrees are allowed when they protect the user's active worktree. An agent
 may create a separate worktree for a feature branch and work exclusively inside
-that directory.
+that directory. Place it outside the repository folder, for example in a sibling
+`<repository>.worktrees/<task>` directory, so the main checkout never sees it as
+untracked content.
 
 Within an agent-created worktree, the agent may manage the task branch as needed
 when the user has asked for that workflow. This can include branching,
