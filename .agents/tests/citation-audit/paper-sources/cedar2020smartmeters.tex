@@ -1,0 +1,107 @@
+% !TEX root = cedar2020smartmeters.tex
+% FICTIONAL TEST MATERIAL: this paper does not exist; it was written for the
+% citation-audit fixture.
+\documentclass{article}
+\usepackage{amsmath}
+
+\title{Inlet Smart Meters for Night-Flow Anomaly Detection}
+\author{E. Fixture}
+\date{Journal of Fixture Studies, 2020}
+
+\begin{document}
+\maketitle
+
+\noindent\textbf{FICTIONAL TEST MATERIAL: this paper does not exist; it was
+written for the citation-audit fixture.} No author, utility, venue, or
+measurement described here is real.
+
+\begin{abstract}
+A new leak in a district adds a steady flow that is easiest to see at night,
+when legitimate demand is lowest. We installed smart meters at the inlets of
+ten districts of a fictional network and opened a hydrant in each to simulate
+a new leak. A simple night-flow anomaly rule flagged the simulated leak within
+24 hours in 9 of the 10 trials. Detecting a new leak within a day, rather than
+at the next scheduled survey, shortens the time it runs before repair and so
+reduces the water it loses.
+\end{abstract}
+
+\section{Introduction}
+\label{sec:introduction}
+
+Most leaks are not reported by the public. They run until an active survey
+finds them, and surveys visit each district only every few months. The water a
+leak loses grows with the time it runs, so detecting it early matters as much
+as finding it precisely.
+
+A district metered at its inlet offers a cheap signal. Between two and four in
+the morning, almost all legitimate demand stops, and the inlet flow settles
+near a stable minimum. A new leak raises that minimum. This paper tests
+whether inlet smart meters can turn that signal into a timely alarm.
+
+\section{Method}
+\label{sec:method}
+
+\subsection{Meters and districts}
+\label{sec:method-meters}
+
+Ten districts of the fictional Fixture Ridge network, each fed through a single
+inlet, received a smart meter that logged flow every 15 minutes and reported it
+daily. The districts ranged from 400 to 3,000 customer connections.
+
+\subsection{Anomaly rule}
+\label{sec:method-rule}
+
+For each district, the rule computes the minimum night flow over a 30-day
+rolling window. It raises an anomaly when the minimum night flow on a given
+night exceeds the rolling median by more than three times the rolling
+median absolute deviation.
+
+\subsection{Simulated leaks}
+\label{sec:method-trials}
+
+In each district, a crew opened a hydrant at a fixed, small flow at an
+unannounced time to simulate a new leak, and left it open for three days. The
+analysts running the rule did not know when or where the hydrant was opened.
+One trial was run per district, ten trials in total.
+
+\section{Results}
+\label{sec:results}
+
+\subsection{Detection within 24 hours}
+\label{sec:results-detection}
+
+Smart meters at the district inlets flagged the night-flow anomaly from the
+new leak within 24 hours in 9 of the 10 trials. In each of these nine trials
+the alarm came on the first night after the hydrant was opened. In the tenth
+trial, the largest district, the simulated leak was small compared with the
+normal night-flow variation and the rule flagged it only on the third night.
+
+\subsection{False alarms}
+\label{sec:results-false}
+
+Over the 30 days before the trials, the rule raised two false alarms across all
+ten districts, both on nights with large, known customer demands such as a
+swimming-pool fill.
+
+\subsection{Effect on run time}
+\label{sec:results-runtime}
+
+Without the meters, a new leak in these districts would run until the next
+active survey, on average several weeks later. Detecting it within a day
+shortens its run time by the same amount and reduces the water it loses before
+repair accordingly.
+
+\section{Limitations}
+\label{sec:limitations}
+
+This study tests detection only, with simulated leaks.
+
+This study does not examine pressure control: district pressures were left
+unchanged, and we make no claim about how pressure management affects leakage.
+This study does not examine bursts: a burst is obvious without a meter, and the
+trials simulated only small new leaks. The meters say that a district has a new
+leak but not where it is; locating it still needs a field survey. Ten trials
+are enough to show the rule works but not to estimate its detection rate
+precisely.
+
+\end{document}

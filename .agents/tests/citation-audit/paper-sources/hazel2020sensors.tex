@@ -1,0 +1,97 @@
+% !TEX root = hazel2020sensors.tex
+% FICTIONAL TEST MATERIAL: this paper does not exist; it was written for the
+% citation-audit fixture.
+\documentclass{article}
+\usepackage{amsmath}
+
+\title{Low-Cost Pressure Sensors for Transient Monitoring}
+\author{L. Fixture \and M. Fixture}
+\date{Journal of Fixture Studies, 2020}
+
+\begin{document}
+\maketitle
+
+\noindent\textbf{FICTIONAL TEST MATERIAL: this paper does not exist; it was
+written for the citation-audit fixture.} No author, utility, venue, or
+measurement described here is real.
+
+\begin{abstract}
+Pressure transients in water mains last a fraction of a second, which is far
+shorter than the sampling interval of a typical network pressure logger. We
+built low-cost pressure sensors that sample at 100~Hz and installed them beside
+standard 1~Hz loggers at eight sites of a fictional network. The 100~Hz sensors
+captured pressure transients above 5~m head that the 1~Hz loggers missed. Each
+sensor cost a small fraction of a commercial transient logger. We describe the
+hardware, the side-by-side trial, and the transient events recorded.
+\end{abstract}
+
+\section{Introduction}
+\label{sec:introduction}
+
+A pressure transient is a short pressure wave caused by a sudden change in
+flow, such as a pump trip or a fast valve closure. Large or repeated transients
+fatigue pipes and joints. Standard network loggers record pressure once per
+second or less often, so a transient that rises and falls within a second can
+pass between two samples and leave no trace.
+
+Commercial transient loggers sample fast enough but are too expensive to deploy
+widely. This paper asks whether a low-cost sensor sampling at 100~Hz can
+capture the transients that the standard loggers miss.
+
+\section{Method}
+\label{sec:method}
+
+\subsection{Sensor design}
+\label{sec:method-sensor}
+
+Each sensor combines an industrial pressure transducer, a small
+microcontroller, and a battery. The microcontroller samples the transducer at
+100~Hz and stores any one-second window in which the pressure changes by more
+than 2~m head. The parts for one sensor cost less than one tenth of the price
+of a commercial transient logger.
+
+\subsection{Side-by-side trial}
+\label{sec:method-trial}
+
+At eight sites of the fictional Fixture Meadows network, a 100~Hz sensor was
+installed on the same hydrant tapping as an existing 1~Hz logger. Both devices
+ran for twelve weeks. Their clocks were synchronised, so each event recorded by
+one device could be checked against the record of the other.
+
+\section{Results}
+\label{sec:results}
+
+\subsection{Transients captured}
+\label{sec:results-captured}
+
+The low-cost sensors sampling at 100~Hz captured pressure transients above 5~m
+head that the 1~Hz loggers missed. Over the twelve weeks, the 100~Hz sensors
+recorded 37 transients larger than 5~m head across the eight sites. The 1~Hz
+loggers showed no excursion above 5~m head for 31 of these 37 events; for the
+other six, the 1~Hz record showed only a small step.
+
+\subsection{Sources of the transients}
+\label{sec:results-sources}
+
+Most of the transients coincided with pump starts and stops at a booster
+station. The others matched fast hydrant closures during flushing work.
+
+\subsection{Cost and reliability}
+\label{sec:results-cost}
+
+All eight sensors ran for the full twelve weeks on one battery. At their low
+cost, a utility could deploy them at many more sites than it could with
+commercial transient loggers.
+
+\section{Limitations}
+\label{sec:limitations}
+
+This study tests transient capture only.
+
+This study does not examine bursts: we did not relate the recorded transients
+to main breaks, and no burst occurred at the trial sites during the twelve
+weeks. This study does not examine metering: the sensors measure pressure, not
+flow, and no flow or consumption data were used. The trial covered eight sites
+for twelve weeks, so the number of transients is small.
+
+\end{document}

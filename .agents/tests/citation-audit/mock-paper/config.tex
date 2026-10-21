@@ -1,0 +1,30 @@
+% FICTIONAL TEST MATERIAL: citation-audit fixture preamble.
+% The markings module is loaded from the repository by a four-level relative
+% path, so the fixes the audit applies with the Mark API compile. The run
+% copy _agents_outputs/_agents_dump/citation-audit-fixture/mock-paper/ has the
+% same depth as .agents/tests/citation-audit/mock-paper/; keep that depth.
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{soul}
+\usepackage{environ}
+\usepackage{etoolbox}
+\usepackage{xparse}
+\usepackage[most]{tcolorbox}
+
+\input{../../../../publications/modules/markings/markings.tex}
+% Plain roles: soul-based highlighting can fail around \cite, and the audit
+% does not depend on colors.
+\DefineMarkRole{changes}{Goldenrod}[plain]
+\DefineMarkRole{edits}{ForestGreen}[plain]
+\DefineMarkRole{missing}{red}[plain]
+
+\usepackage{hyperref}
+\usepackage[
+  backend=biber,
+  style=numeric,
+  datamodel=../../../../publications/modules/markings/markings
+]{biblatex}
+% main.tex adds references.bib: citation-audit finds the .bib from the
+% \addbibresource command in main.tex.

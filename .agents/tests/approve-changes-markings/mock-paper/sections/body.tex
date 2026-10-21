@@ -1,0 +1,26 @@
+\section{\Mark{changes}[heading]{Body}}
+
+\Mark{changes}{This sentence was added.}
+The method is \MarkEdit{edits}{slow}{fast}.
+The square is \Mark{changes}[math]{x^2}.
+Outer text with \MarkEdit{edits}{inner old}{inner new} inside.
+This sentence keeps its end\MarkEdit{edits}{ and loses a clause}{}.
+\Mark{missing}{TODO: keep this missing marker.}
+
+\begin{MarkEnv}{changes}[text]
+This paragraph was added as a block.
+\end{MarkEnv}
+
+\begin{MarkEnv}{changes}[math]
+E = mc^2
+\end{MarkEnv}
+
+\begin{figure}[h]
+  \centering
+  \begin{MarkEnv}{changes}[figure]
+    \fbox{Figure body}
+  \end{MarkEnv}
+  \caption{A marked figure.}
+\end{figure}
+
+Prior work~\cite{doe2020added} and \cite{roe2021missing}.
