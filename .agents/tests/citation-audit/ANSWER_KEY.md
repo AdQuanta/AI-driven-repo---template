@@ -40,6 +40,13 @@ Two keys are deliberately never read:
 
 ### Why each verdict holds
 
+- **Units 2 and 3.** The sentence makes one claim per key: lowering
+  night-time pressure cuts bursts (`birch2019pressure`, Section 3.1: burst
+  frequency fell by 28%), and watching district inlet flows flags new leaks
+  within a day (`cedar2020smartmeters`, Section 3.1: flagged within 24 hours
+  in 9 of 10 trials). Under the multi-cite rule each key is judged on its own
+  clause, so both are `supported`. The sentence claims no loss reduction for
+  inlet monitoring, which `cedar2020smartmeters` argues but does not measure.
 - **Unit 4.** `dogwood2018chlorine` measures chlorine decay in storage tanks
   (Results, Section 3). Its Limitations (Section 4) state that it does not
   examine pipe bursts, temperature effects on pipes, or cold weather. The
