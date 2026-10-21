@@ -8,14 +8,42 @@ This instruction is the canonical guidance for the research sector.
 research/
 ├── derivations/       # One subfolder per derivation topic (e.g., <topic-name>/)
 └── references/        # All ingested literature and background reading
-    └── scientific_papers/  # Ingested papers; topic categories grow with the base
-                            # (e.g., <field>/<sub-category>/<citation-key>/)
+    ├── indexes/tags/  # Parallel tag navigation; maintained README, generated index.md
+    │   └── by_tag/    # Generated per-tag pages, one <tag>.md per accepted tag
+    ├── scientific_papers/  # Ingested papers; topic categories grow with the base
+    │                       # (e.g., <field>/<sub-category>/<citation-key>/)
+    └── src/           # Knowledge-base tooling: tag-index generator, find-papers gatherer
 ```
 
 Add `notes/` (modeling notes, framing decisions, open questions) and
 `progress/` (dated experiment/progress write-ups) when the project first needs
 them, and record them in `docs/agent-guidance/project-layout.md` in the same
 change.
+
+## Literature Tags and Parallel Navigation
+
+Paper summary inline `tags` arrays are authoritative assignments. Use canonical
+ASCII lowercase `snake_case` (`^[a-z0-9]+(?:_[a-z0-9]+)*$`), with no duplicates
+within a summary. Before assigning tags, read the accepted
+[tag index](references/indexes/tags/index.md) and reuse accurate existing tags.
+Explain genuinely new concepts; review every unseen tag and similar-tag
+suggestion before explicit acceptance with `--accept-new-tags`. The generated
+index is the accepted-vocabulary snapshot, not a separately maintained registry.
+
+After creating or repairing a summary, run normal generation from the repository
+root with the project Python environment:
+`python research/references/src/generate_literature_tag_index.py`, then
+`python research/references/src/generate_literature_tag_index.py --check`.
+If normal generation reports unseen tags, correct accidental variants or accept
+only justified new concepts using `--accept-new-tags`, then rerun `--check`.
+See the maintained [operator README](references/indexes/tags/README.md) for
+bootstrap, validation, and safety rules. Never hand-edit generated pages.
+
+Tags provide overlapping, parallel navigation only. They never replace the
+primary-contribution folder classification or require moving/duplicating papers.
+Required `citation_key` and `short_cite` values must be nonempty, printable,
+control-free single-line strings; quoted escapes cannot introduce C0/C1 controls
+or Unicode line/paragraph separators.
 
 ## Citation Organization
 
@@ -34,6 +62,14 @@ top-level fields here as they appear, one bullet each with a one-line scope, so
 
 - *(no categories yet)*
 
+For illustration only (these folders do not exist), a grown taxonomy could
+look like this:
+
+- **`statistical_methods/`** — Estimation, inference, and uncertainty quantification.
+  - `sampling_methods/` — Monte Carlo, importance sampling, and bootstrap techniques.
+  - `bayesian_inference/` — Priors, posterior computation, and model comparison.
+- **`optimization/`** — Problem formulations and solvers (still flat, ≤12 papers).
+
 ### Scalability Rules for Sub-categorization
 
 These rules apply to **all** top-level fields, present and future:
@@ -42,7 +78,7 @@ These rules apply to **all** top-level fields, present and future:
 2. **Minimum size**: Each sub-category must contain **at least 2 papers**. A single-paper sub-category should be merged into the closest related sub-category.
 3. **Classify by primary contribution**: Place each paper in the sub-category matching its *main* contribution, not tangential mentions.
 4. **Flat until necessary**: Categories with ≤12 papers remain flat (citation-key folders directly inside the top-level field). Do not pre-create empty sub-categories.
-5. **Naming convention**: Sub-category folder names use `snake_case`, are descriptive, and avoid abbreviations (e.g., `routing_algorithms/` not `ra/`).
+5. **Naming convention**: Sub-category folder names use `snake_case`, are descriptive, and avoid abbreviations (e.g., `sampling_methods/` not `sm/`).
 6. **Depth limit**: Maximum nesting is two levels (`field/sub-category/citation-key/`). If a sub-category itself grows beyond ~15 papers, split the *top-level field* into sibling fields rather than adding a third nesting level.
 7. **Reorganize when needed**: Subdividing a field means moving already-ingested papers into the new sub-categories and repairing every relative link that pointed at them.
 
@@ -86,3 +122,21 @@ When a mathematical result or analytical derivation is worked out that does not 
 - Save the derivation as a Markdown file with a **meaningful, descriptive filename** (e.g., `bound-under-gaussian-noise.md`).
 - One subfolder per topic; multiple derivation files may live in the same subfolder if they share a topic.
 - Cite supporting literature per **Citing Papers in Research Markdown** above.
+
+## Reproducible Numbers
+
+Every number quoted in research Markdown must be traceable. It is either
+taken from a cited paper, or produced by code committed in this repository:
+tested logic under `code/src/`, run by a script under `code/scripts/`.
+
+- Name the script next to the numbers it produced, or once in the note.
+- Do not quote the result of an ad-hoc command, a notebook cell, or an
+  interactive session. Commit the code first, then quote its output.
+- Numbers that rest on hardware or other costly runs must point to data
+  kept under `data/`; see
+  `docs/agent-guidance/data-preservation.md`.
+
+Research computation stays in `code/`; knowledge-base tooling is not research
+computation. The tag-index generator and the find-papers gatherer live in
+[`references/src/`](references/src/README.md) with their own tests, and
+nothing there imports from `code/`.
