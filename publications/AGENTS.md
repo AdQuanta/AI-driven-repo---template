@@ -3,7 +3,9 @@
 > **STOP — READ THIS BEFORE MAKING ANY EDIT**
 >
 > Every addition or change to a `.tex` or `.bib` file MUST be wrapped with the Mark API:
-> - Inline text: `\Mark{changes}{...}`
+> - Replacement of existing prose: `\MarkEdit{edits}[text]{old}{new}`
+> - Replacement of inline math: `\MarkEdit{edits}[math]{old}{new}`
+> - New inline text: `\Mark{changes}{...}`
 > - Block text / whole paragraph: `\begin{MarkEnv}{changes}[text] ... \end{MarkEnv}`
 > - Equations: `\begin{MarkEnv}{changes}[math] ... \end{MarkEnv}`
 > - Figures: `\begin{MarkEnv}{changes}[figure] ... \end{MarkEnv}`
@@ -11,6 +13,28 @@
 > - New `.bib` entries: add `markroles = {changes},` as a field
 >
 > **No plain edits are acceptable. Unmarked changes are incomplete changes.**
+> If the user explicitly approves an unmarked edit, make it plain and say so
+> in the reply.
+>
+> After any `.tex`/`.bib` change, run the
+> [full build](../docs/agent-guidance/vscode-latex-environment.md#agent-build-recipe)
+> before reporting the task done (Gate 1).
+
+## Manuscript Directories
+
+Authored sources and generated artifacts stay apart. Each manuscript lives in
+its own `publications/paper---<slug>/` directory with `main.tex`, `config.tex`,
+`references.bib`, `sections/`, and `figures/`; build intermediates go to the
+ignored `.latex_build/` folder described in the
+[LaTeX environment guide](../docs/agent-guidance/vscode-latex-environment.md),
+and regenerable figures and data come from `artifacts/`, never from the paper
+folder. The shared Mark API lives in
+[`modules/markings/`](modules/markings/README.md) and is loaded by relative path
+from each paper's `config.tex`. The starter manuscript is
+[`paper---example/`](paper---example/); copy it to start a new paper, and use
+its sections as a working reference for every marker form below.
+Optionally, group venue-specific copies as
+`publications/submissions/<VENUE>/paper---<slug>/`.
 
 ## Core Best Practices
 
@@ -27,13 +51,52 @@
   compilation defaults in the skill.
 - Standalone files also need all required packages declared explicitly in their own preamble — they cannot rely on `config.tex` or any shared include that `main.tex` loads.
 
+## Show Replacements Like a Diff
+
+Prefer `\MarkEdit` when revised text has an identifiable earlier version. Copy
+the actual earlier source into `old`; keep the accepted wording in `new`.
+Nested markers are forbidden: never put one Mark API wrapper inside another.
+When revising content that is already marked, collapse the revision history
+to one marker whose `old` argument is
+the oldest version and whose `new` argument is the newest accepted version;
+intermediate drafts need not be preserved. For display equations, do not nest
+an inline `[math]` marker inside an existing math environment: mark the whole
+equation with one `MarkEnv` instead.
+Mark the smallest meaningful changed phrase and leave shared words outside the
+command. If only a few words in a paragraph or caption changed, split the edit
+at unchanged wording instead of wrapping the whole paragraph or caption. Use
+`\Mark{changes}{...}` for text that was added without replacing earlier words.
+Keep each old/new pair aligned so the popup describes the highlighted change.
+Define the `edits` role with a green color in the paper preamble. The module's
+default edit mode is `plain`, so select `\SetMarkEditMode{popup}` or
+`\SetMarkEditMode{inline}` explicitly for a review PDF. In `inline` mode the old
+text is red and struck through, and the new text is green highlighted. In
+`popup` mode the new text has a green PDF highlight whose popup holds the old
+text. In floats, including captions, a red note icon sits beside the green
+highlighted new text because PDF text markup anchors are unreliable there.
+The viewer controls the popup text color and interaction.
+For a submission PDF, set the `edits` role to `[plain]` so only the new text
+appears even if the review mode is `popup`.
+
+Use `\Mark{changes}{...}` or `MarkEnv` for pure additions and supported block
+content without an earlier counterpart; define `changes` as green for new work.
+Do not invent old wording or attach an unrelated version to an edit note.
+`\MarkEdit` supports prose with simple inline math and `\cite`, plus bare inline
+math with `[math]`; compile and inspect the result. In a caption, provide a
+plain optional short caption for the list of figures or tables. For headings, use the
+existing `[heading]` form of `\Mark` until edit annotations are heading-safe.
+Inspect the PDF note text too: PDF string conversion can omit math macros.
+Add `\pdfstringdefDisableCommands` mappings in the paper preamble for symbols
+used in old text, then rebuild and confirm the note reads correctly.
 
 ## Formatting New and Missing Content
 
 To maintain clean highlights across text, equations, and figures, use the Mark API instead of plain text colors.
 
-- Standard additions or changes:
-- Text (inline): use `\Mark{changes}{...}`.
+- Standard additions and replacements:
+- Replaced text (inline): use `\MarkEdit{edits}{old}{new}`.
+- Replaced inline math: use `\MarkEdit{edits}[math]{old}{new}`.
+- New text (inline): use `\Mark{changes}{...}`.
 - Section/subsection headings: use `\Mark{changes}[heading]{...}` directly inside the heading argument.
 - Text (block): use `\begin{MarkEnv}{changes}[text] ... \end{MarkEnv}`.
 - Equations: use `\begin{MarkEnv}{changes}[math] ... \end{MarkEnv}`.
@@ -99,36 +162,35 @@ in the bibliography alongside other marked changes.
 - Add `markroles = {changes},` as a field in every newly added `.bib` entry.
 - Do **not** add `markroles` to entries that already existed before the current
   task — only mark what is new or changed in this editing session.
+- A `markroles` field holds exactly one role. Never list two roles in one
+  entry.
 - Example:
   ```bibtex
   @article{smith2024example,
     author    = {Smith, Alice},
     title     = {Example Paper},
-    journal   = {Phys. Rev. Lett.},
+    journal   = {J. Example Res.},
     year      = {2024},
-    doi       = {10.1103/...},
+    doi       = {10.0000/...},
     markroles = {changes},
   }
   ```
 - After editing `.bib`, always run a full build (biber + pdflatex ×3) so that
   biber picks up the new field and the highlighting renders correctly.
 
-## Removing Markings Before Submission
+## Approving Markings
 
-Run the `approve-changes-markings` prompt
-(`.github/prompts/approve-changes-markings.prompt.md`) to strip approved
-`\Mark{changes}` wrappers and `markroles = {changes}` fields from a paper.
-Only do this when the user explicitly asks.
+When the user asks to approve or accept marked changes (for example "approve
+all changes" or "accept the marked edits in this section"), delegate to the
+[`approve-changes-markings`](../.claude/agents/approve-changes-markings.agent.md)
+agent. It removes `\Mark{changes}` and `MarkEnv{changes}` wrappers, keeps only
+the new argument of each `\MarkEdit{edits}`, strips `markroles = {changes}`
+fields in the inferred scope, preserves every `missing` marker, and rebuilds
+the paper. It leaves nested markers and multi-role `markroles` fields
+unchanged and reports them as rule violations. Only approve markings when the
+user explicitly asks.
 
 ## Figures and other assets
-
-### Manuscript Directories
-
-Each manuscript lives in its own `publications/paper---<slug>/` directory with
-`main.tex`, `config.tex`, `references.bib`, `sections/`, and `figures/`. The
-shared Mark API lives in `publications/modules/markings/` and is loaded by
-relative path from each paper's `config.tex`. The starter manuscript is
-[`paper---example/`](paper---example/); copy it to start a new paper.
 
 ### Figures
 
@@ -154,7 +216,7 @@ you are working in. The rules below apply to each manuscript independently.
 ## Writing and Formatting Best Practices
 
 ### NEVER write long lines of LaTeX code
-- Break long lines of LaTeX code into multiple lines for better readability. 
+- Break long lines of LaTeX code into multiple lines for better readability.
 - Each line should be up to ~100 characters long when possible, and new sentences or logical units should start on a new line.
 
 #### Text Example Style
