@@ -137,6 +137,10 @@ All must hold.
       && echo BUILD-OK
     ```
 
+    This is the MiKTeX form. With TeX Live (Linux, macOS), which has no
+    `--aux-directory`, use the TeX Live recipe in
+    `docs/agent-guidance/vscode-latex-environment.md` instead.
+
     `mock-paper/config.tex` loads the markings module by the relative path
     `../../../../publications/modules/markings/`, which resolves to the
     repository root from both `.agents/tests/citation-audit/mock-paper/` and

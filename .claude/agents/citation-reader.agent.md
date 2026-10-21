@@ -31,18 +31,18 @@ Paths are relative to the repository root, the folder that contains `.claude/`.
 ## Inputs (from the Conductor)
 
 - **key** — the citation key as the manuscript cites it.
-- **brief path** — `briefs\<key>.md`: every spot the manuscript cites this paper, each with the full citing paragraph, co-cited keys, and the Conductor's `hypothesis:` about intent, plus a cross-spot rollup.
+- **brief path** — `briefs/<key>.md`: every spot the manuscript cites this paper, each with the full citing paragraph, co-cited keys, and the Conductor's `hypothesis:` about intent, plus a cross-spot rollup.
 - **knowledge-base root** — the folder to search.
 - **run line** — `Audit run: <date> <paper directory>`; write it verbatim.
 - **isolated** — `yes` when the knowledge-base root is not the default. An isolated run never fetches: no `ingest-paper`, no web search.
 - **.bib title** — the title of this key's `.bib` entry; empty if the key has no `.bib` entry.
 - **.bib DOI** — the DOI of that entry; empty if it has none.
-- **missing-record path** — `<working area>\missing\<key>.md`; written only if the paper is absent.
+- **missing-record path** — `<working area>/missing/<key>.md`; written only if the paper is absent.
 
 ## Steps
 
 1. **Locate the paper under the knowledge-base root by title or DOI, not by citation key.** Compare the `.bib` title and DOI (when present) with the `title`/`doi` frontmatter of each `summary.md` under the root; if both are empty (the key has no `.bib` entry), match on the key and the brief instead. Outside an isolated run you may also use the `find-papers` sub-agent. Citation keys drift (e.g. `smith2019example` may live in a folder named `smith2020example`); if you resolve to a differently named folder, record a **key-drift note** that names the cited key — it is a real finding. Never create a folder yourself.
-2. **Shared notes — check this before anything else.** If the paper was found and `<resolved folder>\fit.md` already contains `<!-- AUDIT-READER-COMPLETE -->` and this run's run line, another key resolved to the same paper earlier in this run. Do not rewrite the file and do not read the whole PDF:
+2. **Shared notes — check this before anything else.** If the paper was found and `<resolved folder>/fit.md` already contains `<!-- AUDIT-READER-COMPLETE -->` and this run's run line, another key resolved to the same paper earlier in this run. Do not rewrite the file and do not read the whole PDF:
    - Read only the PDF regions your own spots need. If the notes carry `⚠ STUB-PDF`, use `summary.md` instead and tag your bullets `[SUMMARY-ONLY]`.
    - Unless your `### Targeted (<key>)` block is already present, insert it for your spots inside `## Verified Results`, directly above the sentinel line. If it is already present, change nothing and just reply `RESOLVED-SHARED` (last bullet).
    - If you have a key-drift note, add it to the `### Key-drift / metadata notes` list (replacing "none", or appending when other notes already exist).
@@ -67,7 +67,7 @@ Paths are relative to the repository root, the folder that contains `.claude/`.
    - Stub, not isolated: attempt a fresh `ingest-paper` re-fetch and re-check. If it is still a stub, you may seek an alternative full-text source (e.g. a Green-OA manuscript or preprint mirror); if you find one, read it and note the source.
    - Stub with no full text (always the case in an isolated run): work from `summary.md` only. Put a visible `⚠ STUB-PDF` caveat at the top of `## Verified Results` saying the inventory comes from the summary/abstract only, tag summary-derived bullets `[SUMMARY-ONLY]`, and flag the stub for the user. Checkers must treat these findings as lower confidence.
 5. **Read the entire PDF deeply.** Bias toward reading and capturing too much, not too little — this inventory is read once and reused by every Checker, so over-capture is cheap and under-capture is expensive.
-6. **Write `<resolved folder>\fit.md`**, overwriting any older file whose run line differs, then end your reply with `RESOLVED: <absolute path of the resolved folder>`:
+6. **Write `<resolved folder>/fit.md`**, overwriting any older file whose run line differs, then end your reply with `RESOLVED: <absolute path of the resolved folder>`:
 
 ```markdown
 # Fit to the manuscript — <key>

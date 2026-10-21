@@ -34,7 +34,7 @@ Paths are relative to the repository root, the folder that contains `.claude/`.
 ## Inputs
 
 - **paper directory** (required). If the user gives none, ask for it.
-- **knowledge-base root** (optional), default `research\references\scientific_papers`.
+- **knowledge-base root** (optional), default `research/references/scientific_papers`.
 - **output root** (optional), default `_agents_outputs`.
 
 When the knowledge-base root is not the default, the run is **isolated**: no
@@ -68,23 +68,23 @@ verbatim from the ledger header (Phase 0), never retyped. Working area (git-igno
 default output root; create it if absent):
 
 ```
-<output root>\_agents_dump\citation-audit\<date>\
+<output root>/_agents_dump/citation-audit/<date>/
   ledger.md                       ← master state, you own it
-  briefs\<key>.md                 ← rich citation brief you synthesize, one per cited paper
-  units\<unit-id>.md              ← one per location, written by its Checker
-  missing\<key>.md                ← written by a Reader when a cited paper is absent
+  briefs/<key>.md                 ← rich citation brief you synthesize, one per cited paper
+  units/<unit-id>.md              ← one per location, written by its Checker
+  missing/<key>.md                ← written by a Reader when a cited paper is absent
 ```
 
 Per cited paper, the notes file lives in the folder the Reader resolved:
 
 ```
-<knowledge-base root>\...\<resolved folder>\fit.md
+<knowledge-base root>/.../<resolved folder>/fit.md
 ```
 
 Final human deliverable:
 
 ```
-<output root>\citation-audit\<date>\report.md
+<output root>/citation-audit/<date>/report.md
 ```
 
 A `unit-id` is `<key>__<section-file-stem>__L<line>` (e.g. `smith2020example__07_implementation__L42`); if the same key is cited twice on one line, append `_2`, `_3`.
@@ -93,7 +93,7 @@ A `unit-id` is `<key>__<section-file-stem>__L<line>` (e.g. `smith2020example__07
 
 ## Phase 0 — Enumerate and build the ledger
 
-1. Scan every `.tex` under `<paper-dir>\sections\` (skip any `unused\` folder) plus `<paper-dir>\main.tex`.
+1. Scan every `.tex` under `<paper-dir>/sections/` (skip any `unused/` folder) plus `<paper-dir>/main.tex`.
 2. Find every command matching `\(cite|citep|citet|textcite|parencite|autocite)\*?(\[...\])*\{keys\}`. Split the brace contents on commas → one unit per key.
 3. Treat `\nocite` separately: list it in the ledger as `context: none — nocite` and mark it `skipped (no textual context)` unless the user asked to include nocites.
 4. **Locate the `.bib`** from the `\addbibresource{…}` or `\bibliography{…}` command in `main.tex`, resolved against the paper directory (add `.bib` when the extension is omitted; if several files are named, record each and treat them together as the manuscript's `.bib`). For each cited key, read its entry's title and DOI. A key with no `.bib` entry is logged with the flag `no-bib-entry`, and its Reader gets an empty title and DOI.
@@ -104,7 +104,7 @@ Report the totals (`\cite` units, `\nocite` keys, unique papers) before continui
 
 ## Phase 1 — Synthesize a rich citation brief per cited paper (your thinking step)
 
-For each unique key, **read each citation in its full context yourself** and write `briefs\<key>.md`. This is where you earn your keep: you frame the inquiry richly so the Reader reads thoroughly and on-target. Per spot include:
+For each unique key, **read each citation in its full context yourself** and write `briefs/<key>.md`. This is where you earn your keep: you frame the inquiry richly so the Reader reads thoroughly and on-target. Per spot include:
 
 - the `unit-id` and section path;
 - the **full surrounding context** — extract whatever carries the meaning for that construct, never just the cell or the sentence:
@@ -124,20 +124,20 @@ Then add a **cross-spot rollup**: cluster the spots by theme, and call out any a
 
 For each key that the ledger has not yet resolved (see Resumability):
 1. Dispatch the `citation-reader` sub-agent (foreground/blocking). Pass: the
-   key; the absolute path to `briefs\<key>.md`; the knowledge-base root; the
+   key; the absolute path to `briefs/<key>.md`; the knowledge-base root; the
    run line; whether the run is isolated; the title and DOI of the key's
    `.bib` entry (empty when absent); and the absolute path
-   `<working area>\missing\<key>.md`.
+   `<working area>/missing/<key>.md`.
 2. Read the last line of the Reader's reply:
    - `RESOLVED: <folder>` or `RESOLVED-SHARED: <folder>` (an absolute path):
-     record the folder in the ledger, then confirm that `<folder>\fit.md` is
+     record the folder in the ledger, then confirm that `<folder>/fit.md` is
      **finished for this key**: it contains `<!-- AUDIT-READER-COMPLETE -->`,
      this run's run line, and a `### Targeted (<key>)` heading for this key.
      Then set the key's flags: `stub` if `## Verified Results` contains
      `⚠ STUB-PDF`; `drift` if the folder name differs from the key, or if the
      `### Key-drift / metadata notes` list is not "none" and has a note for
      this key.
-   - `MISSING: <key>`: confirm `missing\<key>.md` contains the sentinel, set the
+   - `MISSING: <key>`: confirm `missing/<key>.md` contains the sentinel, set the
      `missing` flag, and mark the key's units `skipped (no inventory)`.
    - Anything else (a malformed reply): run the Resumability scan for this key.
      If it does not find the key finished or missing, re-dispatch once (this is
@@ -149,10 +149,10 @@ Readers run strictly one at a time, so at most one agent writes any `fit.md`.
 
 ## Phase 3 — Dispatch one Checker per location
 
-For each `pending` unit whose `units\<unit-id>.md` lacks the `AUDIT-UNIT-COMPLETE` sentinel:
+For each `pending` unit whose `units/<unit-id>.md` lacks the `AUDIT-UNIT-COMPLETE` sentinel:
 1. If the unit's key is logged as `reader-failed`, log the unit as `skipped (no inventory)` in the ledger and continue.
 2. Dispatch the `citation-checker` sub-agent (foreground/blocking — wait for it to return). Pass: the unit-id, key, `file:line`, the **full raw context** (the paragraph, or for a table/figure citation the cell with its header, row label, and caption — not your hypothesis), the section/role, the absolute path to the `fit.md` in the key's resolved folder, the knowledge-base root, the absolute path of the manuscript's `.bib` (from the ledger header), and the absolute path of the unit file to write.
-3. After it returns, read `units\<unit-id>.md` and confirm `<!-- AUDIT-UNIT-COMPLETE -->` is present.
+3. After it returns, read `units/<unit-id>.md` and confirm `<!-- AUDIT-UNIT-COMPLETE -->` is present.
 4. If the sentinel is absent, re-dispatch once.
 5. If still absent after re-dispatch, mark the unit as `checker-failed` in the ledger and continue.
 
@@ -164,6 +164,10 @@ Skip units already sentinel'd on disk.
 2. **Apply fixes** to `main.tex` (and section files): for each unit whose Checker proposed an edit, apply it wrapped in the Mark API so the user reviews it and approves it through the `approve-changes-markings` agent, which accepts both wrappings:
    - a **replacement or deletion** as `\MarkEdit{edits}{<old>}{<new>}`, with `<old>` copied verbatim from the file; an empty `<new>` deletes. The reviewer then sees what was removed;
    - a **pure addition** as `\Mark{changes}{…}`.
+   - a **citation change** (adding, swapping, splitting, or removing a key) as a
+     `\MarkEdit{edits}` replacement whose arguments hold the whole `\cite`
+     commands, for example `\MarkEdit{edits}{\cite{a}}{\cite{a,b}}`. Never put
+     `\cite` or `\ref` inside `\Mark{changes}`.
 
    If the manuscript defines no `edits` role (no `\DefineMarkRole{edits}` in its sources), wrap the new text in `\Mark{changes}{…}` instead and quote the removed text in the report.
 
@@ -171,9 +175,9 @@ Skip units already sentinel'd on disk.
    - **Fixes outside the unit.** A Checker suggestion that touches text outside its unit's citation context is listed under minor issues, never applied.
    - **Only citation edits.** Apply only edits that change the cited sentence or swap, split, or remove a citation. Never add new content, such as new sentences, table rows, or captions. List any such proposal under minor issues instead.
 
-   Apply serially; never let two edits race. Respect the `\Mark`/soul hazards (no `\Cref`, control-space, or dense math inside `\Mark{}` or `\MarkEdit{}`).
+   Apply serially; never let two edits race. Respect the `\Mark`/soul hazards: no `\cite`, `\ref`, `\Cref`, control-space, or dense math inside `\Mark{}`, and no `\ref`, `\Cref`, control-space, or dense math inside `\MarkEdit{}`.
 3. **Reconcile**: every ledger unit must be `done` or explicitly `skipped`. If any remain `pending`, re-dispatch them — do not report success with gaps. Then rewrite the ledger's totals line, recounting the `\cite` units and `\nocite` keys from the ledger rows before writing it.
-4. **Report** to `<output root>\citation-audit\<date>\report.md`. This file is a required deliverable that you, the Conductor, write yourself; a report returned only as text, without the `REPORT-PATH:` line and the markers below, does not complete the run. State the knowledge-base root and the output root. Then, in order:
+4. **Report** to `<output root>/citation-audit/<date>/report.md`. This file is a required deliverable that you, the Conductor, write yourself; a report returned only as text, without the `REPORT-PATH:` line and the markers below, does not complete the run. State the knowledge-base root and the output root. Then, in order:
    - critical errors (wrong paper, unsupported claim);
    - **Knowledge-base defects**, built from the ledger's `stub`, `drift`, and `missing` flags: every stub, missing paper, and key drift (a key resolved to a differently named folder, or with a key-drift note), each with its key and folder;
    - minor issues, including every unit whose unit file says `Summary-only (stub PDF): yes`, every key flagged `no-bib-entry` (it renders as `[?]`), and every proposed fix left unapplied (an overlapping fix the Checkers disagree on, one outside its unit's citation context, or one that adds new content), with the Checker's proposed text;
@@ -194,10 +198,10 @@ Skip units already sentinel'd on disk.
 
 ## Resumability
 
-On start, before anything else: read `ledger.md` if it exists, then scan `units\`. A unit file counts as complete if it contains `<!-- AUDIT-UNIT-COMPLETE -->`. A key's notes are **finished for this key** when its `fit.md` contains `<!-- AUDIT-READER-COMPLETE -->`, this run's run line, and a `### Targeted (<key>)` heading for that key. For each key:
+On start, before anything else: read `ledger.md` if it exists, then scan `units/`. A unit file counts as complete if it contains `<!-- AUDIT-UNIT-COMPLETE -->`. A key's notes are **finished for this key** when its `fit.md` contains `<!-- AUDIT-READER-COMPLETE -->`, this run's run line, and a `### Targeted (<key>)` heading for that key. For each key:
 
 - If the ledger has a resolved folder, that paper is complete when its `fit.md` is finished for this key.
-- If the ledger has no resolved folder, first look for `missing\<key>.md` containing the sentinel. Then look under the knowledge-base root for a `fit.md` finished for this key, beside a `summary.md` whose title matches the key's `.bib` title. Dispatch a Reader only if neither exists.
+- If the ledger has no resolved folder, first look for `missing/<key>.md` containing the sentinel. Then look under the knowledge-base root for a `fit.md` finished for this key, beside a `summary.md` whose title matches the key's `.bib` title. Dispatch a Reader only if neither exists.
 - For every key found finished or missing, set its folder and its `stub`, `drift`, and `missing` flags exactly as Phase 2 step 2 does. When the scan finds a key's missing record, also mark that key's units `skipped (no inventory)`.
 
 The run line always uses the paper directory from the ledger header, verbatim, so a resumed run recognises the notes it wrote. Notes whose run line differs (an earlier audit, or another manuscript) are not complete; they are re-read and overwritten. Rebuild the ledger to match disk, then resume at the earliest incomplete phase. Within one run, resuming never re-reads an inventoried PDF or re-judges a sentinel'd unit. The working area is keyed by date, so a run resumed on a later day starts over.

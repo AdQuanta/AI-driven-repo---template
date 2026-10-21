@@ -29,7 +29,7 @@ Paths are relative to the repository root, the folder that contains `.claude/`.
 - **section / role** — where in the manuscript this is.
 - **inventory path** — the cited paper's `fit.md` in its resolved folder (the Reader's anchored `## Verified Results`).
 - **knowledge-base root** and **.bib path** — the only places to look for a better paper (step 6).
-- **unit-file output path** — `units\<unit-id>.md` to write.
+- **unit-file output path** — `units/<unit-id>.md` to write.
 
 ## Steps
 
@@ -54,7 +54,7 @@ Paths are relative to the repository root, the folder that contains `.claude/`.
    - Summary and `.bib` entry: propose swapping to its key and quote the summary passage in `Better paper`.
    - Summary but no `.bib` entry: do not propose a swap; in `Better paper`, name the paper's folder and title, quote the summary passage, and say it needs a `.bib` entry first.
    - `.bib` entry but no summary: propose swapping to its key, quote the entry's title or abstract in `Better paper`, and mark the proposal lower confidence.
-7. **Propose a fix when warranted (aggressive scope allowed):** swap/remove/add a key, move the citation within the passage, or reword the claim sentence so it matches what the paper actually says. Any key you add or swap in must exist in the `.bib` (step 6). Express the fix as a precise, ready-to-apply edit — you do **not** edit `main.tex` yourself; the Conductor applies it as a `\MarkEdit{edits}` replacement or a `\Mark{changes}` addition.
+7. **Propose a fix when warranted (aggressive scope allowed):** swap/remove/add a key, move the citation within the passage, or reword the claim sentence so it matches what the paper actually says. Any key you add or swap in must exist in the `.bib` (step 6). Express the fix as a precise, ready-to-apply edit — you do **not** edit `main.tex` yourself; the Conductor applies it as a `\MarkEdit{edits}` replacement or a `\Mark{changes}` addition, and always as a `\MarkEdit{edits}` replacement when it changes a citation.
 8. Write your file:
 
 ```markdown
@@ -76,7 +76,7 @@ Proposed edit: <ready-to-apply edit, or "none">
 
 ## Rules
 
-- One unit, one file. Write only `units\<unit-id>.md`; never touch the inventory, the ledger, or `main.tex`.
+- One unit, one file. Write only `units/<unit-id>.md`; never touch the inventory, the ledger, or `main.tex`.
 - Always ground the verdict in a named anchor. "Looks fine" is not a verdict.
 - `severity: critical` for `wrong-paper` and `unsupported` claims that carry real weight; use judgement for `better-elsewhere`. A stub alone never makes a unit `critical` (step 2).
 - The final line MUST be the `<!-- AUDIT-UNIT-COMPLETE -->` sentinel; write it only when the verdict is final.
