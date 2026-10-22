@@ -15,10 +15,10 @@ Assume they are a skilled developer, but know almost nothing about our toolset o
 
 **Announce at start:** "I'm using the writing-plans skill to create the implementation plan."
 
-**Context:** Work in the user's current worktree unless the user asked for a separate worktree (see `docs/agent-guidance/git-policy.md`).
+**Context:** Work in the user's current worktree unless the user asked for a separate one; if you create a worktree, follow the "Agent-Created Worktrees" section of `docs/agent-guidance/git-policy.md`.
 
-**Save plans to:** `_agents_outputs/plans/YYYY-MM-DD-<feature-name>.md`
-- (User preferences for plan location override this default)
+**Save plans to:** `docs/superpowers/plans/YYYY-MM-DD-<feature-name>.md`, next to the spec that `brainstorming` saved under `docs/superpowers/specs/` with the same date and topic slug.
+- (User preferences for plan location override this default; if you move the plan root, move the spec root in `brainstorming` too)
 
 ## Scope Check
 
@@ -42,7 +42,7 @@ This structure informs the task decomposition. Each task should produce self-con
 - "Run it to make sure it fails" - step
 - "Implement the minimal code to make the test pass" - step
 - "Run the tests and make sure they pass" - step
-- "Checkpoint: report the change for user review" - step
+- "Checkpoint (commit if the project's Git policy allows; otherwise record the diff base for review)" - step
 
 ## Plan Document Header
 
@@ -51,7 +51,7 @@ This structure informs the task decomposition. Each task should produce self-con
 ```markdown
 # [Feature Name] Implementation Plan
 
-> **For agentic workers:** Execute this plan task-by-task, in order, verifying each step's expected output before moving on. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use subagent-driven-development to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** [One sentence describing what this builds]
 
@@ -99,12 +99,15 @@ Expected: PASS
 
 - [ ] **Step 5: Checkpoint**
 
-List the files changed in this task for review. If your Git workflow commits
-per task, commit here, e.g.:
+Commit if the project's Git policy allows; otherwise record the diff base for review.
 
 ```bash
+# If committing:
 git add tests/path/test.py src/path/file.py
 git commit -m "feat: add specific feature"
+
+# Otherwise, record the diff base for the reviewer:
+git rev-parse HEAD   # BASE for this task; review against the working tree
 ```
 ````
 
@@ -126,7 +129,7 @@ Every step must contain the actual content an engineer needs. These are **plan f
 
 ## Self-Review
 
-After writing the complete plan, look at the spec with fresh eyes and check the plan against it. This is a checklist you run yourself — not a subagent dispatch.
+After writing the complete plan, look at the spec with fresh eyes and check the plan against it. This is a checklist you run yourself — not a subagent dispatch. For a large or high-stakes plan you may additionally dispatch a general-purpose subagent with the template in `plan-document-reviewer-prompt.md`.
 
 **1. Spec coverage:** Skim each section/requirement in the spec. Can you point to a task that implements it? List any gaps.
 
@@ -138,16 +141,9 @@ If you find issues, fix them inline. No need to re-review — just fix and move 
 
 ## Execution Handoff
 
-After saving the plan, offer execution choice:
+After saving the plan, offer to execute it:
 
-**"Plan complete and saved to `_agents_outputs/plans/<filename>.md`. Two execution options:**
+**"Plan complete and saved to `docs/superpowers/plans/<filename>.md`. I recommend subagent-driven execution: I dispatch a fresh subagent per task and review between tasks. Shall I start?"**
 
-**1. Inline Execution (recommended)** - I execute the tasks in this session, in order, pausing at each checkpoint for your review
-
-**2. Manual Execution** - You (or another session) execute the plan; I stop here
-
-**Which approach?"**
-
-**If Inline Execution chosen:**
-- Work through the tasks in order, ticking each step only when its expected output is observed
-- Stop and report at every checkpoint
+- **REQUIRED SUB-SKILL:** Use subagent-driven-development
+- Fresh subagent per task + two-stage review

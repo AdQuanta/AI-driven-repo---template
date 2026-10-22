@@ -5,8 +5,8 @@
 Trigger condition: Sentences >50 words OR >3 subordinate clauses
 
 ```bash
-uv run python -B scripts/analyze_sentences.py main.tex
-uv run python -B scripts/analyze_sentences.py main.tex --section introduction --max-words 45 --max-clauses 3
+python -B .agents/skills/latex-paper-en/scripts/analyze_sentences.py main.tex
+python -B .agents/skills/latex-paper-en/scripts/analyze_sentences.py main.tex --section introduction --max-words 45 --max-clauses 3
 ```
 
 Output format:

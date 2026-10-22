@@ -3,18 +3,18 @@
 
 USAGE:
     # 2D plot
-    uv run python scripts/math_plot.py plot2d "sin(x)" \\
+    python .agents/skills/math/scripts/cc_math/math_plot.py plot2d "sin(x)" \\
         --var x --range -10 10 --output plot.png
 
     # 3D surface
-    uv run python scripts/math_plot.py plot3d "x**2 + y**2" \\
+    python .agents/skills/math/scripts/cc_math/math_plot.py plot3d "x**2 + y**2" \\
         --xvar x --yvar y --range 5 --output surface.html
 
     # LaTeX to PNG
-    uv run python scripts/math_plot.py latex "\\int e^{-x^2} dx" --output equation.png
+    python .agents/skills/math/scripts/cc_math/math_plot.py latex "\\int e^{-x^2} dx" --output equation.png
 
     # Multiple 2D functions
-    uv run python scripts/math_plot.py plot2d-multi "sin(x),cos(x)" \\
+    python .agents/skills/math/scripts/cc_math/math_plot.py plot2d-multi "sin(x),cos(x)" \\
         --var x --range -6.28 6.28 --output multi.png
 
 Requires: matplotlib, plotly, sympy, numpy

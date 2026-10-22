@@ -53,9 +53,9 @@ oint_C f(z)dz = 2*pi*i * sum(Res(f, z_k)) for z_k inside C
 
 ### Command Reference
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/sympy_compute.py residue "1/((z-1)*(z-2))" --var z --at 1
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/sympy_compute.py limit "(z-1)*f(z)" --var z --at 1
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/z3_solve.py prove "abs(z0) < R"
+python .agents/skills/math/scripts/cc_math/sympy_compute.py residue "1/((z-1)*(z-2))" --var z --at 1
+python .agents/skills/math/scripts/cc_math/sympy_compute.py limit "(z-1)*f(z)" --var z --at 1
+python .agents/skills/math/scripts/cc_math/z3_solve.py prove "abs(z0) < R"
 ```
 
 ## beta (Termination)

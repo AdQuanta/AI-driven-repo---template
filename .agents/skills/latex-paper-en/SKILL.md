@@ -5,7 +5,7 @@ metadata:
   category: academic-writing
   tags: [latex, paper, english, ieee, acm, springer, neurips, icml, compilation, grammar, bibliography, figures, pseudocode, algorithmicx, algpseudocodex]
 argument-hint: "[main.tex] [--section SECTION] [--module MODULE]"
-allowed-tools: Read, Glob, Grep, Bash(uv *), Bash(pdflatex *), Bash(xelatex *), Bash(latexmk *), Bash(bibtex *), Bash(biber *), Bash(chktex *)
+allowed-tools: Read, Glob, Grep, Bash(python *), Bash(uv *), Bash(pdflatex *), Bash(xelatex *), Bash(latexmk *), Bash(bibtex *), Bash(biber *), Bash(chktex *)
 author: NGBigField
 ---
 
@@ -45,26 +45,39 @@ Do not use this skill for:
 - Chinese thesis-specific structure/template work
 - Typst-first paper workflows
 - DOCX/PDF conversion tasks that do not involve the LaTeX source
-- multi-perspective review, scoring, or submission gate decisions (use `paper-audit`)
+- multi-perspective review, scoring, or submission gate decisions
 - standalone algorithm design from scratch without a paper project
+
+## Running The Scripts
+
+Run every command from the repository root with the project's Python
+interpreter (the root `.venv`: `.venv\Scripts\python.exe` on Windows,
+`.venv/bin/python` on Linux/macOS, or plain `python` once it is activated).
+Script paths are repository-relative (`.agents/skills/latex-paper-en/scripts/...`),
+so no `$SKILL_DIR` variable is needed. Pass the manuscript path relative to the
+root, for example `publications/<paper-folder>/main.tex` in place of `main.tex`.
+The scripts use only the Python standard library; `uv run python ...` works
+too where `uv` is installed, but it is optional. LaTeX commands need a TeX
+distribution (TeX Live, MiKTeX, or MacTeX) providing `latexmk`, `pdflatex`/`xelatex`,
+`bibtex`/`biber`, and `chktex` on `PATH`.
 
 ## Module Router
 
 | Module | Use when | Primary command | Read next |
 | --- | --- | --- | --- |
-| `compile` | Build fails or the user wants a fresh compile | `uv run python -B $SKILL_DIR/scripts/compile.py main.tex` | `references/modules/COMPILE.md` |
-| `format` | User asks for LaTeX or venue formatting review | `uv run python -B $SKILL_DIR/scripts/check_format.py main.tex` | `references/modules/FORMAT.md` |
-| `bibliography` | Missing citations, unused entries, BibTeX validation | `uv run python -B $SKILL_DIR/scripts/verify_bib.py references.bib --tex main.tex` | `references/modules/BIBLIOGRAPHY.md` |
-| `grammar` | Grammar and surface-level language fixes | `uv run python -B $SKILL_DIR/scripts/analyze_grammar.py main.tex --section introduction` | `references/modules/GRAMMAR.md` |
-| `sentences` | Long, dense, or hard-to-read sentences | `uv run python -B $SKILL_DIR/scripts/analyze_sentences.py main.tex --section introduction` | `references/modules/SENTENCES.md` |
-| `logic` | Weak argument flow, unclear transitions, introduction funnel problems, or abstract/conclusion misalignment | `uv run python -B $SKILL_DIR/scripts/analyze_logic.py main.tex --section methods` | `references/modules/LOGIC.md` |
-| `expression` | Academic tone polish without changing claims | `uv run python -B $SKILL_DIR/scripts/improve_expression.py main.tex --section related` | `references/modules/EXPRESSION.md` |
-| `translation` | Chinese-to-English academic translation or bilingual polishing | `uv run python -B $SKILL_DIR/scripts/translate_academic.py input.txt --domain deep-learning` | `references/modules/TRANSLATION.md` |
-| `title` | Generate, compare, or optimize paper titles | `uv run python -B $SKILL_DIR/scripts/optimize_title.py main.tex --check` | `references/modules/TITLE.md` |
-| `figures` | Figure existence, extension, DPI, or caption review | `uv run python -B $SKILL_DIR/scripts/check_figures.py main.tex` | `references/REVIEWER_PERSPECTIVE.md` |
-| `pseudocode` | IEEE-safe pseudocode review, `algorithm2e` cleanup, caption/label/reference checks, and comment-length review | `uv run python -B $SKILL_DIR/scripts/check_pseudocode.py main.tex --venue ieee` | `references/modules/PSEUDOCODE.md` |
-| `deai` | Reduce AI-writing traces while preserving LaTeX syntax | `uv run python -B $SKILL_DIR/scripts/deai_check.py main.tex --section introduction` | `references/modules/DEAI.md` |
-| `experiment` | Inspect experiment design/write-up quality, discussion depth, discussion layering, and conclusion completeness | `uv run python -B $SKILL_DIR/scripts/analyze_experiment.py main.tex --section experiments` | `references/modules/EXPERIMENT.md` |
+| `compile` | Build fails or the user wants a fresh compile | `python -B .agents/skills/latex-paper-en/scripts/compile.py main.tex` | `references/modules/COMPILE.md` |
+| `format` | User asks for LaTeX or venue formatting review | `python -B .agents/skills/latex-paper-en/scripts/check_format.py main.tex` | `references/modules/FORMAT.md` |
+| `bibliography` | Missing citations, unused entries, BibTeX validation | `python -B .agents/skills/latex-paper-en/scripts/verify_bib.py references.bib --tex main.tex` | `references/modules/BIBLIOGRAPHY.md` |
+| `grammar` | Grammar and surface-level language fixes | `python -B .agents/skills/latex-paper-en/scripts/analyze_grammar.py main.tex --section introduction` | `references/modules/GRAMMAR.md` |
+| `sentences` | Long, dense, or hard-to-read sentences | `python -B .agents/skills/latex-paper-en/scripts/analyze_sentences.py main.tex --section introduction` | `references/modules/SENTENCES.md` |
+| `logic` | Weak argument flow, unclear transitions, introduction funnel problems, or abstract/conclusion misalignment | `python -B .agents/skills/latex-paper-en/scripts/analyze_logic.py main.tex --section methods` | `references/modules/LOGIC.md` |
+| `expression` | Academic tone polish without changing claims | `python -B .agents/skills/latex-paper-en/scripts/improve_expression.py main.tex --section related` | `references/modules/EXPRESSION.md` |
+| `translation` | Chinese-to-English academic translation or bilingual polishing | `python -B .agents/skills/latex-paper-en/scripts/translate_academic.py input.txt --domain deep-learning` | `references/modules/TRANSLATION.md` |
+| `title` | Generate, compare, or optimize paper titles | `python -B .agents/skills/latex-paper-en/scripts/optimize_title.py main.tex --check` | `references/modules/TITLE.md` |
+| `figures` | Figure existence, extension, DPI, or caption review | `python -B .agents/skills/latex-paper-en/scripts/check_figures.py main.tex` | `references/REVIEWER_PERSPECTIVE.md` |
+| `pseudocode` | IEEE-safe pseudocode review, `algorithm2e` cleanup, caption/label/reference checks, and comment-length review | `python -B .agents/skills/latex-paper-en/scripts/check_pseudocode.py main.tex --venue ieee` | `references/modules/PSEUDOCODE.md` |
+| `deai` | Reduce AI-writing traces while preserving LaTeX syntax | `python -B .agents/skills/latex-paper-en/scripts/deai_check.py main.tex --section introduction` | `references/modules/DEAI.md` |
+| `experiment` | Inspect experiment design/write-up quality, discussion depth, discussion layering, and conclusion completeness | `python -B .agents/skills/latex-paper-en/scripts/analyze_experiment.py main.tex --section experiments` | `references/modules/EXPERIMENT.md` |
 
 ## Required Inputs
 
@@ -86,7 +99,7 @@ If arguments are missing, ask only for the file path and the target module.
 
 1. Parse `$ARGUMENTS` and identify the smallest matching module.
 2. Read only the reference file needed for that module.
-3. Run the module script with `uv run python -B ...`.
+3. Run the module script with `python -B .agents/skills/latex-paper-en/scripts/...` from the repository root.
 4. Summarize issues, suggested fixes, and blockers in LaTeX-friendly comments.
 5. If the user asks for a different concern, switch modules instead of overloading one run.
 

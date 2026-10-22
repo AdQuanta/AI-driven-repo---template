@@ -5,8 +5,8 @@
 ## Commands
 
 ```bash
-uv run python -B scripts/check_pseudocode.py main.tex --venue ieee
-uv run python -B scripts/check_pseudocode.py main.tex --venue ieee --json
+python -B .agents/skills/latex-paper-en/scripts/check_pseudocode.py main.tex --venue ieee
+python -B .agents/skills/latex-paper-en/scripts/check_pseudocode.py main.tex --venue ieee --json
 ```
 
 ## IEEE-safe defaults

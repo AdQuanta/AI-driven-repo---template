@@ -7,9 +7,9 @@
 ## Commands
 
 ```bash
-uv run python -B scripts/deai_check.py main.tex --section introduction
-uv run python -B scripts/deai_check.py main.tex --analyze
-uv run python -B scripts/deai_batch.py main.tex --all-sections
+python -B .agents/skills/latex-paper-en/scripts/deai_check.py main.tex --section introduction
+python -B .agents/skills/latex-paper-en/scripts/deai_check.py main.tex --analyze
+python -B .agents/skills/latex-paper-en/scripts/deai_batch.py main.tex --all-sections
 ```
 
 ## Raw Script Output

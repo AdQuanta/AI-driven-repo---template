@@ -1,49 +1,33 @@
 % ============================================================================
-%  Section 1 — Introduction
+%  Section 1 -- Introduction
 %
-%  Mark API examples are shown throughout this section to demonstrate
-%  the marking workflow. Remove/replace them with your actual content.
+%  The marks in this section demonstrate the Mark API. Replace them with your
+%  own content.
 % ============================================================================
-\section{\Mark{changes}[heading]{Introduction}}
+\section{Introduction}
+\label{sec:introduction}
 
-\Mark{changes}{%
-This is an example of a highlighted \emph{change} — a new or revised sentence
-is wrapped in \texttt{\textbackslash Mark\{changes\}\{...\}} to highlight it
-in the compiled PDF. The highlight color (yellow by default) is defined in
-\texttt{config.tex} via \texttt{\textbackslash DefineMarkRole\{changes\}\{\textbackslash ChangesColor\}}.%
-}
+Inexpensive digital temperature sensors make dense monitoring networks
+affordable, yet their factory specifications rarely match the accuracy that a
+measurement study needs. Each unit deviates from the true temperature by an
+offset and a gain error, and both terms drift over long
+deployments~\cite{example2024drift}.
+A useful correction must therefore estimate \MarkEdit{edits}{the offset}{both terms}
+for every sensor.
 
-\Mark{missing}{TODO: Write the introduction here. %
-Motivate the problem, state the main contribution, and outline the paper structure.}
+Calibration against a reference instrument maps raw readings to values with a
+stated uncertainty~\cite{taylor1997errors}. We follow the conventions of the
+Guide to the Expression of Uncertainty in Measurement~\cite{jcgm2008gum}.
+\Mark{changes}{The pipeline runs unattended once the sensors are in the bath, so a single operator can calibrate a whole batch in one session.}
 
-Here is an example of a \emph{missing} equation placeholder:
+\Mark{missing}{TODO: Add a sentence on prior calibration studies and cite them.}
 
-\MarkPlaceholderFigure{missing}{%
-  Add a system diagram here showing the high-level architecture.%
-}{fig:system}{System overview.}
+\subsection{\Mark{changes}[heading]{Contributions}}
 
-Here is an example of a highlighted block equation:
-
-\begin{MarkEnv}{changes}[math]
-    \mathcal{F}(\lambda) =
-    \sum_{k=1}^{K}
-    \lambda \cdot f_k + (1 - \lambda) \cdot g_k
+\begin{MarkEnv}{changes}[text]
+We describe a two-parameter linear calibration model, a least-squares fit for its
+two parameters, and a simple residual check that flags sensors whose response
+is not linear over the calibrated range.
 \end{MarkEnv}
 
-\noindent
-where \Mark{changes}{$\lambda \in [0, 1]$ is a weighting parameter} %
-and \Mark{missing}{TODO: define $f_k$ and $g_k$}.
-
-The paper is organized as follows.
-\Cref{sec:background} \Mark{missing}{TODO: describe each section briefly.}
-
-% ============================================================================
-%  Related Work (can be a subsection of Introduction or a standalone section)
-% ============================================================================
-\subsection{Related Work}
-
-\Mark{missing}{TODO: Survey related work here. %
-Cite key papers from the literature knowledge base using \texttt{@find-papers}.}
-
-Prior work on \Mark{changes}{relevant topic}~\cite{example2024} has shown that
-\Mark{missing}{TODO: summarize the key finding and its limitation.}
+\Cref{sec:method} presents the calibration model and the fitting procedure.

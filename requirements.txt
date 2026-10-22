@@ -1,22 +1,33 @@
-# Root dependency manifest for this repository's shared project structure.
+# Root dependency manifest. One root `.venv` serves every sector and skill.
 #
-# Scope: packages required by the executable scripts that ship inside the
-# canonical AI customization assets (`.agents/skills/**`). Without these, those
-# scripts fail at import time with an unhelpful "No module named ..." error and
-# nothing in the repository explains what to install.
+# Every entry backs a named script or module; without it, that code fails at
+# import time with an unhelpful "No module named ..." error. Lower bounds only:
+# nothing here is frozen. Add, drop, or loosen entries as the project's needs
+# change, in the same change that adds or removes the import.
 #
-# This file does NOT cover the science code under `code/`, which carries its own
-# scoped manifest (`code/requirements.txt`). Install both into the same venv.
+# Sections:
+#   1. Shared project structure: the scripts shipped in `.agents/skills/**`.
+#      This section travels with the reusable project package; see
+#      `docs/agent-guidance/reusable-research-project-blueprint.md`.
+#   2. This project's science code: `code/src/**`, `code/scripts/**`,
+#      `code/tests/**`, plus the repository's own test suites. Project-specific;
+#      a new project replaces it.
+#   A package may appear in both sections so each section stays self-contained.
+#
+# A stack with an install constraint the root `.venv` should not inherit (a heavy
+# optional SDK, a conda environment, a different Python version) keeps its own
+# manifest. List each such manifest here, with the code that needs it.
+# This project has none yet.
 #
 # Install into the repository-root virtual environment:
 #
 #     python -m venv .venv
-#     .venv/Scripts/python.exe -m pip install -r requirements.txt -r code/requirements.txt   # Windows
-#     .venv/bin/python -m pip install -r requirements.txt -r code/requirements.txt           # macOS/Linux
-#
-# When a skill, agent, or app that is part of the shared project structure grows
-# a new third-party dependency, add it here in the same change. See
-# `.agents/skills/skill-maintenance/SKILL.md`.
+#     .venv/Scripts/python.exe -m pip install -r requirements.txt     # Windows
+#     .venv/bin/python -m pip install -r requirements.txt             # macOS/Linux
+
+# ============================================================================
+# 1. Shared project structure (ships with the reusable project package)
+# ============================================================================
 
 # --- math skill: .agents/skills/math/scripts/cc_math/ ---
 # Each entry below backs a specific script; removing one breaks that script.
@@ -28,3 +39,13 @@ z3-solver>=4.12    # z3_solve.py  (imported as `z3`)
 pint>=0.24         # pint_compute.py
 shapely>=2.0       # shapely_compute.py
 matplotlib>=3.10   # math_plot.py
+# plotly>=5.0      # optional: math_plot.py plot3d only (lazy import)
+
+# --- literature-review skill: .agents/skills/literature-review/scripts/ ---
+requests>=2.31     # verify_citations.py
+
+# ============================================================================
+# 2. This project's science code (project-specific; replace in a new project)
+# ============================================================================
+
+pytest>=8.0        # code/tests/, research/references/src/tests/, publications/modules/markings/scripts/

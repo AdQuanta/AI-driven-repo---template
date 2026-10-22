@@ -2,6 +2,6 @@
 
 This topic folder maps to installed dependency skills:
 
-- ../../../../.agents/skills/graph-algorithms/SKILL.md
-- ../../../../.agents/skills/prime-numbers/SKILL.md
-- ../../../../.agents/skills/modular-arithmetic/SKILL.md
+- graph-algorithms/SKILL.md
+- prime-numbers/SKILL.md
+- modular-arithmetic/SKILL.md

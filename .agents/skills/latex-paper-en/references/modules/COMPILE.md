@@ -27,28 +27,28 @@
 **Usage**:
 ```bash
 # Default: latexmk auto-handles all dependencies (recommended)
-uv run python -B scripts/compile.py main.tex                          # Auto-detect compiler + latexmk
+python -B .agents/skills/latex-paper-en/scripts/compile.py main.tex                          # Auto-detect compiler + latexmk
 
 # Single-pass compilation (quick builds)
-uv run python -B scripts/compile.py main.tex --recipe pdflatex        # PDFLaTeX only
-uv run python -B scripts/compile.py main.tex --recipe xelatex         # XeLaTeX only
+python -B .agents/skills/latex-paper-en/scripts/compile.py main.tex --recipe pdflatex        # PDFLaTeX only
+python -B .agents/skills/latex-paper-en/scripts/compile.py main.tex --recipe xelatex         # XeLaTeX only
 
 # Explicit bibliography workflows (when you need control)
-uv run python -B scripts/compile.py main.tex --recipe pdflatex-bibtex # Traditional BibTeX
-uv run python -B scripts/compile.py main.tex --recipe pdflatex-biber  # Modern biblatex (recommended)
-uv run python -B scripts/compile.py main.tex --recipe xelatex-bibtex  # XeLaTeX + BibTeX
-uv run python -B scripts/compile.py main.tex --recipe xelatex-biber   # XeLaTeX + biblatex
+python -B .agents/skills/latex-paper-en/scripts/compile.py main.tex --recipe pdflatex-bibtex # Traditional BibTeX
+python -B .agents/skills/latex-paper-en/scripts/compile.py main.tex --recipe pdflatex-biber  # Modern biblatex (recommended)
+python -B .agents/skills/latex-paper-en/scripts/compile.py main.tex --recipe xelatex-bibtex  # XeLaTeX + BibTeX
+python -B .agents/skills/latex-paper-en/scripts/compile.py main.tex --recipe xelatex-biber   # XeLaTeX + biblatex
 
 # With output directory
-uv run python -B scripts/compile.py main.tex --outdir build
+python -B .agents/skills/latex-paper-en/scripts/compile.py main.tex --outdir build
 
 # Force detected-compiler biber workflow
-uv run python -B scripts/compile.py main.tex --biber
+python -B .agents/skills/latex-paper-en/scripts/compile.py main.tex --biber
 
 # Utilities
-uv run python -B scripts/compile.py main.tex --watch                  # Watch mode
-uv run python -B scripts/compile.py main.tex --clean                  # Clean aux files
-uv run python -B scripts/compile.py main.tex --clean-all              # Clean all (incl. PDF)
+python -B .agents/skills/latex-paper-en/scripts/compile.py main.tex --watch                  # Watch mode
+python -B .agents/skills/latex-paper-en/scripts/compile.py main.tex --clean                  # Clean aux files
+python -B .agents/skills/latex-paper-en/scripts/compile.py main.tex --clean-all              # Clean all (incl. PDF)
 ```
 
 **Auto-detection**: Script detects Chinese content (ctex, xeCJK, Chinese chars) and auto-selects xelatex.

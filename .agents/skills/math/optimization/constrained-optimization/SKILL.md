@@ -43,17 +43,17 @@ Use this skill when working on constrained-optimization problems in optimization
 
 ### Scipy_Slsqp
 ```bash
-uv run python -c "from scipy.optimize import minimize; cons = dict(type='eq', fun=lambda x: x[0] + x[1] - 1); res = minimize(lambda x: x[0]**2 + x[1]**2, [1, 1], method='SLSQP', constraints=cons); print('Min at', res.x)"
+python -c "from scipy.optimize import minimize; cons = dict(type='eq', fun=lambda x: x[0] + x[1] - 1); res = minimize(lambda x: x[0]**2 + x[1]**2, [1, 1], method='SLSQP', constraints=cons); print('Min at', res.x)"
 ```
 
 ### Sympy_Lagrangian
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/sympy_compute.py solve "[2*x - lam, 2*y - lam, x + y - 1]" --vars "[x, y, lam]"
+python .agents/skills/math/scripts/cc_math/sympy_compute.py solve "[2*x - lam, 2*y - lam, x + y - 1]" --vars "[x, y, lam]"
 ```
 
 ### Z3_Kkt_Satisfied
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/z3_solve.py prove "complementary_slackness"
+python .agents/skills/math/scripts/cc_math/z3_solve.py prove "complementary_slackness"
 ```
 
 ## Key Techniques

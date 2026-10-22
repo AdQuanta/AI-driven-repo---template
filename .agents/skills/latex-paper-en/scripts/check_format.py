@@ -3,9 +3,9 @@
 LaTeX Format Checker - chktex wrapper with enhanced reporting
 
 Usage:
-    uv run python -B check_format.py main.tex
-    uv run python -B check_format.py main.tex --strict
-    uv run python -B check_format.py main.tex --config .chktexrc
+    python -B .agents/skills/latex-paper-en/scripts/check_format.py main.tex
+    python -B .agents/skills/latex-paper-en/scripts/check_format.py main.tex --strict
+    python -B .agents/skills/latex-paper-en/scripts/check_format.py main.tex --config .chktexrc
 """
 
 import argparse

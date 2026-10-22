@@ -29,6 +29,10 @@ make watch    # Live preview
 make clean    # Remove artifacts
 ```
 
+`make` and `rm` are not available in a stock Windows shell. On Windows, call
+`latexmk` directly or wrap the same steps in a PowerShell script, using
+`Remove-Item main.pdf -ErrorAction SilentlyContinue` in place of `rm -f main.pdf`.
+
 ______________________________________________________________________
 
 ## Configuration (.latexmkrc)

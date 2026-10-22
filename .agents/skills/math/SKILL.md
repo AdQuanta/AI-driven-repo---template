@@ -12,7 +12,17 @@ source: "https://www.skills.sh/parcadei/continuous-claude-v3/math"
 
 **One entry point for all computation and explanation.** I route to the right tool based on your request.
 
-For formal proofs, use `/prove` instead.
+For machine-checked formal proofs, see "Formal Proofs" at the end; no proof skill ships with this skill set.
+
+**Running the scripts:** run every command below from the repository root with
+the root `.venv` interpreter (`.venv\Scripts\python.exe` on Windows,
+`.venv/bin/python` on Linux/macOS, or plain `python` once the venv is activated).
+The packages the scripts import (`sympy`, `mpmath`, `z3-solver`, `numpy`, `scipy`,
+`pint`, `shapely`, `matplotlib`) are declared in the root `requirements.txt`.
+`uv run python ...` also works where `uv` is installed, but it is optional. A
+missing package shows up as `{"error": "No module named ..."}` with exit code 1.
+On a Windows console, set `PYTHONUTF8=1` if `--help` output fails with a
+`UnicodeEncodeError`.
 
 ---
 
@@ -33,7 +43,7 @@ For formal proofs, use `/prove` instead.
 
 ### SymPy (Symbolic Math)
 ```bash
-uv run python ".agents/skills/math/scripts/cc_math/sympy_compute.py" <command> <args>
+python ".agents/skills/math/scripts/cc_math/sympy_compute.py" <command> <args>
 ```
 
 | Command | Description | Example |
@@ -85,7 +95,7 @@ uv run python ".agents/skills/math/scripts/cc_math/sympy_compute.py" <command> <
 
 ### Z3 (Constraint Solving)
 ```bash
-uv run python ".agents/skills/math/scripts/cc_math/z3_solve.py" <command> <args>
+python ".agents/skills/math/scripts/cc_math/z3_solve.py" <command> <args>
 ```
 
 | Command | Use Case |
@@ -98,16 +108,16 @@ uv run python ".agents/skills/math/scripts/cc_math/z3_solve.py" <command> <args>
 
 ### Pint (Units)
 ```bash
-uv run python ".agents/skills/math/scripts/cc_math/pint_compute.py" convert <value> <from_unit> <to_unit>
+python ".agents/skills/math/scripts/cc_math/pint_compute.py" convert "<value> <from_unit>" --to <to_unit>
 ```
 
-Example: `convert 5 miles kilometers`
+Example: `convert "5 miles" --to kilometers`
 
 ---
 
 ### Math Router (Auto-Route)
 ```bash
-uv run python ".agents/skills/math/scripts/cc_math/math_router.py" route "<natural language request>"
+python ".agents/skills/math/scripts/cc_math/math_router.py" route "<natural language request>"
 ```
 
 Returns the exact command to run. Use when unsure which script.
@@ -146,7 +156,7 @@ I decide based on your request:
 "is X always true?" → Z3 (constraint proving)
 "convert units" → Pint
 "explain/what is" → Topic skill for context
-"prove formally" → Redirect to /prove
+"prove formally" → Formal Proofs (below)
 ```
 
 ---
@@ -156,39 +166,41 @@ I decide based on your request:
 ### Solve Equation
 ```
 User: Solve x² - 5x + 6 = 0
-Claude: uv run python ".agents/skills/math/scripts/cc_math/sympy_compute.py" solve "x**2 - 5*x + 6" --var x
+Claude: python ".agents/skills/math/scripts/cc_math/sympy_compute.py" solve "x**2 - 5*x + 6" --var x
 Result: x = 2 or x = 3
 ```
 
 ### Compute Eigenvalues
 ```
 User: Find eigenvalues of [[2, 1], [1, 2]]
-Claude: uv run python ".agents/skills/math/scripts/cc_math/sympy_compute.py" eigenvalues "[[2,1],[1,2]]"
+Claude: python ".agents/skills/math/scripts/cc_math/sympy_compute.py" eigenvalues "[[2,1],[1,2]]"
 Result: {1: 1, 3: 1}  (eigenvalue 1 with multiplicity 1, eigenvalue 3 with multiplicity 1)
 ```
 
 ### Prove Inequality
 ```
 User: Is x² + y² ≥ 2xy always true?
-Claude: uv run python ".agents/skills/math/scripts/cc_math/z3_solve.py" prove "x**2 + y**2 >= 2*x*y"
+Claude: python ".agents/skills/math/scripts/cc_math/z3_solve.py" prove "x**2 + y**2 >= 2*x*y"
 Result: PROVED (equivalent to (x-y)² ≥ 0)
 ```
 
 ### Convert Units
 ```
 User: How many kilometers in 26.2 miles?
-Claude: uv run python ".agents/skills/math/scripts/cc_math/pint_compute.py" convert 26.2 miles kilometers
+Claude: python ".agents/skills/math/scripts/cc_math/pint_compute.py" convert "26.2 miles" --to kilometers
 Result: 42.16 km
 ```
 
 ---
 
-## When to Use /prove Instead
+## Formal Proofs
 
-Use `/prove` when you need:
-- Machine-verified formal proof (Lean 4)
+This skill is for computation and explanation. When you need:
+- Machine-verified formal proof
 - Category theory proofs (functors, Yoneda, etc.)
 - Publication-quality verification
 - Abstract algebra proofs
 
-`/math` is for computation. `/prove` is for verification.
+use a proof assistant such as Lean 4 directly, if the project has installed a
+toolchain. No Lean toolchain or proof skill ships with this skill set; without
+one, state the proof informally and check the computable steps with SymPy or Z3.

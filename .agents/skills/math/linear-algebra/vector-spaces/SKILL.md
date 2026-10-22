@@ -39,17 +39,17 @@ Use this skill when working on vector-spaces problems in linear algebra.
 
 ### Sympy_Nullspace
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/sympy_compute.py nullspace "[[1,2,3],[4,5,6]]"
+python .agents/skills/math/scripts/cc_math/sympy_compute.py nullspace "[[1,2,3],[4,5,6]]"
 ```
 
 ### Sympy_Rref
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/sympy_compute.py rref "[[1,2,3],[4,5,6]]"
+python .agents/skills/math/scripts/cc_math/sympy_compute.py rref "[[1,2,3],[4,5,6]]"
 ```
 
 ### Z3_Prove
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/z3_solve.py prove "subspace_closed"
+python .agents/skills/math/scripts/cc_math/z3_solve.py prove "subspace_closed"
 ```
 
 ## Cognitive Tools Reference

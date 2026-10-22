@@ -1,10 +1,9 @@
-# Writing rules – Written via e-mails by Ido and Thomas, Edited by Yaniv
+# Writing Rules – Collected Advice From Paper Supervisors
 
-Source: `_agents_outputs/_agents_dump/writing articles like a champ.docx`
-
-Project-local companion reference for `latex-paper-en`.
-
-Converted from the Word document into Markdown for readability. Wording is preserved; only structure and formatting were changed.
+Companion reference for `latex-paper-en`: practical writing, figure, citation,
+submission, and rebuttal heuristics collected from supervisors' review e-mails.
+Treat each item as advice, not a hard rule; the target venue's instructions
+always take precedence.
 
 ## Intro: Color method
 
@@ -41,7 +40,7 @@ You should do the same thing exactly: remove a comment that I responded to if yo
 - discussion – several paragraphs here. Mention how this generalizes to other systems. Then say that the most exciting is that… Finally say that this can potentially be used to… adding some bombastic conclusion
 - The work can benefit a lot from an "English teacher" going through it to improve the writing
 - saying easy to produce always annoys experimentalists
-- entangled is a risky word
+- avoid loaded field-specific terms in a loose, everyday sense; use them only with their precise technical meaning
 - Backslash is never used in prose. If any slash, it should be forward-slash (which should generally be avoided as well).
 - Fermi is a person—not a thing! Capitalize. (comment on writing fermi level)
 - Write in the active voice: ‘Figure 2a-d reveals a large frequency shift…’. The passive voice is boring. (comment on “In Figure 2a-d a large frequency shift is revealed”)
@@ -126,13 +125,11 @@ Fonts – (for real experts)
 
 While the "optimal" font (see [1]) of course depends on circumstance and case of usage, I myself am quite fond of two particular typefaces. Depending on whether serif (serious stuff; papers, chapters etc) or sans serif (less serious/friendly; posters, slides, and figure labels) I like, respectively, MinionPro and MyriadPro which are two commercial (i.e. expensive, unless bundled with software) typefaces from Adobe.
 
-To avoid paying, as always, one can simply, say, borrow: http://fontsup.com/. For convenience, I've attached (bottom link) a selection of typefaces I like as a .zip archive. To install them, simply press enter on all the files (at once), and Windows should take care of the rest (MyriadPro and MinionPro are included).
+Free alternatives with a similar feel exist (for example Crimson Pro or Source Serif for serif text and Source Sans for sans serif); use whatever your license allows.
 
 [1] Supposedly, one is supposed to actually call this a typeface; then a font is a particular subset of a typeface - e.g. bold - and a typeface is then the collection/family of fonts. Truely an example of an unnecessary distinction.
 
 PS. If you ever wondered what typeface Nature journals use for their figures (probably you have better things to wonder about; but somehow, I have found myself wondering) - it is one called Whitney (in the, there you have it, 'Book' font). It is nice compared to other sans serif's for labels because it is very compact yet legible!
-
-https://drive.google.com/open?id=0Bw3EGeBSpfA_SVlrNFhMQk9ZSFE3
 
 ## Supplementary Information
 
@@ -145,7 +142,7 @@ https://drive.google.com/open?id=0Bw3EGeBSpfA_SVlrNFhMQk9ZSFE3
 ## Submission
 
 - Always submit only a PDF. Word is too risky because it may look different in different computers and we don't want the referees to reduce points for what is a technical computer problem.
-- It advised to only use Ido’s account to submit from. This can be the difference between the editors letting a paper through to referees, and them being slightly more positive.
+- Agree within the author team on who submits (usually the corresponding author) before the submission day.
 
 ## Response to reviewers
 
@@ -164,7 +161,7 @@ After a comment:" We thank the referee for this recommendation."
 - If the reviewer made the spelling mistake, consider fixing it for them in this case.
 - My preference is that one should generally make every citation of a paper in a reply little a hyperlink (to a DOI link): referees don’t want to spend time looking up papers, and we should indicate with every opportunity that we value their time (… and hence them).
 - This is condescending towards the referee—let’s avoid that. As a response to “We also provide the following plot for the referee’s use”.
-- Every paper that the reviewers comment about must be cited in the paper. Even if it is not related at all – just to make them happy.
+- Every paper that the reviewers comment about deserves serious consideration; cite it wherever it is genuinely relevant.
 - Attempt to answer this question in a weakly phrased manner means that most of this paragraph is borderline science speak/meaningless jargon.
 - It would be better to say that we emphasize something rather than minimize something. E.g. it would be better to say  ‘Accordingly, we have sought to emphasize the essential role played by weak coupling in the revised manuscript. Below, we indicate two relevant places where such additional clarifications have been made:’  (then you would, of course, have to make such changes to the manuscript)
 - Better to just try to explicate an approach like the one he suggests that works (i.e. do our best to make him happy!)
@@ -176,7 +173,7 @@ After a comment:" We thank the referee for this recommendation."
 - This sounds a bit insulting. “Added a sentence” after he wrote 2 paragraphs about it.
 - when we feel that the change is too small, we copy the entire paragraph and not just the single sentence. Since there are other small changes in the sentences surrounding the new sentence, then we can color all of it in blue
 - It’s a good idea to point the referee to similar comments by others, especially that the others are more positive than him/her J
-- Not to answer to a referee that we cited what he is talking about :" Our middle finger in his face. “We cited other Lamb shift papers but not yours!”
+- Do not answer a referee's suggested reference by pointing only to other papers you already cite on the same topic; address the suggested work directly.
 - Important to write it in a way that it’s clear that it is a new change following his comment, and not something that we had already. So the tense matter:" We now emphasize"
 - If we don’t agree: We fully appreciate the referee’s comment. Indeed,... However…
 - Format: Reviewers: Bald, line spacing 1.5; Article: line spacing 2, changes in blue; Response: line spacing 1.15.
@@ -226,10 +223,3 @@ Use the moves when you begin writing a section of your article
 ## removes for writing a paper
 
 The editor’s point of view: https://www.youtube.com/watch?v=UVhINwCrUzc
-
-## TODO
-
-- Ref conventions – by journal, consistency, see previous papers.
-- Mendelayevgoogle scholar/manual review
-- Elaborate on fluent text.
-- Cite from site

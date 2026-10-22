@@ -34,17 +34,17 @@ Use this skill when working on continuity problems in real analysis.
 
 ### Sympy_Limit
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/sympy_compute.py limit "f(x)" --var x --at a
+python .agents/skills/math/scripts/cc_math/sympy_compute.py limit "f(x)" --var x --at a
 ```
 
 ### Sympy_Limit_Left
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/sympy_compute.py limit "f(x)" --var x --at a --dir left
+python .agents/skills/math/scripts/cc_math/sympy_compute.py limit "f(x)" --var x --at a --dir left
 ```
 
 ### Z3_Prove
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/z3_solve.py prove "continuous_at_a"
+python .agents/skills/math/scripts/cc_math/z3_solve.py prove "continuous_at_a"
 ```
 
 ## Cognitive Tools Reference

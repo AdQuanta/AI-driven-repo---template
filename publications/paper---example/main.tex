@@ -1,39 +1,41 @@
 % !TEX root = main.tex
 % ============================================================================
-%  [Your Paper Title Here]
-%  Stand-alone paper — template with Mark API examples
+%  Example paper: a short methods note on sensor calibration.
+%  Copy this folder to start a new paper, then replace the content.
 %
 %  HOW TO USE THIS TEMPLATE:
 %  1. Replace the title, authors, and affiliations below.
-%  2. Edit config.tex to add/remove packages and custom macros.
-%  3. Replace sections/ files with your actual content.
+%  2. Edit config.tex to add or remove packages, macros, and marking roles.
+%  3. Replace the files in sections/ with your own content.
 %  4. Add bibliography entries to references.bib.
 %
-%  Mark API quick reference (defined in publications/modules/markings/):
-%    \Mark{changes}{...}              — highlight an inline change (yellow)
-%    \Mark{missing}{...}              — flag missing content (red)
-%    \Mark{changes}[heading]{...}     — highlight a section heading
-%    \begin{MarkEnv}{changes}[text]   — highlight a block of text
-%    \begin{MarkEnv}{changes}[math]   — highlight a display equation
-%    \MarkPlaceholderFigure{missing}{description}{label}{caption}
+%  Mark API quick reference (publications/modules/markings/README.md).
+%  Roles defined in config.tex: changes (new text), edits (replacements),
+%  missing (content still to write). Written here with <role> so the marker
+%  finder does not report this header:
+%    \Mark{<role>}{...}                  inline text (changes or missing)
+%    \Mark{<role>}[heading]{...}         text inside a heading argument
+%    \MarkEdit{<role>}{old}{new}         replaced prose (role edits)
+%    \MarkEdit{<role>}[math]{old}{new}   replaced inline math (role edits)
+%    \begin{MarkEnv}{<role>}[text]       block of plain text
+%    \begin{MarkEnv}{<role>}[math]       display equation
+%    \MarkPlaceholderFigure{<role>}{description}{label}{caption}
+%    markroles field in a .bib entry     highlights the citation (one role)
+%  Never nest one marker inside another. Keep \cite, \ref, and \cref outside
+%  \Mark and MarkEnv[text].
 %
-%  To strip all \Mark{changes} wrappers before submission, run:
-%    @approve-changes-markings
+%  Approving changes: the approve-changes-markings agent
+%  (.claude/agents/approve-changes-markings.agent.md) removes the changes and
+%  edits wrappers, keeps only the accepted text, and rebuilds the paper.
+%  Missing markers stay until the content is written.
 % ============================================================================
 \documentclass[10pt,twocolumn]{article}
 
 % ---------- Packages, macros & settings ----------
 \input{config}
 
-
-% Uncomment to turn all mark-highlights OFF for a clean read:
-% \MarkingOff
-
-
 % ============================================================================
-\title{%
-    \Mark{changes}{[TODO: Your Paper Title]}
-}
+\title{A Linear Calibration Pipeline for Low-Cost Temperature Sensors}
 
 \author[1]{First Author}
 \author[1]{Second Author}
@@ -55,20 +57,18 @@
 \input{sections/abstract}
 \end{@twocolumnfalse}
 ]
-\vspace{1em}
 
 % ---------- Body ----------
 \input{sections/01_introduction}
-\input{sections/02_background}
+\input{sections/02_method}
 
 % Add more sections here:
-% \input{sections/03_method}
-% \input{sections/04_results}
-% \input{sections/05_conclusion}
+% \input{sections/03_results}
+% \input{sections/04_conclusion}
 
 % ---------- Acknowledgements ----------
 \section*{Acknowledgements}
-\Mark{missing}{TODO: Fill acknowledgements — names, funding agency, grant number(s).}
+\Mark{missing}{TODO: Thank contributors and list funding sources.}
 
 % ---------- Bibliography ----------
 \printbibliography

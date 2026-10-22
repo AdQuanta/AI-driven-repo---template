@@ -40,17 +40,17 @@ Use this skill when working on groups problems in abstract algebra.
 
 ### Z3_Group_Axioms
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/z3_solve.py prove "ForAll([a,b,c], op(op(a,b),c) == op(a,op(b,c)))"
+python .agents/skills/math/scripts/cc_math/z3_solve.py prove "ForAll([a,b,c], op(op(a,b),c) == op(a,op(b,c)))"
 ```
 
 ### Z3_Subgroup
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/z3_solve.py prove "subgroup_criterion"
+python .agents/skills/math/scripts/cc_math/z3_solve.py prove "subgroup_criterion"
 ```
 
 ### Sympy_Simplify
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/sympy_compute.py simplify "phi(a*b) - phi(a)*phi(b)"
+python .agents/skills/math/scripts/cc_math/sympy_compute.py simplify "phi(a*b) - phi(a)*phi(b)"
 ```
 
 ## Key Techniques

@@ -5,8 +5,13 @@
 ### Issue: latexmk Not Found
 
 ```bash
-# Check installation
+# Check installation (works on every OS)
 latexmk -v
+
+# Locate the executable
+#   Windows PowerShell: Get-Command latexmk
+#   Windows cmd:        where latexmk
+#   Linux/macOS:        command -v latexmk
 
 # If not found, install a TeX distribution:
 #   Windows: TeX Live (https://tug.org/texlive/) or MiKTeX
@@ -44,8 +49,10 @@ $pdflatex = 'pdflatex -interaction=nonstopmode %O %S';
 # Force rebuild of all dependencies
 latexmk -gg -pdf document.tex
 
-# Or clean and rebuild
-latexmk -C && latexmk -pdf document.tex
+# Or clean and rebuild (run the two commands in sequence;
+# Windows PowerShell 5.1 does not support `&&`, use `;` there)
+latexmk -C
+latexmk -pdf document.tex
 ```
 
 ### Issue: Compilation Errors Not Showing
@@ -55,7 +62,8 @@ latexmk -C && latexmk -pdf document.tex
 latexmk -pdf -verbose document.tex
 
 # Check log file
-less document.log
+less document.log                      # Linux/macOS
+Get-Content document.log -Tail 60      # Windows PowerShell
 ```
 
 ### Issue: Stale Auxiliary Files

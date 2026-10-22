@@ -36,17 +36,17 @@ Use this skill when working on matrices problems in linear algebra.
 
 ### Sympy_Inverse
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/sympy_compute.py inverse "[[1,2],[3,4]]"
+python .agents/skills/math/scripts/cc_math/sympy_compute.py inverse "[[1,2],[3,4]]"
 ```
 
 ### Sympy_Det
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/sympy_compute.py det "[[a,b],[c,d]]"
+python .agents/skills/math/scripts/cc_math/sympy_compute.py det "[[a,b],[c,d]]"
 ```
 
 ### Sympy_Linsolve
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/sympy_compute.py linsolve "[[1,2],[3,4]]" "[5,6]"
+python .agents/skills/math/scripts/cc_math/sympy_compute.py linsolve "[[1,2],[3,4]]" "[5,6]"
 ```
 
 ## Cognitive Tools Reference

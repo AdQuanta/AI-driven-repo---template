@@ -1,0 +1,39 @@
+% ============================================================================
+%  Section 2 -- Calibration model
+% ============================================================================
+\section{Calibration Model}
+\label{sec:method}
+
+Sensor $i$ reports a raw reading $r_{i}$. We model the true temperature as a
+linear function of that reading,
+\begin{equation}
+    T_{i} = a_{i}\, r_{i} + b_{i},
+    \label{eq:model}
+\end{equation}
+where $a_{i}$ is the gain and $b_{i}$ is the offset. All sensors sit in a
+stirred water bath next to a reference thermometer, and the bath steps through
+set points between \qty{5}{\celsius} and \qty{45}{\celsius}.
+
+\subsection{Least-squares fit}
+
+With reference temperatures $T_{\mathrm{ref},k}$ at
+\MarkEdit{edits}[math]{N = 2}{N \geq 3} set points, the parameters in
+\cref{eq:model} follow from ordinary least squares~\cite{press2007numerical}:
+
+\begin{MarkEnv}{changes}[math]
+    (\hat{a}_{i}, \hat{b}_{i}) =
+    \argmin_{a,\,b} \sum_{k=1}^{N}
+    \bigl( T_{\mathrm{ref},k} - a\, r_{i,k} - b \bigr)^{2}
+\end{MarkEnv}
+
+\noindent
+The root-mean-square residual of this fit estimates the remaining calibration
+uncertainty of sensor~$i$. \Mark{changes}{A third set point makes this residual meaningful, because two points always fit a line exactly.}
+
+\Cref{fig:fit} \Mark{missing}{TODO: describe the fitted lines once the figure exists.}
+
+\MarkPlaceholderFigure{missing}{%
+  Plot raw readings against the reference temperature for each sensor,
+  with the fitted calibration lines.%
+}{fig:fit}{Raw sensor readings against the reference temperature, with
+per-sensor linear fits.}

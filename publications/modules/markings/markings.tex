@@ -4,6 +4,8 @@
 %   \DefineMarkRole{role}{color}[state]   state: colored (default) | plain | hidden
 %   \SetMarkFallbackColor{color}
 %   \Mark{role}[kind]{content}
+%   \SetMarkEditMode{plain|popup|inline}   default: plain
+%   \MarkEdit{role}[kind]{old}{new}        kind: text (default) | math
 %   \begin{MarkEnv}{role}[kind] ... \end{MarkEnv}
 %   \MarkPlaceholderFigure{role}[layout]{description}{label}{caption}
 % Supported Mark kinds: text, math, figure, heading
@@ -35,6 +37,11 @@
 }
 \makeatother
 
+% Popup edit notes are PDF annotations. The mode remains plain unless selected.
+\RequirePackage{pdfcomment}
+% soul needs to treat citations as one unit in edit highlights and strikeouts.
+\soulregister\cite7
+
 \providecommand{\MarkingResolvedColor}{red}
 
 \makeatletter
@@ -48,11 +55,23 @@
 \makeatother
 
 \ExplSyntaxOn
+% Declare the expl3 argument variants this module uses. Recent expl3 releases
+% predeclare them, so omitting these lines happens to work on an up-to-date
+% TeX Live; older bundles (and Tectonic's pinned bundle) raise "Undefined
+% control sequence" at the first \DefineMarkRole. Generating a variant that
+% already exists is a no-op, so this is safe on every release.
+\cs_generate_variant:Nn \tl_if_eq:nnTF { Vn }
+\cs_generate_variant:Nn \tl_if_eq:nnT  { Vn }
+\cs_generate_variant:Nn \tl_if_eq:nnF  { Vn }
+\cs_generate_variant:Nn \tl_if_blank:nTF { V }
+\cs_generate_variant:Nn \str_case:nnF { Vn }
 
 \prop_new:N \g_marking_role_color_prop
 \prop_new:N \g_marking_role_state_prop
 \tl_new:N \g_marking_fallback_color_tl
 \tl_gset:Nn \g_marking_fallback_color_tl { red }
+\tl_new:N \g_marking_edit_mode_tl
+\tl_gset:Nn \g_marking_edit_mode_tl { plain }
 
 \tl_new:N \l_marking_role_tl
 \tl_new:N \l_marking_kind_tl
@@ -80,6 +99,7 @@
       }
       {
         \tl_gset_eq:NN \g_marking_fallback_color_tl \l_marking_color_tl
+        % Keep LaTeX2e mirror in sync (used by biblatex citation hooks).
         \xdef\marking@fallbackcolor { \tl_use:N \l_marking_color_tl }
       }
   }
@@ -143,10 +163,14 @@
                   \g_marking_role_color_prop
                   \l_marking_role_tl
                   \g_marking_fallback_color_tl
+                % CS-name mirror: \marking_rolecolor_<role> -> color value.
+                % Used by biblatex citation hooks (\marking@resolveentryroles)
+                % without needing expl3 prop-list access in non-expl3 context.
                 \tl_set:Nx \l_tmpa_tl
                   { marking_rolecolor_ \tl_use:N \l_marking_role_tl }
                 \exp_args:Nc \xdef { \tl_use:N \l_tmpa_tl }
                   { \tl_use:N \g_marking_fallback_color_tl }
+                % Store and mirror state.
                 \marking_validate_state:n {#3}
                 \prop_gput:NVV
                   \g_marking_role_state_prop
@@ -162,10 +186,12 @@
                   \g_marking_role_color_prop
                   \l_marking_role_tl
                   \l_marking_color_tl
+                % CS-name mirror for biblatex citation hooks.
                 \tl_set:Nx \l_tmpa_tl
                   { marking_rolecolor_ \tl_use:N \l_marking_role_tl }
                 \exp_args:Nc \xdef { \tl_use:N \l_tmpa_tl }
                   { \tl_use:N \l_marking_color_tl }
+                % Store and mirror state.
                 \marking_validate_state:n {#3}
                 \prop_gput:NVV
                   \g_marking_role_state_prop
@@ -210,6 +236,111 @@
     \tl_if_blank:VTF \l_marking_kind_tl
       { \tl_set:Nn \l_marking_kind_tl { text } }
       {}
+  }
+
+\cs_new_protected:Npn \marking_set_edit_mode:n #1
+  {
+    \tl_set:Nx \l_tmpa_tl { \marking_normalize_token:n {#1} }
+    \str_case:VnF \l_tmpa_tl
+      {
+        { plain }  { \tl_gset:Nn \g_marking_edit_mode_tl { plain } }
+        { popup }  { \tl_gset:Nn \g_marking_edit_mode_tl { popup } }
+        { inline } { \tl_gset:Nn \g_marking_edit_mode_tl { inline } }
+      }
+      {
+        \marking_warn:nn { MarkWarnInvalidEditMode }
+          { unknown~edit~mode~'\l_tmpa_tl';~keeping~current~mode }
+      }
+  }
+
+\cs_new_protected:Npn \marking_edit_plain:nn #1#2
+  {
+    \str_if_eq:eeTF {#1} { math } { $#2$ } {#2}
+  }
+
+\cs_new_protected:Npn \marking_edit_new:nn #1#2
+  {
+    \str_if_eq:eeTF {#1} { math }
+      { \colorbox{\MarkingResolvedColor!25}{$\displaystyle #2$} }
+      { \sethlcolor{\MarkingResolvedColor!25}\hl{#2} }
+  }
+
+\cs_new_protected:Npn \marking_edit_popup:nnn #1#2#3
+  {
+    \tl_if_blank:nTF {#3}
+      {
+        % A deletion has no replacement text to anchor a markup annotation.
+        \pdfcomment[icon=Note,color=red,subject={Deleted text}]
+          {Removed\space text:\textCR #2}
+        \nobreak\hspace{2.2em}
+      }
+      {
+        % PDF markup anchors are unreliable in moving caption arguments.
+        \cs_if_exist:cTF {@captype}
+          {
+            \str_if_eq:eeTF {#1} { math }
+              { \pdfcomment[icon=Note,color=red,subject={Old expression}]
+                  {Earlier\space version:\textCR $#2$} }
+              { \pdfcomment[icon=Note,color=red,subject={Old text}]
+                  {Earlier\space version:\textCR #2} }
+            \nobreak\hspace{2.2em}
+            \marking_edit_new:nn {#1}{#3}
+          }
+          {
+            \str_if_eq:eeTF {#1} { math }
+              { \pdfmarkupcomment[markup=Highlight,color=\MarkingResolvedColor,
+                  opacity=0.35,subject={Old expression}]
+                  {$#3$}{Earlier\space version:\textCR $#2$} }
+              { \pdfmarkupcomment[markup=Highlight,color=\MarkingResolvedColor,
+                  opacity=0.35,subject={Old text}]
+                  {#3}{Earlier\space version:\textCR #2} }
+          }
+      }
+  }
+
+\cs_new_protected:Npn \marking_edit_inline_old:nn #1#2
+  {
+    \str_if_eq:eeTF {#1} { math }
+      { \textcolor{red}{\st{$#2$}} }
+      { \textcolor{red}{\st{#2}} }
+    \nobreak\hspace{0.2em}
+  }
+
+\cs_new_protected:Npn \marking_edit:nnnn #1#2#3#4
+  {
+    \marking_resolve_role_color:n {#1}
+    \marking_resolve_role_state:n {#1}
+    \marking_resolve_kind:n {#2}
+    \tl_if_eq:VnF \l_marking_kind_tl { math }
+      {
+        \tl_if_eq:VnF \l_marking_kind_tl { text }
+          {
+            \marking_warn:nn { MarkWarnUnknownEditKind }
+              { unknown~edit~kind~'\l_marking_kind_tl';~using~text }
+            \tl_set:Nn \l_marking_kind_tl { text }
+          }
+      }
+    % A plain or hidden role always leaves only the accepted replacement.
+    \tl_if_eq:VnTF \l_marking_state_tl { colored }
+      {
+        \tl_if_eq:VnTF \g_marking_edit_mode_tl { plain }
+          { \marking_edit_plain:nn {\l_marking_kind_tl}{#4} }
+          {
+            \tl_if_eq:VnTF \g_marking_edit_mode_tl { popup }
+              {
+                \tl_if_blank:nTF {#3}
+                  { \marking_edit_new:nn {\l_marking_kind_tl}{#4} }
+                  { \marking_edit_popup:nnn {\l_marking_kind_tl}{#3}{#4} }
+              }
+              {
+                \tl_if_blank:nF {#3}
+                  { \marking_edit_inline_old:nn {\l_marking_kind_tl}{#3} }
+                \tl_if_blank:nF {#4}
+                  { \marking_edit_new:nn {\l_marking_kind_tl}{#4} }
+              }
+          }
+      }
+      { \marking_edit_plain:nn {\l_marking_kind_tl}{#4} }
   }
 
 \cs_new_protected:Npn \marking_render_inline:nnn #1#2#3
@@ -269,6 +400,7 @@
         #2
       }
       {
+        % Heading-safe rendering: highlighted in typeset text, plain in PDF strings.
         \texorpdfstring
           { \marking_render_inline:nnn {#1}{text}{#2} }
           { #2 }
@@ -380,6 +512,7 @@
     \tl_if_blank:VTF \l_marking_layout_tl
       { \tl_set:Nn \l_marking_layout_tl { single } }
       {}
+
     \tl_set:Nx \l_marking_caption_tl { \tl_trim_spaces:n {#5} }
     \tl_if_blank:VTF \l_marking_caption_tl
       {
@@ -388,6 +521,7 @@
         \tl_set:Nn \l_marking_caption_tl { Placeholder Figure }
       }
       {}
+
     \tl_set:Nx \l_marking_label_tl { \tl_trim_spaces:n {#4} }
     \tl_if_blank:VTF \l_marking_label_tl
       {
@@ -396,6 +530,7 @@
         \bool_set_false:N \l_marking_has_label_bool
       }
       { \bool_set_true:N \l_marking_has_label_bool }
+
     \tl_if_eq:VnTF \l_marking_state_tl { hidden }
       {}
       {
@@ -498,6 +633,12 @@
 \NewDocumentCommand{\Mark}{m O{text} +m}
   { \marking_mark:nnn {#1}{#2}{#3} }
 
+\NewDocumentCommand{\SetMarkEditMode}{m}
+  { \marking_set_edit_mode:n {#1} }
+
+\NewDocumentCommand{\MarkEdit}{m O{text} +m +m}
+  { \marking_edit:nnnn {#1}{#2}{#3}{#4} }
+
 \NewDocumentEnvironment{MarkEnv}{m O{text} +b}
   { \marking_markenv:nnn {#1}{#2}{#3} }
   {}
@@ -510,6 +651,8 @@
 \AtBeginDocument{%
   \@ifpackageloaded{hyperref}{%
     \pdfstringdefDisableCommands{%
+      % In PDF strings/bookmarks, keep only the marked content.
+      % Heading marks always include [heading] in this project.
       \def\Mark#1#2]#3{#3}%
     }%
   }{}%
@@ -518,18 +661,39 @@
 
 % ============================================================================
 % Citation Marking (biblatex-only feature)
+% Soft deps: biblatex, hyperref, xpatch — degrade gracefully when absent.
+% Usage: add  markroles = {role}  to a .bib entry to highlight it.
+%        Role names must match a \DefineMarkRole definition.
 % ============================================================================
 
+% breakable is needed for page-spanning bib panels; call is idempotent.
 \tcbuselibrary{breakable}
 
 \makeatletter
+% LaTeX2e mirror of \g_marking_fallback_color_tl; kept in sync by
+% \marking_set_fallback_color:n (via \xdef). Used by biblatex citation hooks.
 \newcommand{\marking@fallbackcolor}{red}
+% markroles data model registration lives in markings.dbx (loaded via
+% biblatex's datamodel= package option). See publications/modules/markings/markings.dbx.
 
-\newcommand{\marking@defaultcitecolor}{}
+% \SetMarkDefaultCiteColor{<color>}
+% Optional public override for the reset citecolor used in \AtEveryCitekey.
+% Normally auto-captured from hyperref at \AtBeginDocument; only set this if
+% your project changes citecolor after that point.
+\newcommand{\marking@defaultcitecolor}{} % placeholder; filled at \AtBeginDocument
 \newcommand{\SetMarkDefaultCiteColor}[1]{\renewcommand{\marking@defaultcitecolor}{#1}}
 
 \AtBeginDocument{%
   \@ifpackageloaded{biblatex}{%
+    %
+    % ---- Helper: resolve markroles field and set \marking@entryrolecolor ----
+    % Sets \marking@entryrolecolor to the resolved color, or \@empty if none.
+    % markroles is declared as a scalar literal field (markings.dbx), accessed
+    % via \thefield.  The role-to-color lookup uses a CS-name mirror defined
+    % by \DefineMarkRole:  \csname marking_rolecolor_<role>\endcsname.
+    % The role-to-state lookup uses \csname marking_rolestate_<role>\endcsname.
+    % Both mirrors avoid expl3 prop-list access from non-expl3 macro bodies.
+    % \marking@statecolored is a constant used for \ifx comparisons.
     \def\marking@statecolored{colored}%
     \newcommand{\marking@resolveentryroles}{%
       \global\let\marking@entryrolecolor\@empty
@@ -550,7 +714,10 @@
         }%
       }%
     }%
+    %
+    % ---- Hook 1: in-text citation color (requires hyperref) ----
     \@ifpackageloaded{hyperref}{%
+      % Auto-capture the project's default citecolor from hyperref internals.
       \@ifundefined{HyColor@citecolor}{%
         \@ifundefined{Hy@citecolor}{%
           \renewcommand{\marking@defaultcitecolor}{black}%
@@ -560,6 +727,7 @@
       }{%
         \edef\marking@defaultcitecolor{\HyColor@citecolor}%
       }%
+      %
       \AtEveryCitekey{%
         \marking@resolveentryroles
         \ifx\marking@entryrolecolor\@empty
@@ -575,6 +743,8 @@
     }{%
       \PackageInfo{marking}{hyperref not loaded; in-text citation color disabled}%
     }%
+    %
+    % ---- Hook 2: bibliography label box ----
     \DeclareFieldFormat{labelnumberwidth}{%
       \marking@resolveentryroles
       \ifx\marking@entryrolecolor\@empty
@@ -587,6 +757,8 @@
         \fi
       \fi
     }%
+    %
+    % ---- Hook 3: bibliography entry body panel (requires xpatch) ----
     \@ifpackageloaded{xpatch}{%
       \xpretobibmacro{begentry}{%
         \marking@resolveentryroles

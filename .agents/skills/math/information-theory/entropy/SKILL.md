@@ -47,17 +47,17 @@ Use this skill when working on entropy problems in information theory.
 
 ### Scipy_Entropy
 ```bash
-uv run python -c "from scipy.stats import entropy; p = [0.25, 0.25, 0.25, 0.25]; H = entropy(p, base=2); print('Entropy:', H, 'bits')"
+python -c "from scipy.stats import entropy; p = [0.25, 0.25, 0.25, 0.25]; H = entropy(p, base=2); print('Entropy:', H, 'bits')"
 ```
 
 ### Scipy_Kl_Div
 ```bash
-uv run python -c "from scipy.stats import entropy; p = [0.5, 0.5]; q = [0.9, 0.1]; kl = entropy(p, q); print('KL divergence:', kl)"
+python -c "from scipy.stats import entropy; p = [0.5, 0.5]; q = [0.9, 0.1]; kl = entropy(p, q); print('KL divergence:', kl)"
 ```
 
 ### Sympy_Entropy
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/sympy_compute.py simplify "-p*log(p, 2) - (1-p)*log(1-p, 2)"
+python .agents/skills/math/scripts/cc_math/sympy_compute.py simplify "-p*log(p, 2) - (1-p)*log(1-p, 2)"
 ```
 
 ## Key Techniques

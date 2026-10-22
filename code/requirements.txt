@@ -1,3 +1,6 @@
-# Dependencies of the science code under `code/` (src, scripts, tests).
-# Shared skill dependencies live in the root `requirements.txt`.
+# Dependencies of the code under `code/` (src, scripts, tests).
+# CI installs only this file for the code tests:
+#     python -m pip install -r code/requirements.txt
+# The root `requirements.txt` installs everything into the shared `.venv`;
+# keep each package the code sector imports listed here as well.
 pytest>=8.0

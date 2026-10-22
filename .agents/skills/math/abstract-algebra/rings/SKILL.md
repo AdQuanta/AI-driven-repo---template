@@ -40,17 +40,17 @@ Use this skill when working on rings problems in abstract algebra.
 
 ### Z3_Ring_Axioms
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/z3_solve.py prove "ForAll([a,b,c], a*(b+c) == a*b + a*c)"
+python .agents/skills/math/scripts/cc_math/z3_solve.py prove "ForAll([a,b,c], a*(b+c) == a*b + a*c)"
 ```
 
 ### Z3_Integral_Domain
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/z3_solve.py prove "a*b == 0 implies a == 0 or b == 0"
+python .agents/skills/math/scripts/cc_math/z3_solve.py prove "a*b == 0 implies a == 0 or b == 0"
 ```
 
 ### Sympy_Ideal
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/sympy_compute.py simplify "r*a"
+python .agents/skills/math/scripts/cc_math/sympy_compute.py simplify "r*a"
 ```
 
 ## Key Techniques

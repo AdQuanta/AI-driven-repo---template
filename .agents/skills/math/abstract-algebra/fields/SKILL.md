@@ -38,17 +38,17 @@ Use this skill when working on fields problems in abstract algebra.
 
 ### Z3_Field_Axioms
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/z3_solve.py prove "field_axioms"
+python .agents/skills/math/scripts/cc_math/z3_solve.py prove "field_axioms"
 ```
 
 ### Sympy_Minpoly
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/sympy_compute.py minpoly "sqrt(2)" --var x
+python .agents/skills/math/scripts/cc_math/sympy_compute.py minpoly "sqrt(2)" --var x
 ```
 
 ### Sympy_Solve
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/sympy_compute.py solve "x**2 - 2" --var x
+python .agents/skills/math/scripts/cc_math/sympy_compute.py solve "x**2 - 2" --var x
 ```
 
 ## Key Techniques

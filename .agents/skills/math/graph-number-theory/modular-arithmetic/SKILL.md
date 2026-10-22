@@ -42,22 +42,22 @@ Use this skill when working on modular-arithmetic problems in graph number theor
 
 ### Sympy_Mod_Inverse
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/sympy_compute.py solve "a*x == 1 mod n" --var x
+python .agents/skills/math/scripts/cc_math/sympy_compute.py solve "a*x == 1 mod n" --var x
 ```
 
 ### Z3_Crt
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/z3_solve.py prove "solution_exists_iff_pairwise_coprime"
+python .agents/skills/math/scripts/cc_math/z3_solve.py prove "solution_exists_iff_pairwise_coprime"
 ```
 
 ### Sympy_Euler_Phi
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/sympy_compute.py simplify "phi(p**k) == p**(k-1)*(p-1)"
+python .agents/skills/math/scripts/cc_math/sympy_compute.py simplify "phi(p**k) == p**(k-1)*(p-1)"
 ```
 
 ### Z3_Quadratic_Residue
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/z3_solve.py prove "legendre_symbol_multiplicative"
+python .agents/skills/math/scripts/cc_math/z3_solve.py prove "legendre_symbol_multiplicative"
 ```
 
 ## Key Techniques

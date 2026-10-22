@@ -43,22 +43,22 @@ Use this skill when working on predicate-logic problems in mathematical logic.
 
 ### Z3_Forall
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/z3_solve.py prove "ForAll([x], Implies(P(x), Q(x)))"
+python .agents/skills/math/scripts/cc_math/z3_solve.py prove "ForAll([x], Implies(P(x), Q(x)))"
 ```
 
 ### Z3_Exists
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/z3_solve.py sat "Exists([x], And(P(x), Not(Q(x))))"
+python .agents/skills/math/scripts/cc_math/z3_solve.py sat "Exists([x], And(P(x), Not(Q(x))))"
 ```
 
 ### Z3_Universal_Instantiation
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/z3_solve.py prove "Implies(ForAll([x], P(x)), P(a))"
+python .agents/skills/math/scripts/cc_math/z3_solve.py prove "Implies(ForAll([x], P(x)), P(a))"
 ```
 
 ### Z3_Model
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/z3_solve.py model "Exists([x], P(x))"
+python .agents/skills/math/scripts/cc_math/z3_solve.py model "Exists([x], P(x))"
 ```
 
 ## Cognitive Tools Reference

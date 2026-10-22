@@ -1,0 +1,139 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "LaTeX: First pdfLaTeX Pass",
+            "type": "process",
+            "command": "powershell",
+            "args": [
+                "-NoProfile",
+                "-Command",
+                "$dir = & '${workspaceFolder}\\.vscode\\find-latex-root.ps1' -FileDirname '${fileDirname}' -WorkspaceFolder '${workspaceFolder}'; if (-not $dir) { exit 0 }; & '${workspaceFolder}\\.vscode\\latex-full-build.ps1' -ProjectDir $dir -Step Pass; exit $LASTEXITCODE"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "LaTeX: Run Bibliography",
+            "type": "process",
+            "command": "powershell",
+            "args": [
+                "-NoProfile",
+                "-Command",
+                "$dir = & '${workspaceFolder}\\.vscode\\find-latex-root.ps1' -FileDirname '${fileDirname}' -WorkspaceFolder '${workspaceFolder}'; if (-not $dir) { exit 0 }; & '${workspaceFolder}\\.vscode\\latex-full-build.ps1' -ProjectDir $dir -Step Bibliography; exit $LASTEXITCODE"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "LaTeX: Full Build Sequence",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "LaTeX: First pdfLaTeX Pass",
+                "LaTeX: Run Bibliography",
+                "LaTeX: Second pdfLaTeX Pass",
+                "LaTeX: Third pdfLaTeX Pass"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "LaTeX: Second pdfLaTeX Pass",
+            "type": "process",
+            "command": "powershell",
+            "args": [
+                "-NoProfile",
+                "-Command",
+                "$dir = & '${workspaceFolder}\\.vscode\\find-latex-root.ps1' -FileDirname '${fileDirname}' -WorkspaceFolder '${workspaceFolder}'; if (-not $dir) { exit 0 }; & '${workspaceFolder}\\.vscode\\latex-full-build.ps1' -ProjectDir $dir -Step Pass; exit $LASTEXITCODE"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "LaTeX: Third pdfLaTeX Pass",
+            "type": "process",
+            "command": "powershell",
+            "args": [
+                "-NoProfile",
+                "-Command",
+                "$dir = & '${workspaceFolder}\\.vscode\\find-latex-root.ps1' -FileDirname '${fileDirname}' -WorkspaceFolder '${workspaceFolder}'; if (-not $dir) { exit 0 }; & '${workspaceFolder}\\.vscode\\latex-full-build.ps1' -ProjectDir $dir -Step FinalPass; exit $LASTEXITCODE"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "LaTeX: Clean Intermediates",
+            "type": "process",
+            "command": "powershell",
+            "args": [
+                "-NoProfile",
+                "-Command",
+                "$dir = & '${workspaceFolder}\\.vscode\\find-latex-root.ps1' -FileDirname '${fileDirname}' -WorkspaceFolder '${workspaceFolder}'; if (-not $dir) { exit 0 }; Set-Location $dir; $paths = @('.latex_build/main.aux', '.latex_build/main.bbl', '.latex_build/main.bcf', '.latex_build/main.blg'); Remove-Item -Path $paths -Force -ErrorAction SilentlyContinue"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": false
+            },
+            "problemMatcher": []
+        }
+    ]
+}

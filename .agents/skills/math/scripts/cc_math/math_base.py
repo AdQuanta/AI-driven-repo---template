@@ -9,7 +9,7 @@ This module provides:
 - Decorator for function registration
 
 USAGE:
-    from scripts.math_base import (
+    from math_base import (
         math_command, format_output, format_error,
         parse_matrix, parse_array, parse_expression,
         format_latex_matrix, format_latex_scalar,

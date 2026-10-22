@@ -44,22 +44,22 @@ Use this skill when working on graph-algorithms problems in graph number theory.
 
 ### Sympy_Adjacency
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/sympy_compute.py eigenvalues "adjacency_matrix"
+python .agents/skills/math/scripts/cc_math/sympy_compute.py eigenvalues "adjacency_matrix"
 ```
 
 ### Z3_Dijkstra
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/z3_solve.py prove "d[v] >= d[u] + w(u,v) for all edges"
+python .agents/skills/math/scripts/cc_math/z3_solve.py prove "d[v] >= d[u] + w(u,v) for all edges"
 ```
 
 ### Z3_Mst_Cut
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/z3_solve.py prove "min_edge_crossing_cut_in_mst"
+python .agents/skills/math/scripts/cc_math/z3_solve.py prove "min_edge_crossing_cut_in_mst"
 ```
 
 ### Sympy_Flow
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/sympy_compute.py linsolve "flow_conservation_equations"
+python .agents/skills/math/scripts/cc_math/sympy_compute.py linsolve "flow_conservation_equations"
 ```
 
 ## Key Techniques

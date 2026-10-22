@@ -208,7 +208,8 @@ def generate_search_summary(results: List[Dict]) -> Dict:
 
 def main():
     """Command-line interface for search result processing."""
-    if len(sys.argv) < 2:
+    wants_help = len(sys.argv) >= 2 and sys.argv[1] in ('-h', '--help')
+    if len(sys.argv) < 2 or wants_help:
         print("Usage: python search_databases.py <results.json> [options]")
         print("\nOptions:")
         print("  --format FORMAT          Output format (json, markdown, bibtex)")
@@ -218,7 +219,7 @@ def main():
         print("  --year-end YEAR          Filter by end year")
         print("  --deduplicate            Remove duplicates")
         print("  --summary                Show summary statistics")
-        sys.exit(1)
+        sys.exit(0 if wants_help else 1)
 
     # Load results
     results_file = sys.argv[1]

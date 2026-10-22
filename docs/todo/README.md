@@ -14,9 +14,12 @@ needed.
 - Name files `YYYY-MM-DD-<kebab-case-topic>.md`.
 - State near the top whether the file records decisions, open investigations,
   implementation work, or a handoff.
-- Keep task descriptions concise, actionable, and aligned with the project
-  vision.
-- Keep active TODOs directly in `docs/todo/`; Only terminal TODOs belong in
+- Keep task descriptions concise, outcome-oriented, and aligned with the
+  project vision. For open questions or investigations, state the uncertainty,
+  relevant context, and the decision or evidence needed; do not prescribe a
+  solution or step-by-step approach prematurely. Use implementation detail only
+  when that approach has already been deliberately chosen.
+- Keep active TODOs directly in `docs/todo/`; only terminal TODOs belong in
   `docs/todo/resolved/`.
 
 ## Working with TODOs
@@ -25,6 +28,8 @@ needed.
   [research](../../research/AGENTS.md),
   [code](../../code/AGENTS.md), or
   [publications](../../publications/AGENTS.md).
+- After related work, record which items it resolved and link to the
+  evidence.
 - Use repository-relative Markdown links so references remain navigable.
 - Use proper LaTeX delimiters for math: `$...$` inline and `$$...$$` for display
   math.

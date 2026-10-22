@@ -16,17 +16,17 @@ Instead of reading individual skill documentation, call the router to get the ex
 
 ```bash
 # Route any math intent to get the CLI command
-uv run python .agents/skills/math/scripts/cc_math/math_router.py route "<user's math request>"
+python .agents/skills/math/scripts/cc_math/math_router.py route "<user's math request>"
 ```
 
 ## Example Workflow
 
 1. User says: "integrate sin(x) from 0 to pi"
-2. You run: `uv run python .agents/skills/math/scripts/cc_math/math_router.py route "integrate sin(x) from 0 to pi"`
+2. You run: `python .agents/skills/math/scripts/cc_math/math_router.py route "integrate sin(x) from 0 to pi"`
 3. Router returns:
    ```json
    {
-     "command": "uv run python .agents/skills/math/scripts/cc_math/sympy_compute.py integrate \"sin(x)\" --var x --lower 0 --upper pi",
+     "command": "python .agents/skills/math/scripts/cc_math/sympy_compute.py integrate \"sin(x)\" --var x --lower 0 --upper pi",
      "confidence": 0.95
    }
    ```
@@ -56,14 +56,14 @@ uv run python .agents/skills/math/scripts/cc_math/math_router.py route "<user's 
 
 ```bash
 # List all available routes
-uv run python .agents/skills/math/scripts/cc_math/math_router.py list
+python .agents/skills/math/scripts/cc_math/math_router.py list
 
 # List routes by category
-uv run python .agents/skills/math/scripts/cc_math/math_router.py list --category sympy
+python .agents/skills/math/scripts/cc_math/math_router.py list --category sympy
 ```
 
 ## Fallback
 
 If the router returns `{"command": null}`, the intent wasn't recognized. Then:
 1. Ask user to clarify
-2. Or use individual skills: /sympy-compute, /z3-solve, /pint-compute, etc.
+2. Or run the scripts directly (`sympy_compute.py`, `z3_solve.py`, `pint_compute.py`, ...; see `.agents/skills/math/TOOLS.md`)

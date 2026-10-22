@@ -44,28 +44,28 @@ Use this skill when working on numerical-integration problems in numerical metho
 
 ### Scipy_Quad
 ```bash
-uv run python -c "from scipy.integrate import quad; import numpy as np; result, err = quad(lambda x: np.sin(x), 0, np.pi); print('Integral:', result, 'Error:', err)"
+python -c "from scipy.integrate import quad; import numpy as np; result, err = quad(lambda x: np.sin(x), 0, np.pi); print('Integral:', result, 'Error:', err)"
 ```
 
 ### Scipy_Dblquad
 ```bash
-uv run python -c "from scipy.integrate import dblquad; result, err = dblquad(lambda y, x: x*y, 0, 1, 0, 1); print('Integral:', result)"
+python -c "from scipy.integrate import dblquad; result, err = dblquad(lambda y, x: x*y, 0, 1, 0, 1); print('Integral:', result)"
 ```
 
 ### Sympy_Integrate
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/sympy_compute.py integrate "sin(x)" --var x --from 0 --to "pi"
+python .agents/skills/math/scripts/cc_math/sympy_compute.py integrate "sin(x)" --var x --from 0 --to "pi"
 ```
 
 ## Key Techniques
 
 *From indexed textbooks:*
 
-- [An Introduction to Numerical Analysis... (Z-Library)] Even though the topic of numerical integration is one of the oldest in numerical analysis and there is a very large literature, new papers continue to appear at a fairly high rate. Many of these results give methods for special classes of problems, for example, oscillatory integrals, and others are a response to changes in computers, for example, the use of vector pipeline architectures. The best survey of numerical integration is the large and detailed work of Davis and Rabinowitz (1984).
-- [An Introduction to Numerical Analysis... (Z-Library)] Automatic computation of improper integrals over a bounded or unbounded planar region, Computing 27, 253-284. Approximate Calculation of Multiple Integrals. Prentice-Hall, Englewood Cliffs, N.
-- [Numerical analysis (Burden R.L., Fair... (Z-Library)] Composite Numerical Integration 4. Survey of Methods and Software 235 250 5 Initial-Value Problems for Ordinary Differential Equations 259 5. The Elementary Theory of Initial-Value Problems 5.
-- [An Introduction to Numerical Analysis... (Z-Library)] A comparison of numerical integration programs, J. Numerical methods based on Whittaker cardinal or sine Wahba, G. Ill-posed problems: Numerical and statistical methods for mildly, moderately, and severely ill-posed problems with noisy data, Tech.
-- [Elementary Differential Equations and... (Z-Library)] August 7, 2012 21:05 c08 Sheet number 1 Page number 451 cyan black C H A P T E R Numerical Methods Up to this point we have discussed methods for solving differential equations by using analytical techniques such as integration or series expansions. Usually, the emphasis was on nding an exact expression for the solution. Unfortunately, there are many important problems in engineering and science, especially nonlinear ones, to which these methods either do not apply or are very complicated to use.
+- [An Introduction to Numerical Analysis...] Even though the topic of numerical integration is one of the oldest in numerical analysis and there is a very large literature, new papers continue to appear at a fairly high rate. Many of these results give methods for special classes of problems, for example, oscillatory integrals, and others are a response to changes in computers, for example, the use of vector pipeline architectures. The best survey of numerical integration is the large and detailed work of Davis and Rabinowitz (1984).
+- [An Introduction to Numerical Analysis...] Automatic computation of improper integrals over a bounded or unbounded planar region, Computing 27, 253-284. Approximate Calculation of Multiple Integrals. Prentice-Hall, Englewood Cliffs, N.
+- [Numerical analysis (Burden R.L., Fair...] Composite Numerical Integration 4. Survey of Methods and Software 235 250 5 Initial-Value Problems for Ordinary Differential Equations 259 5. The Elementary Theory of Initial-Value Problems 5.
+- [An Introduction to Numerical Analysis...] A comparison of numerical integration programs, J. Numerical methods based on Whittaker cardinal or sine Wahba, G. Ill-posed problems: Numerical and statistical methods for mildly, moderately, and severely ill-posed problems with noisy data, Tech.
+- [Elementary Differential Equations and...] August 7, 2012 21:05 c08 Sheet number 1 Page number 451 cyan black C H A P T E R Numerical Methods Up to this point we have discussed methods for solving differential equations by using analytical techniques such as integration or series expansions. Usually, the emphasis was on nding an exact expression for the solution. Unfortunately, there are many important problems in engineering and science, especially nonlinear ones, to which these methods either do not apply or are very complicated to use.
 
 ## Cognitive Tools Reference
 

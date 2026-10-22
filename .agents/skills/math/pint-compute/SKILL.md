@@ -31,56 +31,56 @@ Cognitive prosthetics for unit-aware computation. Use Pint for converting betwee
 ### parse
 Parse a quantity string into magnitude, units, and dimensionality.
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/pint_compute.py \
+python .agents/skills/math/scripts/cc_math/pint_compute.py \
     parse "100 km/h"
 
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/pint_compute.py \
+python .agents/skills/math/scripts/cc_math/pint_compute.py \
     parse "9.8 m/s^2"
 ```
 
 ### convert
 Convert a quantity to different units.
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/pint_compute.py \
+python .agents/skills/math/scripts/cc_math/pint_compute.py \
     convert "5 meters" --to feet
 
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/pint_compute.py \
+python .agents/skills/math/scripts/cc_math/pint_compute.py \
     convert "100 km/h" --to mph
 
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/pint_compute.py \
+python .agents/skills/math/scripts/cc_math/pint_compute.py \
     convert "1 atmosphere" --to pascal
 ```
 
 ### calc
 Perform unit-aware arithmetic. Operators must be space-separated.
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/pint_compute.py \
+python .agents/skills/math/scripts/cc_math/pint_compute.py \
     calc "5 m * 3 s"
 
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/pint_compute.py \
+python .agents/skills/math/scripts/cc_math/pint_compute.py \
     calc "10 m / 2 s"
 
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/pint_compute.py \
+python .agents/skills/math/scripts/cc_math/pint_compute.py \
     calc "5 meters + 300 cm"
 ```
 
 ### check
 Check if two units have compatible dimensions.
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/pint_compute.py \
+python .agents/skills/math/scripts/cc_math/pint_compute.py \
     check newton --against "kg * m / s^2"
 
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/pint_compute.py \
+python .agents/skills/math/scripts/cc_math/pint_compute.py \
     check joule --against "kg * m^2 / s^2"
 ```
 
 ### simplify
 Simplify compound units to base or compact form.
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/pint_compute.py \
+python .agents/skills/math/scripts/cc_math/pint_compute.py \
     simplify "1 kg*m/s^2"
 
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/pint_compute.py \
+python .agents/skills/math/scripts/cc_math/pint_compute.py \
     simplify "1000 m"
 ```
 
@@ -117,12 +117,12 @@ All commands return JSON with relevant fields:
 Dimensionality errors are caught and reported:
 ```bash
 # This will error - incompatible dimensions
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/pint_compute.py \
+python .agents/skills/math/scripts/cc_math/pint_compute.py \
     convert "5 meters" --to kg
 # Error: Cannot convert '[length]' to '[mass]'
 ```
 
 ## Related Skills
 
-- /math-mode - Full math orchestration (SymPy + Z3)
-- /sympy-compute - Symbolic computation
+- math - Full math orchestration (SymPy + Z3)
+- SymPy symbolic computation: `.agents/skills/math/scripts/cc_math/sympy_compute.py`

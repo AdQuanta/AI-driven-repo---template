@@ -147,5 +147,5 @@ Would you like the Beta function approach, or get a numerical answer first to ve
 When user is stuck, suggest:
 - **math-intuition-builder** - reset understanding
 - **math-model-selector** - if framework was wrong
-- **math-mode** - for verification computations
+- **math** - for verification computations
 - **Relevant domain skill** - for alternative approach

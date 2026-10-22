@@ -3,13 +3,13 @@
 
 USAGE:
     # Generate step-by-step solution
-    uv run python scripts/math_tutor.py steps "x**2 - 5*x + 6 = 0" --operation solve
+    python .agents/skills/math/scripts/cc_math/math_tutor.py steps "x**2 - 5*x + 6 = 0" --operation solve
 
     # Get progressive hint
-    uv run python scripts/math_tutor.py hint "Solve x**2 - 4 = 0" --level 2
+    python .agents/skills/math/scripts/cc_math/math_tutor.py hint "Solve x**2 - 4 = 0" --level 2
 
     # Generate practice problem
-    uv run python scripts/math_tutor.py generate --topic algebra --difficulty 2
+    python .agents/skills/math/scripts/cc_math/math_tutor.py generate --topic algebra --difficulty 2
 
 Features:
 - Step-by-step solutions with rule justifications

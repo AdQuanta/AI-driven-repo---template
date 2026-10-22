@@ -5,8 +5,8 @@
 **Purpose**: Ensure logical flow between paragraphs and strengthen methodological rigor in academic writing.
 
 ```bash
-uv run python -B scripts/analyze_logic.py main.tex
-uv run python -B scripts/analyze_logic.py main.tex --section methods
+python -B .agents/skills/latex-paper-en/scripts/analyze_logic.py main.tex
+python -B .agents/skills/latex-paper-en/scripts/analyze_logic.py main.tex --section methods
 ```
 
 **Focus Areas**:

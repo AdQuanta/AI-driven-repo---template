@@ -3,47 +3,47 @@
 
 USAGE:
     # Solve equations
-    uv run python -m runtime.harness scripts/sympy_compute.py \
+    python .agents/skills/math/scripts/cc_math/sympy_compute.py \
         solve "x**2 - 4 = 0" --var x --domain real
 
     # Integrate
-    uv run python -m runtime.harness scripts/sympy_compute.py \
+    python .agents/skills/math/scripts/cc_math/sympy_compute.py \
         integrate "sin(x)" --var x
 
     # Definite integral
-    uv run python -m runtime.harness scripts/sympy_compute.py \
+    python .agents/skills/math/scripts/cc_math/sympy_compute.py \
         integrate "x" --var x --bounds 0 1
 
     # Differentiate
-    uv run python -m runtime.harness scripts/sympy_compute.py \
+    python .agents/skills/math/scripts/cc_math/sympy_compute.py \
         diff "x**3" --var x --order 2
 
     # Simplify
-    uv run python -m runtime.harness scripts/sympy_compute.py \
+    python .agents/skills/math/scripts/cc_math/sympy_compute.py \
         simplify "sin(x)**2 + cos(x)**2" --strategy trig
 
     # Compute limit
-    uv run python -m runtime.harness scripts/sympy_compute.py \
+    python .agents/skills/math/scripts/cc_math/sympy_compute.py \
         limit "sin(x)/x" --var x --to 0
 
     # Limit at infinity
-    uv run python -m runtime.harness scripts/sympy_compute.py \
+    python .agents/skills/math/scripts/cc_math/sympy_compute.py \
         limit "1/x" --var x --to oo
 
     # One-sided limit (from the right)
-    uv run python -m runtime.harness scripts/sympy_compute.py \
+    python .agents/skills/math/scripts/cc_math/sympy_compute.py \
         limit "1/x" --var x --to 0 --dir +
 
     # Matrix determinant
-    uv run python -m runtime.harness scripts/sympy_compute.py \
+    python .agents/skills/math/scripts/cc_math/sympy_compute.py \
         det "[[1,2],[3,4]]"
 
     # Eigenvalues
-    uv run python -m runtime.harness scripts/sympy_compute.py \
+    python .agents/skills/math/scripts/cc_math/sympy_compute.py \
         eigenvalues "[[1,2],[3,4]]"
 
     # Characteristic polynomial
-    uv run python -m runtime.harness scripts/sympy_compute.py \
+    python .agents/skills/math/scripts/cc_math/sympy_compute.py \
         charpoly "[[1,2],[3,4]]" --var lambda
 
 Requires: sympy (pip install sympy)

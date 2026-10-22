@@ -1,26 +1,26 @@
 % ============================================================================
-%  [Your Paper Title Here]
-%  Package & settings configuration
+%  Example paper -- packages, marking roles, and settings
+%
+%  Every package below ships with the TeX Live collections that CI installs
+%  (base, latex-recommended, latex-extra, plain-generic, pictures,
+%  bibtex-extra, science).
+%  Check the collection before adding a package.
 % ============================================================================
 
 % ---------- Page layout ----------
 \usepackage[a4paper,margin=0.85in]{geometry}
 
-% ---------- Fonts & typography ----------
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
+% ---------- Typography ----------
 \usepackage{microtype}
 \usepackage{csquotes}
 
 % ---------- Math ----------
 \usepackage{amsmath,amssymb,amsthm,mathtools,bm}
-\usepackage{bbm}
 
 % ---------- Graphics & figures ----------
 \usepackage{graphicx}
 \usepackage{tikz}
-\usetikzlibrary{positioning,calc,arrows.meta,decorations.markings}
-\usepackage{float}
+\usetikzlibrary{positioning,calc,arrows.meta}
 \usepackage[font=small,labelfont=bf]{caption}
 \usepackage{subcaption}
 
@@ -33,38 +33,20 @@
 \usepackage{enumitem}
 \setlist{nosep, leftmargin=*}
 
-% ---------- Colors & Highlighting ----------
-\usepackage[dvipsnames]{xcolor}
-\definecolor{CustomYellow}{RGB}{204, 153, 0}
+% ---------- SI units ----------
+\usepackage{siunitx}
 
-% Packages for robust highlighting
+% ---------- Marking module dependencies ----------
+\usepackage[dvipsnames]{xcolor}
 \usepackage{soul}
 \usepackage{environ}
 \usepackage{etoolbox}
 \usepackage{xparse}
 \usepackage[most]{tcolorbox}
 \usepackage{xpatch}
-
-% Avoid hyphenation & footnote breaking issues with soul
-\AtBeginDocument{%
-  \soulregister\cite7
-  \soulregister\ref7
-  \soulregister\cref7
-  \soulregister\eqref7
-}
-
-%% ==== Marking Environments ==== %%
-
-% Load modular marking API.
-\input{../modules/markings/markings.tex}
-
-% Global Highlight Colors
-\newcommand{\ChangesColor}{CustomYellow}
-\newcommand{\MissingColor}{red}
-
-% Default role definitions for project-level semantics.
-\DefineMarkRole{changes}{\ChangesColor}
-\DefineMarkRole{missing}{\MissingColor}
+% PDF annotations for \MarkEdit popup notes. pdfcomment loads hyperref itself,
+% so it comes first to avoid a hyperref option clash.
+\usepackage{pdfcomment}
 
 % ---------- Hyperlinks & cross-references ----------
 \usepackage{hyperref}
@@ -80,13 +62,9 @@
 \Crefname{equation}{Eq.}{Eqs.}
 \crefname{figure}{Fig.}{Figs.}
 \Crefname{figure}{Fig.}{Figs.}
-\creflabelformat{equation}{#2#1#3}
-\AtBeginDocument{%
-  \SetMarkDefaultCiteColor{ForestGreen}%
-  \hypersetup{citecolor=ForestGreen,linkcolor=blue,urlcolor=blue}%
-}
 
 % ---------- Bibliography (biblatex + biber) ----------
+% datamodel points at markings.dbx, which declares the markroles field.
 \usepackage[
   backend=biber,
   style=numeric-comp,
@@ -96,33 +74,43 @@
   doi=true,
   isbn=false,
   url=true,
-  eprint=true,
   sorting=none,
   datamodel=../modules/markings/markings
 ]{biblatex}
 \addbibresource{references.bib}
 
-% ---------- Algorithms ----------
-\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
-\crefname{algocf}{Algorithm}{Algorithms}
-\Crefname{algocf}{Algorithm}{Algorithms}
+% ==== Marking module ====
+% If you move this paper, update both this path and the datamodel path above.
+\input{../modules/markings/markings.tex}
 
-% ---------- SI units ----------
-\usepackage{siunitx}
+% Role colors. Highlights use the role color at full strength, so keep it light.
+\definecolor{MarkChanges}{RGB}{150, 220, 150}
+\definecolor{MarkMissing}{RGB}{245, 130, 130}
+
+% Review build: every role is colored.
+\DefineMarkRole{changes}{MarkChanges}
+\DefineMarkRole{edits}{MarkChanges}
+\DefineMarkRole{missing}{MarkMissing}
+
+% How \MarkEdit shows replacements: plain (new text only, the module default),
+% popup (new text highlighted, old text in a PDF note), or inline (old text
+% struck through in red, new text highlighted).
+\SetMarkEditMode{popup}
+
+% Submission build: replace the three role lines above with these, so marked
+% text prints without highlights and replacements show only the new text.
+% \DefineMarkRole{changes}{MarkChanges}[plain]
+% \DefineMarkRole{edits}{MarkChanges}[plain]
+% \DefineMarkRole{missing}{MarkMissing}[plain]
 
 % ---------- Math operators ----------
-\DeclareMathOperator{\Tr}{Tr}
-\DeclareMathOperator{\diag}{diag}
-\DeclareMathOperator{\rank}{rank}
-\DeclareMathOperator{\Span}{span}
-\DeclareMathOperator{\Prob}{Pr}
+\DeclareMathOperator*{\argmin}{arg\,min}
 \DeclareMathOperator{\E}{\mathbb{E}}
+\DeclareMathOperator{\Var}{Var}
 
 % ---------- Theorem environments ----------
 \newtheorem{definition}{Definition}
 \newtheorem{proposition}{Proposition}
-\newtheorem{lemma}{Lemma}
-\newtheorem{theorem}{Theorem}
 \newtheorem{remark}{Remark}
 
 % ---------- Author block ----------

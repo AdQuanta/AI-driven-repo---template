@@ -3,10 +3,10 @@
 Prose Extractor - Extract plain text from LaTeX/Typst for analysis
 
 Usage:
-    uv run python -B extract_prose.py main.tex
-    uv run python -B extract_prose.py main.tex --keep-structure
-    uv run python -B extract_prose.py main.tex --output prose.txt
-    uv run python -B extract_prose.py main.tex --keep-structure
+    python -B .agents/skills/latex-paper-en/scripts/extract_prose.py main.tex
+    python -B .agents/skills/latex-paper-en/scripts/extract_prose.py main.tex --keep-structure
+    python -B .agents/skills/latex-paper-en/scripts/extract_prose.py main.tex --output prose.txt
+    python -B .agents/skills/latex-paper-en/scripts/extract_prose.py main.tex --keep-structure
 """
 
 import argparse

@@ -9,8 +9,8 @@ Recommended module sequence:
 
 Commands:
 ```bash
-uv run python -B $SKILL_DIR/scripts/translate_academic.py input_zh.txt --domain deep-learning
-uv run python -B $SKILL_DIR/scripts/deai_check.py main.tex --section introduction
+python -B .agents/skills/latex-paper-en/scripts/translate_academic.py input_zh.txt --domain deep-learning
+python -B .agents/skills/latex-paper-en/scripts/deai_check.py main.tex --section introduction
 ```
 
 Expected output:

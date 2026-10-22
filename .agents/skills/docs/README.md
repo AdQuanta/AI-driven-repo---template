@@ -55,10 +55,10 @@ author: <github-handle>
 **Imported from an external source:**
 ```yaml
 ---
-name: networkx
-description: Comprehensive toolkit for network graphs.
+name: literature-review
+description: Conduct systematic literature reviews.
 author: skills.sh
-source: "https://www.skills.sh/davila7/claude-code-templates/networkx"
+source: "https://www.skills.sh/davila7/claude-code-templates/literature-review"
 ---
 ```
 

@@ -28,8 +28,8 @@ You MUST create a task for each of these items and complete them in order:
 3. **Ask clarifying questions** — one at a time, understand purpose/constraints/success criteria
 4. **Propose 2-3 approaches** — with trade-offs and your recommendation
 5. **Present design** — in sections scaled to their complexity, get user approval after each section
-6. **Write design doc** — save to `_agents_outputs/specs/YYYY-MM-DD-<topic>-design.md`
-7. **Spec review loop** — dispatch spec-document-reviewer subagent with precisely crafted review context (never your session history); fix issues and re-dispatch until approved (max 5 iterations, then surface to human)
+6. **Write design doc** — save to `docs/superpowers/specs/YYYY-MM-DD-<topic>-design.md`
+7. **Spec review loop** — dispatch a general-purpose subagent with the `spec-document-reviewer-prompt.md` template and precisely crafted review context (never your session history); fix issues and re-dispatch until approved (max 5 iterations, then surface to human)
 8. **User reviews written spec** — ask user to review the spec file before proceeding
 9. **Transition to implementation** — invoke writing-plans skill to create implementation plan
 
@@ -68,7 +68,7 @@ digraph brainstorming {
 }
 ```
 
-**The terminal state is invoking writing-plans.** Do NOT invoke frontend-design, mcp-builder, or any other implementation skill. The ONLY skill you invoke after brainstorming is writing-plans.
+**The terminal state is invoking writing-plans.** Do NOT invoke any other implementation skill. The ONLY skill you invoke after brainstorming is writing-plans.
 
 ## The Process
 
@@ -113,14 +113,16 @@ digraph brainstorming {
 
 **Documentation:**
 
-- **Check `AGENTS.md` for the repo's designated output root** (in this repository: `_agents_outputs/`). Save the spec to `specs/YYYY-MM-DD-<topic>-design.md` under that root. The subfolder name (`specs/`) and filename format are fixed regardless of which root is used.
-  - (User preferences for spec location override this default)
-- Use elements-of-style:writing-clearly-and-concisely skill if available
+- **Save the spec to `docs/superpowers/specs/YYYY-MM-DD-<topic>-design.md`**, the same fixed
+  path as step 6. Its plan goes to `docs/superpowers/plans/` under the same date and topic
+  slug, so the pair stays together.
+  - (An explicit user preference for spec location overrides this.)
+- Write the spec clearly and concisely: short sentences, one idea per paragraph, no filler
 
 **Spec Review Loop:**
 After writing the spec document:
 
-1. Dispatch spec-document-reviewer subagent (see spec-document-reviewer-prompt.md)
+1. Dispatch a general-purpose subagent with the template in `spec-document-reviewer-prompt.md` (it is a prompt template, not a named agent)
 2. If Issues Found: fix, re-dispatch, repeat until Approved
 3. If loop exceeds 5 iterations, surface to human for guidance
 
@@ -162,4 +164,8 @@ A browser-based companion for showing mockups, diagrams, and visual options duri
 A question about a UI topic is not automatically a visual question. "What does personality mean in this context?" is a conceptual question — use the terminal. "Which wizard layout works better?" is a visual question — use the browser.
 
 If they agree to the companion, read the detailed guide before proceeding:
-`skills/brainstorming/visual-companion.md`
+`.agents/skills/brainstorming/visual-companion.md`
+
+The companion needs Node.js and a POSIX shell (`bash`) for its `scripts/*.sh`
+launchers. On Windows, run them from Git Bash or WSL; if neither is available,
+continue with text-only brainstorming.

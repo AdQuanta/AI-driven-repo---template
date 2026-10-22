@@ -2,188 +2,188 @@
 
 USAGE:
     # Precision control (4)
-    uv run python scripts/mpmath_compute.py set_dps 100
-    uv run python scripts/mpmath_compute.py get_dps
-    uv run python scripts/mpmath_compute.py set_prec 332
-    uv run python scripts/mpmath_compute.py get_prec
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py set_dps 100
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py get_dps
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py set_prec 332
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py get_prec
 
     # Constants (14)
-    uv run python scripts/mpmath_compute.py pi --dps 100
-    uv run python scripts/mpmath_compute.py e --dps 50
-    uv run python scripts/mpmath_compute.py euler --dps 30
-    uv run python scripts/mpmath_compute.py catalan --dps 30
-    uv run python scripts/mpmath_compute.py phi --dps 50
-    uv run python scripts/mpmath_compute.py khinchin --dps 30
-    uv run python scripts/mpmath_compute.py glaisher --dps 30
-    uv run python scripts/mpmath_compute.py apery --dps 30
-    uv run python scripts/mpmath_compute.py mertens --dps 30
-    uv run python scripts/mpmath_compute.py twinprime --dps 30
-    uv run python scripts/mpmath_compute.py degree --dps 30
-    uv run python scripts/mpmath_compute.py inf
-    uv run python scripts/mpmath_compute.py nan
-    uv run python scripts/mpmath_compute.py j
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py pi --dps 100
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py e --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py euler --dps 30
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py catalan --dps 30
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py phi --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py khinchin --dps 30
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py glaisher --dps 30
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py apery --dps 30
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mertens --dps 30
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py twinprime --dps 30
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py degree --dps 30
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py inf
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py nan
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py j
 
     # Elementary (10)
-    uv run python -m scripts.mpmath_compute mp_sqrt "2" --dps 100
-    uv run python -m scripts.mpmath_compute mp_cbrt "8" --dps 50
-    uv run python -m scripts.mpmath_compute mp_root "16" 4 --dps 50
-    uv run python -m scripts.mpmath_compute mp_exp "1" --dps 50
-    uv run python -m scripts.mpmath_compute mp_expm1 "0.001" --dps 50
-    uv run python -m scripts.mpmath_compute mp_log "2" --dps 50
-    uv run python -m scripts.mpmath_compute mp_log10 "1000" --dps 50
-    uv run python -m scripts.mpmath_compute mp_log1p "0.001" --dps 50
-    uv run python -m scripts.mpmath_compute mp_power "2" "10" --dps 50
-    uv run python -m scripts.mpmath_compute mp_lambertw "1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_sqrt "2" --dps 100
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_cbrt "8" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_root "16" 4 --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_exp "1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_expm1 "0.001" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_log "2" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_log10 "1000" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_log1p "0.001" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_power "2" "10" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_lambertw "1" --dps 50
 
     # Trigonometric (12)
-    uv run python -m scripts.mpmath_compute mp_sin "1" --dps 50
-    uv run python -m scripts.mpmath_compute mp_cos "1" --dps 50
-    uv run python -m scripts.mpmath_compute mp_tan "1" --dps 50
-    uv run python -m scripts.mpmath_compute mp_sec "1" --dps 50
-    uv run python -m scripts.mpmath_compute mp_csc "1" --dps 50
-    uv run python -m scripts.mpmath_compute mp_cot "1" --dps 50
-    uv run python -m scripts.mpmath_compute mp_asin "0.5" --dps 50
-    uv run python -m scripts.mpmath_compute mp_acos "0.5" --dps 50
-    uv run python -m scripts.mpmath_compute mp_atan "1" --dps 50
-    uv run python -m scripts.mpmath_compute mp_atan2 "1" "1" --dps 50
-    uv run python -m scripts.mpmath_compute mp_sinpi "0.5" --dps 50
-    uv run python -m scripts.mpmath_compute mp_cospi "0.5" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_sin "1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_cos "1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_tan "1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_sec "1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_csc "1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_cot "1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_asin "0.5" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_acos "0.5" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_atan "1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_atan2 "1" "1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_sinpi "0.5" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_cospi "0.5" --dps 50
 
     # Hyperbolic (6)
-    uv run python -m scripts.mpmath_compute mp_sinh "1" --dps 50
-    uv run python -m scripts.mpmath_compute mp_cosh "1" --dps 50
-    uv run python -m scripts.mpmath_compute mp_tanh "1" --dps 50
-    uv run python -m scripts.mpmath_compute mp_asinh "1" --dps 50
-    uv run python -m scripts.mpmath_compute mp_acosh "2" --dps 50
-    uv run python -m scripts.mpmath_compute mp_atanh "0.5" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_sinh "1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_cosh "1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_tanh "1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_asinh "1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_acosh "2" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_atanh "0.5" --dps 50
 
     # Gamma functions (14)
-    uv run python -m scripts.mpmath_compute mp_gamma "5" --dps 50
-    uv run python -m scripts.mpmath_compute mp_rgamma "5" --dps 50
-    uv run python -m scripts.mpmath_compute mp_loggamma "5" --dps 50
-    uv run python -m scripts.mpmath_compute mp_factorial "10" --dps 50
-    uv run python -m scripts.mpmath_compute mp_fac2 "10" --dps 50
-    uv run python -m scripts.mpmath_compute mp_rf "5" "3" --dps 50
-    uv run python -m scripts.mpmath_compute mp_ff "5" "3" --dps 50
-    uv run python -m scripts.mpmath_compute mp_binomial "10" "5" --dps 50
-    uv run python -m scripts.mpmath_compute mp_beta "2" "3" --dps 50
-    uv run python -m scripts.mpmath_compute mp_betainc "2" "3" "0" "0.5" --dps 50
-    uv run python -m scripts.mpmath_compute mp_gammainc "2" "1" --dps 50
-    uv run python -m scripts.mpmath_compute mp_digamma "5" --dps 50
-    uv run python -m scripts.mpmath_compute mp_polygamma 1 "5" --dps 50
-    uv run python -m scripts.mpmath_compute mp_harmonic "10" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_gamma "5" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_rgamma "5" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_loggamma "5" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_factorial "10" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_fac2 "10" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_rf "5" "3" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_ff "5" "3" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_binomial "10" "5" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_beta "2" "3" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_betainc "2" "3" "0" "0.5" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_gammainc "2" "1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_digamma "5" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_polygamma 1 "5" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_harmonic "10" --dps 50
 
     # Zeta functions (8)
-    uv run python -m scripts.mpmath_compute mp_zeta "2" --dps 50
-    uv run python -m scripts.mpmath_compute mp_altzeta "2" --dps 50
-    uv run python -m scripts.mpmath_compute mp_dirichlet "2" "1,-1" --dps 50
-    uv run python -m scripts.mpmath_compute mp_polylog "2" "0.5" --dps 50
-    uv run python -m scripts.mpmath_compute mp_lerchphi "0.5" "2" "1" --dps 50
-    uv run python -m scripts.mpmath_compute mp_stieltjes 0 --dps 50
-    uv run python -m scripts.mpmath_compute mp_primezeta "2" --dps 50
-    uv run python -m scripts.mpmath_compute mp_secondzeta "0.5" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_zeta "2" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_altzeta "2" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_dirichlet "2" "1,-1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_polylog "2" "0.5" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_lerchphi "0.5" "2" "1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_stieltjes 0 --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_primezeta "2" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_secondzeta "0.5" --dps 50
 
     # Hypergeometric functions (11)
-    uv run python -m scripts.mpmath_compute mp_hyp0f1 "1" "0.5" --dps 50
-    uv run python -m scripts.mpmath_compute mp_hyp1f1 "1" "2" "0.5" --dps 50
-    uv run python -m scripts.mpmath_compute mp_hyp1f2 "1" "2" "3" "0.5" --dps 50
-    uv run python -m scripts.mpmath_compute mp_hyp2f0 "1" "2" "0.1" --dps 50
-    uv run python -m scripts.mpmath_compute mp_hyp2f1 "1" "2" "3" "0.5" --dps 50
-    uv run python -m scripts.mpmath_compute mp_hyp2f2 "1" "2" "3" "4" "0.5" --dps 50
-    uv run python -m scripts.mpmath_compute mp_hyp3f2 "1" "2" "3" "4" "5" "0.5" --dps 50
-    uv run python -m scripts.mpmath_compute mp_hyperu "1" "2" "1" --dps 50
-    uv run python -m scripts.mpmath_compute mp_hyper "1,2" "3" "0.5" --dps 50
-    uv run python -m scripts.mpmath_compute mp_meijerg "1" "" "0" "0.5" "1" --dps 50
-    uv run python -m scripts.mpmath_compute mp_appellf1 "1" "2" "3" "4" "0.1" "0.2" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_hyp0f1 "1" "0.5" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_hyp1f1 "1" "2" "0.5" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_hyp1f2 "1" "2" "3" "0.5" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_hyp2f0 "1" "2" "0.1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_hyp2f1 "1" "2" "3" "0.5" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_hyp2f2 "1" "2" "3" "4" "0.5" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_hyp3f2 "1" "2" "3" "4" "5" "0.5" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_hyperu "1" "2" "1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_hyper "1,2" "3" "0.5" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_meijerg "1" "" "0" "0.5" "1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_appellf1 "1" "2" "3" "4" "0.1" "0.2" --dps 50
 
     # Bessel functions (17)
-    uv run python -m scripts.mpmath_compute mp_besselj "0" "1" --dps 50
-    uv run python -m scripts.mpmath_compute mp_bessely "0" "1" --dps 50
-    uv run python -m scripts.mpmath_compute mp_besseli "0" "1" --dps 50
-    uv run python -m scripts.mpmath_compute mp_besselk "0" "1" --dps 50
-    uv run python -m scripts.mpmath_compute mp_hankel1 "0" "1" --dps 50
-    uv run python -m scripts.mpmath_compute mp_hankel2 "0" "1" --dps 50
-    uv run python -m scripts.mpmath_compute mp_airyai "1" --dps 50
-    uv run python -m scripts.mpmath_compute mp_airybi "1" --dps 50
-    uv run python -m scripts.mpmath_compute mp_airyaizero 1 --dps 50
-    uv run python -m scripts.mpmath_compute mp_airybizero 1 --dps 50
-    uv run python -m scripts.mpmath_compute mp_struveh "0" "1" --dps 50
-    uv run python -m scripts.mpmath_compute mp_struvel "0" "1" --dps 50
-    uv run python -m scripts.mpmath_compute mp_kelvin "0" "1" --dps 50
-    uv run python -m scripts.mpmath_compute mp_ber "0" "1" --dps 50
-    uv run python -m scripts.mpmath_compute mp_bei "0" "1" --dps 50
-    uv run python -m scripts.mpmath_compute mp_ker "0" "1" --dps 50
-    uv run python -m scripts.mpmath_compute mp_kei "0" "1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_besselj "0" "1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_bessely "0" "1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_besseli "0" "1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_besselk "0" "1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_hankel1 "0" "1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_hankel2 "0" "1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_airyai "1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_airybi "1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_airyaizero 1 --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_airybizero 1 --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_struveh "0" "1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_struvel "0" "1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_kelvin "0" "1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_ber "0" "1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_bei "0" "1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_ker "0" "1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_kei "0" "1" --dps 50
 
     # Orthogonal polynomials (10)
-    uv run python -m scripts.mpmath_compute mp_legendre 5 "0.5" --dps 50
-    uv run python -m scripts.mpmath_compute mp_legenp 2 1 "0.5" --dps 50
-    uv run python -m scripts.mpmath_compute mp_legenq 2 0 "0.5" --dps 50
-    uv run python -m scripts.mpmath_compute mp_chebyt 5 "0.5" --dps 50
-    uv run python -m scripts.mpmath_compute mp_chebyu 5 "0.5" --dps 50
-    uv run python -m scripts.mpmath_compute mp_hermite 5 "1" --dps 50
-    uv run python -m scripts.mpmath_compute mp_gegenbauer 5 "0.5" "0.3" --dps 50
-    uv run python -m scripts.mpmath_compute mp_laguerre 5 0 "1" --dps 50
-    uv run python -m scripts.mpmath_compute mp_jacobi 5 1 2 "0.5" --dps 50
-    uv run python -m scripts.mpmath_compute mp_spherharm 2 1 "0.5" "0.3" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_legendre 5 "0.5" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_legenp 2 1 "0.5" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_legenq 2 0 "0.5" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_chebyt 5 "0.5" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_chebyu 5 "0.5" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_hermite 5 "1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_gegenbauer 5 "0.5" "0.3" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_laguerre 5 0 "1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_jacobi 5 1 2 "0.5" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_spherharm 2 1 "0.5" "0.3" --dps 50
 
     # Elliptic functions (14)
-    uv run python -m scripts.mpmath_compute mp_ellipk "0.5" --dps 50
-    uv run python -m scripts.mpmath_compute mp_ellipe "0.5" --dps 50
-    uv run python -m scripts.mpmath_compute mp_ellipf "0.5" "0.3" --dps 50
-    uv run python -m scripts.mpmath_compute mp_ellippi "0.5" "0.3" --dps 50
-    uv run python -m scripts.mpmath_compute mp_elliprj "0.5" "1" "1.5" "2" --dps 50
-    uv run python -m scripts.mpmath_compute mp_elliprf "0.5" "1" "1.5" --dps 50
-    uv run python -m scripts.mpmath_compute mp_elliprc "0.5" "1" --dps 50
-    uv run python -m scripts.mpmath_compute mp_elliprd "0.5" "1" "1.5" --dps 50
-    uv run python -m scripts.mpmath_compute mp_elliprg "0.5" "1" "1.5" --dps 50
-    uv run python -m scripts.mpmath_compute mp_agm "1" "2" --dps 50
-    uv run python -m scripts.mpmath_compute mp_jtheta 1 "0.5" "0.1" --dps 50
-    uv run python -m scripts.mpmath_compute mp_qfrom --m "0.5" --dps 50
-    uv run python -m scripts.mpmath_compute mp_mfrom --q "0.1" --dps 50
-    uv run python -m scripts.mpmath_compute mp_kleinj "0.5+0.5j" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_ellipk "0.5" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_ellipe "0.5" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_ellipf "0.5" "0.3" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_ellippi "0.5" "0.3" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_elliprj "0.5" "1" "1.5" "2" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_elliprf "0.5" "1" "1.5" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_elliprc "0.5" "1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_elliprd "0.5" "1" "1.5" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_elliprg "0.5" "1" "1.5" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_agm "1" "2" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_jtheta 1 "0.5" "0.1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_qfrom --m "0.5" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_mfrom --q "0.1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_kleinj "0.5+0.5j" --dps 50
 
     # Error/Exponential integrals (16)
-    uv run python -m scripts.mpmath_compute mp_erf "1" --dps 50
-    uv run python -m scripts.mpmath_compute mp_erfc "1" --dps 50
-    uv run python -m scripts.mpmath_compute mp_erfi "1" --dps 50
-    uv run python -m scripts.mpmath_compute mp_erfinv "0.5" --dps 50
-    uv run python -m scripts.mpmath_compute mp_erfcinv "0.5" --dps 50
-    uv run python -m scripts.mpmath_compute mp_npdf "0" --dps 50
-    uv run python -m scripts.mpmath_compute mp_ncdf "0" --dps 50
-    uv run python -m scripts.mpmath_compute mp_ei "1" --dps 50
-    uv run python -m scripts.mpmath_compute mp_li "2" --dps 50
-    uv run python -m scripts.mpmath_compute mp_ci "1" --dps 50
-    uv run python -m scripts.mpmath_compute mp_si "1" --dps 50
-    uv run python -m scripts.mpmath_compute mp_chi "1" --dps 50
-    uv run python -m scripts.mpmath_compute mp_shi "1" --dps 50
-    uv run python -m scripts.mpmath_compute mp_fresnels "1" --dps 50
-    uv run python -m scripts.mpmath_compute mp_fresnelc "1" --dps 50
-    uv run python -m scripts.mpmath_compute mp_expint 1 "1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_erf "1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_erfc "1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_erfi "1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_erfinv "0.5" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_erfcinv "0.5" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_npdf "0" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_ncdf "0" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_ei "1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_li "2" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_ci "1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_si "1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_chi "1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_shi "1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_fresnels "1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_fresnelc "1" --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_expint 1 "1" --dps 50
 
     # Number theory (17)
-    uv run python -m scripts.mpmath_compute mp_primepi 100
-    uv run python -m scripts.mpmath_compute mp_prime 10
-    uv run python -m scripts.mpmath_compute mp_isprime 17
-    uv run python -m scripts.mpmath_compute mp_nextprime 10
-    uv run python -m scripts.mpmath_compute mp_prevprime 10
-    uv run python -m scripts.mpmath_compute mp_moebius 6
-    uv run python -m scripts.mpmath_compute mp_bernoulli 10 --dps 50
-    uv run python -m scripts.mpmath_compute mp_euler_number 10 --dps 50
-    uv run python -m scripts.mpmath_compute mp_stirling1 5 3 --dps 50
-    uv run python -m scripts.mpmath_compute mp_stirling2 5 3 --dps 50
-    uv run python -m scripts.mpmath_compute mp_bell 10 --dps 50
-    uv run python -m scripts.mpmath_compute mp_npartitions 100
-    uv run python -m scripts.mpmath_compute mp_fibonacci 50 --dps 50
-    uv run python -m scripts.mpmath_compute mp_lucas 50 --dps 50
-    uv run python -m scripts.mpmath_compute mp_gcd 48 18
-    uv run python -m scripts.mpmath_compute mp_lcm 12 18
-    uv run python -m scripts.mpmath_compute mp_isqrt 1000
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_primepi 100
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_prime 10
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_isprime 17
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_nextprime 10
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_prevprime 10
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_moebius 6
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_bernoulli 10 --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_euler_number 10 --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_stirling1 5 3 --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_stirling2 5 3 --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_bell 10 --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_npartitions 100
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_fibonacci 50 --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_lucas 50 --dps 50
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_gcd 48 18
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_lcm 12 18
+    python .agents/skills/math/scripts/cc_math/mpmath_compute.py mp_isqrt 1000
 """
 
 import sys
 
-from scripts.math_base import (
+from math_base import (
     create_main_parser,
     get_registry,
     main_cli,

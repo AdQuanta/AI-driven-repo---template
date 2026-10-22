@@ -12,7 +12,15 @@ source: "https://www.skills.sh/davila7/claude-code-templates/literature-review"
 
 Conduct systematic, comprehensive literature reviews following rigorous academic methodology. Search multiple literature databases, synthesize findings thematically, verify all citations for accuracy, and generate professional output documents in markdown and PDF formats.
 
-This skill integrates with multiple scientific skills for database access (gget, bioservices, datacommons-client) and provides specialized tools for citation verification, result aggregation, and document generation.
+Databases are reached through their public web APIs or search pages, using the harness's web-search and web-fetch tools. The skill bundles tools for citation verification, result aggregation, and document generation. Domain-specific command-line clients (for example `gget`, `bioservices`, or `datacommons-client` for biomedical and statistical data) are **optional**: they are not shipped or declared as dependencies, so use them only if they are already installed, and fall back to the public APIs otherwise.
+
+**Paths:** run the bundled scripts from the repository root as
+`python .agents/skills/literature-review/scripts/<script>.py` with the project's
+root `.venv` interpreter. Save review documents and their outputs wherever the
+project keeps research notes (for example under `research/`), not inside the
+skill folder. If the project keeps a literature knowledge base (for example
+through `find-papers` and `ingest-paper` agents), search it first and ingest
+newly found papers there.
 
 ## When to Use This Skill
 
@@ -29,9 +37,9 @@ Use this skill when:
 
 Figures are optional. If the review benefits from one (for example a PRISMA
 flow diagram, a search-strategy flowchart, or a thematic-synthesis diagram),
-create it with the tools available in this repository (Mermaid in Markdown,
-TikZ, or matplotlib under `code/`). The upstream `scientific-schematics` skill
-is not shipped with this template; do not depend on it.
+create it with tools available in the repository: Mermaid in Markdown, TikZ,
+or matplotlib (declared in the root `requirements.txt`). No figure-generation
+skill ships with this skill set; do not depend on one.
 
 ---
 
@@ -68,21 +76,19 @@ Literature reviews follow a structured, multi-phase workflow:
 
    Select databases appropriate for the domain:
 
-   **Biomedical & Life Sciences:**
-   - Use `gget` skill: `gget search pubmed "search terms"` for PubMed/PMC
-   - Use `gget` skill: `gget search biorxiv "search terms"` for preprints
-   - Use `bioservices` skill for ChEMBL, KEGG, UniProt, etc.
+   **General Scientific Literature (any field):**
+   - Search arXiv via its public API (preprints in physics, math, CS, statistics, q-bio, and more)
+   - Search Semantic Scholar or OpenAlex via their public APIs (cross-disciplinary)
+   - Use Google Scholar for comprehensive coverage (manual searches)
+   - Use the field's own indexes where relevant (for example IEEE Xplore, ACM Digital Library, dblp, INSPIRE-HEP, NASA ADS)
 
-   **General Scientific Literature:**
-   - Search arXiv via direct API (preprints in physics, math, CS, q-bio)
-   - Search Semantic Scholar via API (200M+ papers, cross-disciplinary)
-   - Use Google Scholar for comprehensive coverage (manual or careful scraping)
+   **Biomedical & Life Sciences (when the topic needs them):**
+   - PubMed/PMC through the NCBI E-utilities API or the PubMed web search
+   - bioRxiv/medRxiv through their public API or website
+   - Optional, if installed: `gget` (`gget search pubmed ...`) or `bioservices` clients
 
    **Specialized Databases:**
-   - Use `gget alphafold` for protein structures
-   - Use `gget cosmic` for cancer genomics
-   - Use `datacommons-client` for demographic/statistical data
-   - Use specialized databases as appropriate for the domain
+   - Use specialized databases as appropriate for the domain, through their public APIs
 
 2. **Document Search Parameters**:
    ```markdown
@@ -107,7 +113,7 @@ Literature reviews follow a structured, multi-phase workflow:
    - Combine all results into a single file
    - Use `scripts/search_databases.py` for post-processing:
      ```bash
-     python search_databases.py combined_results.json \
+     python .agents/skills/literature-review/scripts/search_databases.py combined_results.json \
        --deduplicate \
        --format markdown \
        --output aggregated_results.md
@@ -117,7 +123,7 @@ Literature reviews follow a structured, multi-phase workflow:
 
 1. **Deduplication**:
    ```bash
-   python search_databases.py results.json --deduplicate --output unique_results.json
+   python .agents/skills/literature-review/scripts/search_databases.py results.json --deduplicate --output unique_results.json
    ```
    - Removes duplicates by DOI (primary) or title (fallback)
    - Document number of duplicates removed
@@ -173,7 +179,8 @@ Literature reviews follow a structured, multi-phase workflow:
 
 1. **Create Review Document** from template:
    ```bash
-   cp assets/review_template.md my_literature_review.md
+   cp .agents/skills/literature-review/assets/review_template.md my_literature_review.md
+   # Windows PowerShell: Copy-Item .agents/skills/literature-review/assets/review_template.md my_literature_review.md
    ```
 
 2. **Write Thematic Synthesis** (NOT study-by-study summaries):
@@ -213,7 +220,7 @@ Literature reviews follow a structured, multi-phase workflow:
 
 1. **Verify All DOIs**:
    ```bash
-   python scripts/verify_citations.py my_literature_review.md
+   python .agents/skills/literature-review/scripts/verify_citations.py my_literature_review.md
    ```
 
    This script:
@@ -239,9 +246,8 @@ Literature reviews follow a structured, multi-phase workflow:
 
 1. **Generate PDF**:
    ```bash
-   python scripts/generate_pdf.py my_literature_review.md \
-     --citation-style apa \
-     --output my_review.pdf
+   python .agents/skills/literature-review/scripts/generate_pdf.py my_literature_review.md my_review.pdf \
+     --citation-style apa
    ```
 
    Options:
@@ -273,14 +279,14 @@ Literature reviews follow a structured, multi-phase workflow:
 
 ### PubMed / PubMed Central
 
-Access via `gget` skill:
+Access via the NCBI E-utilities API (or, optionally, an installed `gget` client):
 ```bash
-# Search PubMed
-gget search pubmed "CRISPR gene editing" -l 100
+# Search PubMed through E-utilities (JSON output)
+# https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&retmode=json&retmax=100&term=CRISPR+gene+editing
 
 # Search with filters
-# Use PubMed Advanced Search Builder to construct complex queries
-# Then execute via gget or direct Entrez API
+# Use PubMed Advanced Search Builder to construct complex queries,
+# then execute them through E-utilities
 ```
 
 **Search tips**:
@@ -292,10 +298,8 @@ gget search pubmed "CRISPR gene editing" -l 100
 
 ### bioRxiv / medRxiv
 
-Access via `gget` skill:
-```bash
-gget search biorxiv "CRISPR sickle cell" -l 50
-```
+Access via the public API (https://api.biorxiv.org/) or the website search
+(optionally an installed `gget` client: `gget search biorxiv "search terms"`).
 
 **Important considerations**:
 - Preprints are not peer-reviewed
@@ -328,13 +332,14 @@ Access via direct API (requires API key, or use free tier):
 
 ### Specialized Biomedical Databases
 
-Use appropriate skills:
-- **ChEMBL**: `bioservices` skill for chemical bioactivity
-- **UniProt**: `gget` or `bioservices` skill for protein information
-- **KEGG**: `bioservices` skill for pathways and genes
-- **COSMIC**: `gget` skill for cancer mutations
-- **AlphaFold**: `gget alphafold` for protein structures
-- **PDB**: `gget` or direct API for experimental structures
+Only when the topic needs them. Use each database's public API or web
+interface; the `gget` and `bioservices` Python clients are optional
+conveniences, not dependencies:
+- **ChEMBL**: chemical bioactivity
+- **UniProt**: protein information
+- **KEGG**: pathways and genes
+- **COSMIC**: cancer mutations
+- **AlphaFold DB / PDB**: protein structures
 
 ### Citation Chaining
 
@@ -415,19 +420,20 @@ Detailed formatting guidelines are in `references/citation_styles.md`. Quick ref
 
 ## Example Workflow
 
-Complete workflow for a biomedical literature review:
+Complete workflow for a literature review (run from the repository root; the
+review files live wherever the project keeps research notes):
 
 ```bash
 # 1. Create review document from template
-cp assets/review_template.md crispr_sickle_cell_review.md
+cp .agents/skills/literature-review/assets/review_template.md crispr_sickle_cell_review.md
 
-# 2. Search multiple databases using appropriate skills
-# - Use gget skill for PubMed, bioRxiv
-# - Use direct API access for arXiv, Semantic Scholar
+# 2. Search multiple databases
+# - Use the public APIs (PubMed E-utilities, bioRxiv, arXiv, Semantic Scholar)
+#   through the harness's web-search and web-fetch tools
 # - Export results in JSON format
 
 # 3. Aggregate and process results
-python scripts/search_databases.py combined_results.json \
+python .agents/skills/literature-review/scripts/search_databases.py combined_results.json \
   --deduplicate \
   --rank citations \
   --year-start 2015 \
@@ -449,44 +455,31 @@ python scripts/search_databases.py combined_results.json \
 # - Clear conclusions
 
 # 6. Verify all citations
-python scripts/verify_citations.py crispr_sickle_cell_review.md
+python .agents/skills/literature-review/scripts/verify_citations.py crispr_sickle_cell_review.md
 
-# Review the citation report
+# Review the citation report (cat, or Get-Content in PowerShell)
 cat crispr_sickle_cell_review_citation_report.json
 
 # Fix any failed citations and re-verify
-python scripts/verify_citations.py crispr_sickle_cell_review.md
+python .agents/skills/literature-review/scripts/verify_citations.py crispr_sickle_cell_review.md
 
 # 7. Generate professional PDF
-python scripts/generate_pdf.py crispr_sickle_cell_review.md \
-  --citation-style nature \
-  --output crispr_sickle_cell_review.pdf
+python .agents/skills/literature-review/scripts/generate_pdf.py crispr_sickle_cell_review.md \
+  crispr_sickle_cell_review.pdf --citation-style nature
 
 # 8. Review final PDF and markdown outputs
 ```
 
 ## Integration with Other Skills
 
-This skill works seamlessly with other scientific skills:
+- **research-gap-explorer**: turn the review's identified gaps into research questions.
+- **latex-paper-en**: polish a review that becomes the related-work section of a LaTeX paper.
 
-### Database Access Skills
-- **gget**: PubMed, bioRxiv, COSMIC, AlphaFold, Ensembl, UniProt
-- **bioservices**: ChEMBL, KEGG, Reactome, UniProt, PubChem
-- **datacommons-client**: Demographics, economics, health statistics
-
-### Analysis Skills
-- **pydeseq2**: RNA-seq differential expression (for methods sections)
-- **scanpy**: Single-cell analysis (for methods sections)
-- **anndata**: Single-cell data (for methods sections)
-- **biopython**: Sequence analysis (for background sections)
-
-### Visualization Skills
-- **matplotlib**: Generate figures and plots for review
-- **seaborn**: Statistical visualizations
-
-### Writing Skills
-- **brand-guidelines**: Apply institutional branding to PDF
-- **internal-comms**: Adapt review for different audiences
+### Optional External Tools (not shipped, not declared)
+- Database clients such as `gget`, `bioservices`, or `datacommons-client` can speed
+  up domain-specific searches if a project installs them; the workflow above does
+  not require them.
+- Figures: matplotlib (declared in the root `requirements.txt`), Mermaid, or TikZ.
 
 ## Resources
 
@@ -524,24 +517,27 @@ This skill works seamlessly with other scientific skills:
 ## Dependencies
 
 ### Required Python Packages
-```bash
-pip install requests  # For citation verification
-```
 
-### Required System Tools
-```bash
-# For PDF generation
-brew install pandoc  # macOS
-apt-get install pandoc  # Linux
+`scripts/verify_citations.py` needs `requests`; the other two scripts use only
+the standard library. Install it into the root `.venv` through the root
+`requirements.txt`.
 
-# For LaTeX (PDF generation)
-brew install --cask mactex  # macOS
-apt-get install texlive-xetex  # Linux
+### Required System Tools (PDF generation only)
+```bash
+# pandoc
+winget install JohnMacFarlane.Pandoc   # Windows
+brew install pandoc                    # macOS
+apt-get install pandoc                 # Linux
+
+# xelatex (from a TeX distribution)
+# Windows: TeX Live (https://tug.org/texlive/) or MiKTeX
+brew install --cask mactex             # macOS
+apt-get install texlive-xetex          # Linux
 ```
 
 Check dependencies:
 ```bash
-python scripts/generate_pdf.py --check-deps
+python .agents/skills/literature-review/scripts/generate_pdf.py --check-deps
 ```
 
 ## Summary
@@ -549,7 +545,7 @@ python scripts/generate_pdf.py --check-deps
 This literature-review skill provides:
 
 1. **Systematic methodology** following academic best practices
-2. **Multi-database integration** via existing scientific skills
+2. **Multi-database integration** via public database APIs
 3. **Citation verification** ensuring accuracy and credibility
 4. **Professional output** in markdown and PDF formats
 5. **Comprehensive guidance** covering the entire review process

@@ -2,6 +2,6 @@
 
 This topic folder maps to installed dependency skills:
 
-- ../../../../.agents/skills/limits/SKILL.md
-- ../../../../.agents/skills/continuity/SKILL.md
-- ../../../../.agents/skills/convergence/SKILL.md
+- limits/SKILL.md
+- continuity/SKILL.md
+- convergence/SKILL.md

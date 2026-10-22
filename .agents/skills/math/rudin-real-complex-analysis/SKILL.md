@@ -58,19 +58,19 @@ Use this skill when working on:
 
 ## Tool Commands
 
-### Query Rudin Content
-```bash
-uv run python .agents/skills/math/scripts/cc_math/ragie_query.py --query "YOUR_TOPIC measure integration" --partition math-textbooks --top-k 5
-```
+### Consult Rudin Content
+No textbook-retrieval tool ships with this skill. If the project's literature
+knowledge base holds the textbook (for example through a `find-papers` agent),
+search it there; otherwise work from the theorem summaries above.
 
 ### SymPy for Symbolic Computation
 ```bash
-uv run python .agents/skills/math/scripts/cc_math/sympy_compute.py integrate "exp(-x**2)" --var x --bounds "0,oo"
+python .agents/skills/math/scripts/cc_math/sympy_compute.py integrate "exp(-x**2)" --var x --bounds "0,oo"
 ```
 
 ### Z3 for Verification
 ```bash
-uv run python .agents/skills/math/scripts/cc_math/z3_solve.py prove "forall x, |f(x)| <= M implies bounded"
+python .agents/skills/math/scripts/cc_math/z3_solve.py prove "forall x, |f(x)| <= M implies bounded"
 ```
 
 ## Key Theorems Reference

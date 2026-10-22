@@ -10,9 +10,9 @@ Recommended module sequence:
 
 Commands:
 ```bash
-uv run python -B $SKILL_DIR/scripts/analyze_grammar.py main.tex --section introduction
-uv run python -B $SKILL_DIR/scripts/analyze_sentences.py main.tex --section related
-uv run python -B $SKILL_DIR/scripts/analyze_logic.py main.tex --section related
+python -B .agents/skills/latex-paper-en/scripts/analyze_grammar.py main.tex --section introduction
+python -B .agents/skills/latex-paper-en/scripts/analyze_sentences.py main.tex --section related
+python -B .agents/skills/latex-paper-en/scripts/analyze_logic.py main.tex --section related
 ```
 
 Expected output:

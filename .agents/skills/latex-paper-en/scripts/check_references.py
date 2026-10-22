@@ -6,8 +6,8 @@ Checks for undefined references, unreferenced labels, missing captions,
 reference ordering issues, and numbering gaps.
 
 Usage:
-    uv run python -B check_references.py main.tex
-    uv run python -B check_references.py main.tex --json
+    python -B .agents/skills/latex-paper-en/scripts/check_references.py main.tex
+    python -B .agents/skills/latex-paper-en/scripts/check_references.py main.tex --json
 """
 
 from __future__ import annotations

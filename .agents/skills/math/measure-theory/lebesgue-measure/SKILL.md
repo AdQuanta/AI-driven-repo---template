@@ -35,28 +35,28 @@ Use this skill when working on lebesgue-measure problems in measure theory.
 
 ### Sympy_Outer_Measure
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/sympy_compute.py sum "length(I_n)" --var n --from 1 --to oo
+python .agents/skills/math/scripts/cc_math/sympy_compute.py sum "length(I_n)" --var n --from 1 --to oo
 ```
 
 ### Z3_Caratheodory
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/z3_solve.py prove "mu(A) == mu(A & E) + mu(A & E_complement)"
+python .agents/skills/math/scripts/cc_math/z3_solve.py prove "mu(A) == mu(A & E) + mu(A & E_complement)"
 ```
 
 ### Sympy_Borel_Sets
 ```bash
-uv run python -m runtime.harness .agents/skills/math/scripts/cc_math/sympy_compute.py simplify "open_set_countable_union"
+python .agents/skills/math/scripts/cc_math/sympy_compute.py simplify "open_set_countable_union"
 ```
 
 ## Key Techniques
 
 *From indexed textbooks:*
 
-- [Measure, Integration  Real Analysis (... (Z-Library)] Lebesgue measure on the Lebesgue measurable sets does have one small advantage over Lebesgue measure on the Borel sets: every subset of a set with (outer) measure 0 is Lebesgue measurable but is not necessarily a Borel set. However, any natural process that produces a subset of R will produce a Borel set. Thus this small advantage does not often come up in practice.
-- [Measure, Integration  Real Analysis (... (Z-Library)] B j j You have probably long suspected that not every subset of R is a Borel set. Now j j j j Section 2D Lebesgue Measure restricted to the Borel sets, is a measure. Borel sets Outer measure is a measure on (R, of R.
-- [Measure, Integration  Real Analysis (... (Z-Library)] The terminology Lebesgue set would make good sense in parallel to the termi- nology Borel set. However, Lebesgue set has another meaning, so we need to use Lebesgue measurable set. Every Lebesgue measurable set differs from a Borel set by a set with outer measure 0.
-- [Measure, Integration  Real Analysis (... (Z-Library)] If you go at a leisurely pace, then covering Chapters 1–5 in the rst semester may be a good goal. If you go a bit faster, then covering Chapters 1–6 in the rst semester may be more appropriate. For a second-semester course, covering some subset of Chapters 6 through 12 should produce a good course.
-- [Measure, Integration  Real Analysis (... (Z-Library)] Egorov’s Theorem, which states that pointwise convergence of a sequence of measurable functions is close to uniform convergence, has multiple applications in later chapters. Luzin’s Theorem, back in the context of R, sounds spectacular but has no other uses in this book and thus can be skipped if you are pressed for time. Chapter 4: The highlight of this chapter is the Lebesgue Differentiation Theorem, which allows us to differentiate an integral.
+- [Measure, Integration  Real Analysis (...] Lebesgue measure on the Lebesgue measurable sets does have one small advantage over Lebesgue measure on the Borel sets: every subset of a set with (outer) measure 0 is Lebesgue measurable but is not necessarily a Borel set. However, any natural process that produces a subset of R will produce a Borel set. Thus this small advantage does not often come up in practice.
+- [Measure, Integration  Real Analysis (...] B j j You have probably long suspected that not every subset of R is a Borel set. Now j j j j Section 2D Lebesgue Measure restricted to the Borel sets, is a measure. Borel sets Outer measure is a measure on (R, of R.
+- [Measure, Integration  Real Analysis (...] The terminology Lebesgue set would make good sense in parallel to the termi- nology Borel set. However, Lebesgue set has another meaning, so we need to use Lebesgue measurable set. Every Lebesgue measurable set differs from a Borel set by a set with outer measure 0.
+- [Measure, Integration  Real Analysis (...] If you go at a leisurely pace, then covering Chapters 1–5 in the rst semester may be a good goal. If you go a bit faster, then covering Chapters 1–6 in the rst semester may be more appropriate. For a second-semester course, covering some subset of Chapters 6 through 12 should produce a good course.
+- [Measure, Integration  Real Analysis (...] Egorov’s Theorem, which states that pointwise convergence of a sequence of measurable functions is close to uniform convergence, has multiple applications in later chapters. Luzin’s Theorem, back in the context of R, sounds spectacular but has no other uses in this book and thus can be skipped if you are pressed for time. Chapter 4: The highlight of this chapter is the Lebesgue Differentiation Theorem, which allows us to differentiate an integral.
 
 ## Cognitive Tools Reference
 

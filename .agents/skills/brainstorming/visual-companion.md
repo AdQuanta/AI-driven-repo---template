@@ -2,6 +2,10 @@
 
 Browser-based visual brainstorming companion for showing mockups, diagrams, and options.
 
+Script paths below (`scripts/...`) are relative to `.agents/skills/brainstorming/`.
+The launchers need Node.js and a POSIX shell; on Windows run them from Git Bash
+or WSL.
+
 ## When to Use
 
 Decide per-question, not per-session. The test: **would the user understand this better by seeing it than reading it?**

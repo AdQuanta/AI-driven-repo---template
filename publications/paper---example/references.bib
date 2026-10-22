@@ -1,19 +1,53 @@
 % ============================================================================
-%  references.bib — paper bibliography
+%  references.bib -- paper bibliography
 %
-%  Convention for new entries added during editing:
-%    Add  markroles = {changes},  to highlight the entry in the compiled PDF.
-%    Remove this field (or run @approve-changes-markings) before submission.
+%  Convention for entries added during editing:
+%    Add a markroles field set to the changes role (see the last entry) to
+%    highlight the entry in the compiled PDF. The field holds exactly one role.
+%    The approve-changes-markings agent removes the field once the change
+%    is accepted.
+%
+%  The first three entries are classic references. The last one is a
+%  fictional entry that shows citation highlighting.
 % ============================================================================
 
-@article{example2024,
+@book{taylor1997errors,
+  author    = {Taylor, John R.},
+  title     = {An Introduction to Error Analysis: The Study of Uncertainties
+               in Physical Measurements},
+  edition   = {2},
+  publisher = {University Science Books},
+  address   = {Sausalito, CA},
+  year      = {1997},
+}
+
+@manual{jcgm2008gum,
+  author       = {{Joint Committee for Guides in Metrology}},
+  title        = {Evaluation of Measurement Data -- Guide to the Expression of
+                  Uncertainty in Measurement},
+  number       = {JCGM 100:2008},
+  organization = {BIPM},
+  year         = {2008},
+}
+
+@book{press2007numerical,
+  author    = {Press, William H. and Teukolsky, Saul A. and
+               Vetterling, William T. and Flannery, Brian P.},
+  title     = {Numerical Recipes: The Art of Scientific Computing},
+  edition   = {3},
+  publisher = {Cambridge University Press},
+  address   = {Cambridge},
+  year      = {2007},
+}
+
+@article{example2024drift,
   author       = {Smith, Alice and Jones, Bob},
-  title        = {An Example Paper Title},
-  journal      = {Journal of Example Research},
-  shortjournal = {J. Example Res.},
+  title        = {Long-Term Drift of Low-Cost Temperature Sensors
+                  (Fictional Example Entry)},
+  journal      = {Journal of Example Instrumentation},
+  shortjournal = {J. Example Instrum.},
   year         = {2024},
   volume       = {10},
   pages        = {100--110},
-  doi          = {10.1000/example.2024.001},
   markroles    = {changes},
 }

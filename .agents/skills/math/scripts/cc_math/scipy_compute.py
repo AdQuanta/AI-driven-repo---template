@@ -1,7 +1,7 @@
 """SciPy computation CLI - 289 functions across 7 categories.
 
 USAGE:
-    uv run python scripts/scipy_compute.py <command> [args]
+    python .agents/skills/math/scripts/cc_math/scipy_compute.py <command> [args]
 
 CATEGORIES:
     optimize    - Optimization and root finding (20 functions)
@@ -14,27 +14,27 @@ CATEGORIES:
 
 EXAMPLES:
     # Minimize a function
-    uv run python scripts/scipy_compute.py minimize "x**2 + 2*x" "5"
+    python .agents/skills/math/scripts/cc_math/scipy_compute.py minimize "x**2 + 2*x" "5"
 
     # Find root of equation
-    uv run python scripts/scipy_compute.py root "x**3 - x - 2" "1.5"
+    python .agents/skills/math/scripts/cc_math/scipy_compute.py root "x**3 - x - 2" "1.5"
 
     # Solve system of equations
-    uv run python scripts/scipy_compute.py fsolve "x[0]**2 + x[1]**2 - 1, x[0] - x[1]" "0.5,0.5"
+    python .agents/skills/math/scripts/cc_math/scipy_compute.py fsolve "x[0]**2 + x[1]**2 - 1, x[0] - x[1]" "0.5,0.5"
 
     # Find root in bracket
-    uv run python scripts/scipy_compute.py brentq "x**3 - 1" "0" "2"
+    python .agents/skills/math/scripts/cc_math/scipy_compute.py brentq "x**3 - 1" "0" "2"
 
     # Linear programming
-    uv run python scripts/scipy_compute.py linprog "-1,-2" "[[1,1],[2,1]]" "[4,5]"
+    python .agents/skills/math/scripts/cc_math/scipy_compute.py linprog "-1,-2" "[[1,1],[2,1]]" "[4,5]"
 
     # Curve fitting
-    uv run python scripts/scipy_compute.py curve_fit "a*exp(-b*x)" "0,1,2,3" "1,0.6,0.4,0.2" "1,0.5"
+    python .agents/skills/math/scripts/cc_math/scipy_compute.py curve_fit "a*exp(-b*x)" "0,1,2,3" "1,0.6,0.4,0.2" "1,0.5"
 """
 
 import sys
 
-from scripts.math_base import (
+from math_base import (
     create_main_parser,
     get_registry,
     main_cli,

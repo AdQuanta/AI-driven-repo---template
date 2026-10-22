@@ -1,0 +1,127 @@
+% !TEX root = alder2021leakage.tex
+% FICTIONAL TEST MATERIAL: this paper does not exist; it was written for the
+% citation-audit fixture.
+\documentclass{article}
+\usepackage{amsmath}
+
+\title{Acoustic Leak Localization in Cast-Iron Water Mains}
+\author{A. Fixture \and B. Fixture}
+\date{Journal of Fixture Studies, 2021}
+
+\begin{document}
+\maketitle
+
+\noindent\textbf{FICTIONAL TEST MATERIAL: this paper does not exist; it was
+written for the citation-audit fixture.} No author, utility, venue, or
+measurement described here is real.
+
+\begin{abstract}
+Leaks on buried water mains are expensive to find because excavation is slow
+and a wrong dig is costly. We evaluate acoustic leak-noise correlators on a
+fictional municipal network and report how accurately they locate leaks on
+cast-iron mains up to 300~mm in diameter. Across 140 confirmed leaks, the
+correlators located 92\% of them, with a median localization error of 1.5~m.
+We also compare the localization error on cast-iron, ductile-iron, and PVC
+mains, and find that the error grows as the pipe wall becomes less rigid.
+\end{abstract}
+
+\section{Introduction}
+\label{sec:introduction}
+
+A leak-noise correlator places two acoustic sensors on fittings on either side
+of a suspected leak. The noise of escaping water travels along the pipe wall
+and through the water column to both sensors. The difference in arrival times,
+together with the distance between the sensors and the speed of sound in the
+pipe, gives the position of the leak between them. The method is old, but its
+accuracy depends strongly on the pipe material and diameter, and published
+field figures are scattered.
+
+This paper reports a field evaluation on the fictional Fixture Valley network.
+Our question is narrow: how often, and how precisely, do correlators locate
+leaks on cast-iron mains, and how does that compare with other common pipe
+materials?
+
+\section{Method}
+\label{sec:method}
+
+\subsection{Network and leak set}
+\label{sec:method-network}
+
+The evaluation covered cast-iron distribution mains with nominal diameters from
+100~mm to 300~mm. A leak entered the study when a survey crew suspected it and
+a later excavation confirmed it. In total 140 leaks on cast-iron mains were
+confirmed during the study period. A smaller comparison set of leaks on
+ductile-iron and PVC mains was collected in the same way.
+
+\subsection{Correlation procedure}
+\label{sec:method-procedure}
+
+For each suspected leak, the crew placed two sensors on hydrants or valves no
+more than 200~m apart. The correlator computed the cross-correlation of the two
+signals and reported the leak position. The crew then marked that position on
+the ground, and the excavation team recorded the true leak position after
+excavation. The localization error is the distance between the marked and the
+true position. A leak counts as \emph{located} when the excavation at the
+marked position exposed it, which we define as an error of 3~m or less.
+
+\section{Results}
+\label{sec:results}
+
+\subsection{Localization rate and error on cast iron}
+\label{sec:results-castiron}
+
+The acoustic correlators located 92\% of the 140 confirmed leaks on cast-iron
+mains up to 300~mm in diameter. The median localization error on these mains
+was 1.5~m. Errors were smallest on the 100~mm and 150~mm mains and grew
+slightly with diameter, but the median stayed below 2~m in every diameter
+class. The leaks the correlators failed to locate were mostly at joints close
+to a branch, where the noise reached the sensors by more than one path.
+
+\subsection{Localization error by pipe material}
+\label{sec:results-material}
+
+Table~\ref{tab:material} gives the median localization error by pipe material.
+Cast iron gave the smallest error, at 1.5~m. Ductile iron followed, at 2.1~m.
+PVC gave by far the largest error, at 4.8~m, because its flexible wall damps
+the leak noise and lowers the speed of sound along the pipe, so a small timing
+error turns into a large position error.
+
+\begin{table}[h]
+  \centering
+  \caption{Median leak-localization error by pipe material
+    (Section~\ref{sec:results-material}).}
+  \label{tab:material}
+  \begin{tabular}{lr}
+    \hline
+    Pipe material & Median localization error \\
+    \hline
+    Cast iron     & 1.5 m \\
+    Ductile iron  & 2.1 m \\
+    PVC           & 4.8 m \\
+    \hline
+  \end{tabular}
+\end{table}
+
+\subsection{Practical consequence}
+\label{sec:results-practice}
+
+On cast iron, a median error of 1.5~m means that a single standard excavation
+usually exposes the leak. On PVC, the crew should expect to widen the dig or to
+confirm the position with a second sensor spacing.
+
+\section{Limitations}
+\label{sec:limitations}
+
+This study measures leak localization only. It has clear limits on what it
+can support.
+
+This study does not examine pressure management: network pressure was not
+changed during the study, and we draw no conclusion about how pressure affects
+leaks. This study does not examine bursts: every event in the data set was a
+background or reported leak, not a main break, and burst frequency was not
+recorded. This study does not examine water quality: no samples were taken and
+no water-quality parameter was measured. Finally, the comparison sets for
+ductile iron and PVC are smaller than the cast-iron set, so their medians are
+less certain.
+
+\end{document}
